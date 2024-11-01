@@ -118,76 +118,80 @@ VS Code will carry out some steps to add the file. After a few seconds, it will 
 Here, take note that there are '0' changes between the staging area and the working directory. Secondly, the file is added ('A') to staging. Staged Changes shows '1' to tell us that VS Code know there is one file being different between content of Staging and commit history.
 
 Git now knows that it's supposed to keep track of `guacamole.md`,
-but it hasn't recorded these changes as a commit yet.
-To get it to do that,
-we need to run one more command:
+but it hasn't recorded these changes as a commit yet. Before we run commit, there are a few helping things VS Code shows us. In VS Code's Explorer view, the file is shown as added to staging ('A'):
+
+<img src="fig/04-f2-file-added.JPG" alt="04-f2-file-added" width=50%>
+
+Back in VS Code's Source Control view, under `Staged Changes`, we can click the file to show `Changes`. Here the left icon (with a "+" and "-" symbol) is to view changes between the version of the file in the repository and that in the Staging area. Clicking on that icon will show a pop-up message at the bottom of the screen.
+
+<img src="fig/04-f2-staging-show-no-changes1.JPG" alt="04-f3-staging-show-no-changes1" width=30%>
+
+The pop-up message might be similar to this:
+
+<img src="fig/04-f3-staging-show-no-changes2.JPG" alt="04-f3-staging-show-no-changes2" width=30%>
+
+CLicking the second left icon (the round arrow going to the left) will discard the changes, i.e. remove the Staging.
+
+The next icon, '**&#043;**', is for staging changes. Since there is no change (shown with the '0'), clicking on '**&#043;**' does not do anything. See below for the icons.
+
+<img src="fig/04-f5-staging-no-changes-no-action.JPG" alt="04-f5-staging-no-changes-no-action" width=30%>
+
+We see in the above image that on the right of "Staged Changes" is shown a "1". This means Git knows there is one item changed between the file version in the Staging area, and in Commit. Click in the first icon ("+" and "-" symbol), VS Code will show the differences in file content between the two versions:
+
+<img src="fig/04-g1-git-diff-file-changes.JPG" alt="04-g1-git-diff-file-changes" width=30%>
+
+To commit what is in the Staging area, we click the button "Commit".
+
+<img src="fig/04-h1-commit-button.JPG" alt="04-h1-commit-button" width=30%>
 
 
+VS Code then opens a new tab (named "COMMIT_EDITMSG") and waits for us to enter the corresponding commit message. Enter in line 1:
 
-<hr >
-<hr >
-<hr >
-```bash
-$ git commit -m "Create a template for recipe"
-```
+`Create a template for recipe`
 
-```output
-[main (root-commit) f22b25e] Create a template for recipe
- 1 file changed, 1 insertion(+)
- create mode 100644 guacamole.md
-```
+As shown in the following image, there is an undo icon (the one with the round arrow pointing to the left) and a tick icon. The lines below, each beginning with "#" have further instructions, and can be left as they are. To commit with this message, click on the tick icon, and a confirmation dialog appears. Here click `Save`.
 
-When we run `git commit`,
-Git takes everything we have told it to save by using `git add`
+<img src="fig/04-h2-commit-message.JPG" alt="04-h2-commit-message.JPG" width=50%>
+
+<img src="fig/04-h3-commit-confirmation-dialog.JPG" alt="04-h3-commit-confirmation-dialog" width=30%>
+
+The Source Control might show progress bar for a few seconds. And then the blue button, which showed "Commit" before, now shows "Publish Branch". Further under "Source Control Graph" is the first listing of our commit which is for the branch `main`.
+
+<img src="fig/04-h4-commit-done.JPG" alt="04-h4-commit-done" width=30%>
+
+Click on the `main` link in Source Control Graph will show a summary of this commit. When we run `Commit`,
+Git takes everything we have told it to save 
 and stores a copy permanently inside the special `.git` directory.
 This permanent copy is called a [commit](../learners/reference.md#commit)
-(or [revision](../learners/reference.md#revision)) and its short identifier is `f22b25e`. Your commit may have another identifier.
+(or [revision](../learners/reference.md#revision)) and its short identifier is `eb8fac66`. Your commit may have another identifier.
 
-We use the `-m` flag (for "message")
-to record a short, descriptive, and specific comment that will help us remember later on what we did and why.
-If we just run `git commit` without the `-m` option,
-Git will launch `nano` (or whatever other editor we configured as `core.editor`)
-so that we can write a longer message.
+<img src="fig/04-h5-commit-summary.JPG" alt="04-h5-commit-summary" width=50%>
 
 [Good commit messages][commit-messages] start with a brief (\<50 characters) statement about the
 changes made in the commit. Generally, the message should complete the sentence "If applied, this commit will" <commit message here>.
 If you want to go into more detail, add a blank line between the summary line and your additional notes. Use this additional space to explain why you made changes and/or what their impact will be.
 
-If we run `git status` now:
+Another useful feature in VS Code is that it tells us everything is up to date: the tick icon next to `Source Control Repositories` and `Source Control`.
 
-```bash
-$ git status
-```
+<img src="fig/04-h6-all-up-to-date.JPG" alt="04-h6-all-up-to-date" width=30%>
 
-```output
-On branch main
-nothing to commit, working tree clean
-```
-
-it tells us everything is up to date.
 If we want to know what we've done recently,
-we can ask Git to show us the project's history using `git log`:
+we can ask Git to show us the project's history using the Git Graph icon: either the one under `Source Control Repositories` or `Source Control`:
 
-```bash
-$ git log
-```
+<img src="fig/04-h7-git-log.JPG" alt="04-h7-git-log" width=50%>
 
-```output
-commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 09:51:46 2013 -0400
-
-    Create a template for recipe
-```
-
-`git log` lists all commits  made to a repository in reverse chronological order.
+We can view details of this commit by clicking on the commit item. Git Graph lists all commits made to a repository in reverse chronological order.
 The listing for each commit includes
-the commit's full identifier
+the commit's full ID
 (which starts with the same characters as
-the short identifier printed by the `git commit` command earlier),
+the short ID),
 the commit's author,
 when it was created,
-and the log message Git was given when the commit was created.
+and the commit message Git was given when the commit was created.
+
+<img src="fig/04-h8-commit-details.JPG" alt="04-h8-commit-details" width=50%>
+
+
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
