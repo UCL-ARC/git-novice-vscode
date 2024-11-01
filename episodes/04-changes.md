@@ -45,11 +45,11 @@ Name the text document `guacamole.md`. Check that the file extension is `md`.
 
 **Option 2 Visual Studio Code File menu** VS Code also has file management options. First, ensure that you are in Explorer view. If not, please click top menu `View` and then `Explorer`:
 
-<img src="fig/04-a4-explorer-menu.JPG" alt="04-a4-explorer-menu" width=50%>
+<img src="fig/04-a4-explorer-menu.JPG" alt="04-a4-explorer-menu" width=30%>
 
 Then, click top menu `File` followed by `New File`, and you are asked for the file name:
 
-<img src="fig/04-a5-new-file.JPG" alt="04-a5-new-file" width=50%>
+<img src="fig/04-a5-new-file.JPG" alt="04-a5-new-file" width=30%>
 
 Name the text document `guacamole.md` - check that the file extension is `md` - and press return.
 
@@ -57,7 +57,7 @@ Name the text document `guacamole.md` - check that the file extension is `md` - 
 
 **Option 3 VS Code Explorer New File** Another option to create files is to use the new file icon in Exlorer:
 
-<img src="fig/04-a6-new-file.JPG" alt=" 04-a6-new-file" width=50%>
+<img src="fig/04-a6-new-file.JPG" alt=" 04-a6-new-file" width=30%>
 
 
 <hr >
@@ -86,8 +86,9 @@ Type the text below into the `guacamole.md` file. Please take note that the text
 With the file opened in VS Code, take note of the file tab: when a file has changes that have not been saved, the right side icon is a dark circle (&#x25CF;). When the file is saved, the icon becomes an `X` (**&#10005;**). Whether a dark circle or an `X`, clicking on it closes that window, and you are asked if you want to save it if it has changes.
 
 The file status is also shown in the Primary Side Bar, when hovering over it, or having it selected:
-<img src="fig/04-b2-git-status.JPG" alt="04-b1-git-status" width=40%>&nbsp;&nbsp;&nbsp;
-<img src="fig/04-b3-git-status.JPG" alt="04-b1-git-status" width=40%>
+
+<img src="fig/04-b2-git-status.JPG" alt="04-b2-git-status" width=40%>&nbsp;&nbsp;&nbsp;
+<img src="fig/04-b3-git-status.JPG" alt="04-b3-git-status" width=40%>
 
 We will now save the file (menu `File` - `Save`). The file tab indicator changes from the dark circle to `X`.
 
@@ -95,25 +96,28 @@ We will now save the file (menu `File` - `Save`). The file tab indicator changes
 To manage file versions, we switch over to source control view. As a reminder, here is how to go to  source control view:
 
 If VS Code top menu is visible, use `View` and `Source Control`. If the top menu is not available (because VS Code window is narrow), the menu is available from the menu shortcut on the left.
-<img src="fig/04-c2-source-control-menu.JPG" alt="04-c2-source-control-menu" width=50%><p>&nbsp;</p>
-<img src="fig/04-c3-source-control-menu.JPG" alt="04-c3-source-control-menu" width=50%>
 
-For clarity, please display all available source control functions from the Source COntrol sub-menu:
-<img src="fig/04-c4-source-control-sub-menu.JPG" alt="04-c4-source-control-sub-menu" width=50%>
+<img src="fig/04-c2-source-control-menu.JPG" alt="04-c2-source-control-menu" width=30%>&nbsp;&nbsp;&nbsp;
+<img src="fig/04-c3-source-control-menu.JPG" alt="04-c3-source-control-menu" width=30%>
+
+For clarity, please display all available source control functions from the Source Control sub-menu:
+
+<img src="fig/04-c4-source-control-sub-menu.JPG" alt="04-c4-source-control-sub-menu" width=30%>
 
 The source control view should look similar to this:
-<img src="fig/04-c1-source-control-view.JPG" alt="04-c1-source-control-view" width=50%>
+
+<img src="fig/04-c1-source-control-view.JPG" alt="04-c1-source-control-view" width=30%>
 
 In the above source control view, VS Code tells us that it's noticed one new file indicated with `1` and the `U`. Further, it tells us this is in repository branch "main".
 
 We can tell Git to track this file by clicking the '**&#043;**' icon, for **staging** the file. Note that in this case we have only one file to track, we can either click the '**&#043;**' of the file, or the '**&#043;**' (second screenshot) which is for the whole set of file (where only file is available and to add to tracking). This process is called "staging" because it is the holding area before fully commiting this version.
 
-<img src="fig/04-e1-staging-file.JPG" alt="04-e1-staging-file" width=50%>
-<img src="fig/04-e2-staging-all.JPG" alt="04-e2-staging-all" width=50%>
+<img src="fig/04-e1-staging-file.JPG" alt="04-e1-staging-file" width=30%>
+<img src="fig/04-e2-staging-all.JPG" alt="04-e2-staging-all" width=30%>
 
 VS Code will carry out some steps to add the file. After a few seconds, it will show completion of the "staging" stage:
 
-<img src="fig/04-f1-staging-done.JPG" alt="04-f1-staging-done" width=50%>
+<img src="fig/04-f1-staging-done.JPG" alt="04-f1-staging-done" width=30%>
 
 Here, take note that there are '0' changes between the staging area and the working directory. Secondly, the file is added ('A') to staging. Staged Changes shows '1' to tell us that VS Code know there is one file being different between content of Staging and commit history.
 
@@ -130,7 +134,7 @@ The pop-up message might be similar to this:
 
 <img src="fig/04-f3-staging-show-no-changes2.JPG" alt="04-f3-staging-show-no-changes2" width=30%>
 
-CLicking the second left icon (the round arrow going to the left) will discard the changes, i.e. remove the Staging.
+Clicking the second left icon (the round arrow going to the left) will discard the changes, i.e. remove the Staging.
 
 The next icon, '**&#043;**', is for staging changes. Since there is no change (shown with the '0'), clicking on '**&#043;**' does not do anything. See below for the icons.
 
