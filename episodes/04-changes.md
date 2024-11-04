@@ -201,23 +201,17 @@ and the commit message Git was given when the commit was created.
 
 ## Where Are My Changes?
 
-If we run `ls` at this point, we will still see just one file called `guacamole.md`.
+If we look at the contents of our `recipes` folder, we will still see just one file called `guacamole.md`.
 That's because Git saves information about files' history
 in the special `.git` directory mentioned earlier
 so that our filesystem doesn't become cluttered
 (and so that we can't accidentally edit or delete an old version).
 
+<img src="fig/04-i1-recipes-file-explorer.JPG" alt="04-i1-recipes-file-explorer" width=50%>
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Now suppose Alfredo adds more information to the file.
-(Again, we'll edit with `nano` and then `cat` the file to show its contents;
-you may use a different editor, and don't need to `cat`.)
-
-```bash
-$ nano guacamole.md
-$ cat guacamole.md
-```
+Now suppose Alfredo adds more information to the file as shown below. You can copy and paste either all the five lines, or the three lines of ingredients, into your VS Code editor. 
 
 ```output
 # Guacamole
@@ -228,68 +222,34 @@ $ cat guacamole.md
 ## Instructions
 ```
 
-When we run `git status` now,
-it tells us that a file it already knows about has been modified:
+In the editor, the added lines are indicated with a solid green line on their left.
 
-```bash
-$ git status
-```
+<img src="fig/04-j1-add-content1.JPG" alt="04-j1-add-content1" width=50%>
 
-```output
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
+**Important**. Save the file (`File` - `Save`). The file tab shows the file is modified ('M'). In the Explorer file list, this file is indicated with an 'M'.
 
-	modified:   guacamole.md
+<img src="fig/04-j2-add-content2.JPG" alt="04-j2-add-content2" width=50%>
 
-no changes added to commit (use "git add" and/or "git commit -a")
-```
+Go to `Source Control`, Git tells us that a file it already knows about has been modified, indicated by the 'M' in the `Source Control` - `Changes` list (bottom of the image). Clicking on this 'M' opens a `Working Tree` tab that shows what the changes are, in this case, the new lines are highlighted with a green background.
 
-The last line is the key phrase:
-"no changes added to commit".
-We have changed this file,
-but we haven't told Git we will want to save those changes
-(which we do with `git add`)
-nor have we saved them (which we do with `git commit`).
-So let's do that now. It is good practice to always review
-our changes before saving them. We do this using `git diff`.
-This shows us the differences between the current state
-of the file and the most recently saved version:
+<img src="fig/04-j3-source-control1.JPG" alt="04-j3-source-control1" width=70%>
 
-```bash
-$ git diff
-```
+Also, clicking on the '+' '-' icon (as shown below), will show `Git Changes` (see tab in the image above). There is no difference between this (`Git Changes`) and the `Working Tree` above.
 
-```output
-diff --git a/guacamole.md b/guacamole.md
-index df0654a..315bf3a 100644
---- a/guacamole.md
-+++ b/guacamole.md
-@@ -1,3 +1,6 @@
- # Guacamole
- ## Ingredients
-+* avocado
-+* lemon
-+* salt
- ## Instructions
-```
+<img src="fig/04-j4-source-control2.JPG" alt="04-j4-source-control2" width=30%>
 
-The output is cryptic because
-it is actually a series of commands for tools like editors and `patch`
-telling them how to reconstruct one file given the other.
-If we break it down into pieces:
+Of the lines in green background, note that there is also a `+` on the left of each line. Each shows where we added a line.
 
-1. The first line tells us that Git is producing output similar to the Unix `diff` command
-  comparing the old and new versions of the file.
-2. The second line tells exactly which versions of the file
-  Git is comparing;
-  `df0654a` and `315bf3a` are unique computer-generated labels for those versions.
-3. The third and fourth lines once again show the name of the file being changed.
-4. The remaining lines are the most interesting, they show us the actual differences
-  and the lines on which they occur.
-  In particular,
-  the `+` marker in the first column shows where we added a line.
+Git Graph tells us there are uncommitted changes (one) between our repository and the staging area, when the changes were made, and the number of added lines (shown by '+3') and deleted ones (in this case '-0').
+
+<img src="fig/04-j5-git-graph.JPG" alt="04-j5-git-graph" width=50%>
+
+
+<hr />
+
+<hr />
+
+<hr />
 
 After reviewing our change, it's time to commit it:
 
