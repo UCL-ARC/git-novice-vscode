@@ -244,44 +244,28 @@ Git Graph tells us there are uncommitted changes (one) between our repository an
 
 <img src="fig/04-j5-git-graph.JPG" alt="04-j5-git-graph" width=50%>
 
+After reviewing our change, it's time to commit it. Click the commit button. Whoops:
+Git won't commit because we didn't add files to the staging area.
 
-<hr />
+<img src="fig/04-j6-git-commit-not-staged.JPG" alt="04-j6-git-commit-not-staged" width=50%>
 
-<hr />
+Let's fix that. Click `Cancel` on the dialog box, and click "+" next to file `guacamole.md` to add this file to the staging area. (As above, another option is to use the "+" icon next to `Changes`, a line above the file: this icon will appear along with the digit "1".)
 
-<hr />
+<img src="fig/04-j7-add-file to-staging-area.JPG" alt="04-j7-add-file to-staging-area" width=30%>
 
-After reviewing our change, it's time to commit it:
+Having done that, Source Control now shows `Staged Changes` and with a  digit "1", which indicates the number of changes (files), see image below. Further, the `Changes` menu that was shown before the staging is repeated after the staging, the differences being the digit of "0" says there is no change between the version in staging, and the working directory; secondly, there is no file listed under `Changes` (file `guacamole.md` is now listed in `Staged Changes`.)
 
-```bash
-$ git commit -m "Add basic guacamole's ingredients"
-$ git status
-```
+<img src="fig/04-j8-file-added-to-staging-area.JPG" alt="04-j8-file-added-to-staging-area" width=30%>
 
-```output
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
+Enter commit message "Add basic guacamole's ingredients" and click the tick icon as shown.
 
-	modified:   guacamole.md
+<img src="fig/04-j9-commit.JPG" alt="04-j9-commit" width=70%>
 
-no changes added to commit (use "git add" and/or "git commit -a")
-```
+A confirmation dialog box appears, click `Save`.
 
-Whoops:
-Git won't commit because we didn't use `git add` first.
-Let's fix that:
+In Source Control Graph / Git Graph, click on the commit message to show its description. The file `guacamelo.md` is the changed file in this commit, and there were 3 insertions (3 lines), indicated by the digit "+3", and no deletions ("-0"). For reference the commit ID is shown, also the person who made the commit and the date and time this was made.
 
-```bash
-$ git add guacamole.md
-$ git commit -m "Add basic guacamole's ingredients"
-```
-
-```output
-[main 34961b1] Add basic guacamole's ingredient
- 1 file changed, 3 insertions(+)
-```
+<img src="fig/04-j10-commit-details.JPG" alt="04-j10-commit-details" width=70%>
 
 Git insists that we add files to the set we want to commit
 before actually committing anything. This allows us to commit our
@@ -305,12 +289,12 @@ but not yet committed.
 ## Staging Area
 
 If you think of Git as taking snapshots of changes over the life of a project,
-`git add` specifies *what* will go in a snapshot
+using `Changes` "+" specifies *what* will go in a snapshot
 (putting things in the staging area),
-and `git commit` then *actually takes* the snapshot, and
+and the `Commit` button then *actually takes* the snapshot, and
 makes a permanent record of it (as a commit).
-If you don't have anything staged when you type `git commit`,
-Git will prompt you to use `git commit -a` or `git commit --all`,
+If you don't have anything staged when you want to commit,
+Git will prompt you to add files
 which is kind of like gathering *everyone* to take a group photo!
 However, it's almost always better to
 explicitly add things to the staging area, because you might
@@ -318,10 +302,12 @@ commit changes you forgot you made. (Going back to the group photo simile,
 you might get an extra with incomplete makeup walking on
 the stage for the picture because you used `-a`!)
 Try to stage things manually,
-or you might find yourself searching for "git undo commit" more
+or you might find yourself searching for "undo commit" more
 than you would like!
 
-
+<hr />
+<hr />
+<hr />
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ![](fig/git-staging-area.svg){alt='A diagram showing how "git add" registers changes in the staging area, while "git commit" moves changes from the staging area to the repository'}
