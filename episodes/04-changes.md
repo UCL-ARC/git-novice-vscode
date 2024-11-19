@@ -305,9 +305,6 @@ Try to stage things manually,
 or you might find yourself searching for "undo commit" more
 than you would like!
 
-<hr />
-<hr />
-<hr />
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ![](fig/git-staging-area.svg){alt='A diagram showing how "git add" registers changes in the staging area, while "git commit" moves changes from the staging area to the repository'}
@@ -318,79 +315,44 @@ and into long-term storage.
 First,
 we'll improve our recipe by changing 'lemon' to 'lime':
 
-```bash
-$ nano guacamole.md
-$ cat guacamole.md
-```
+<img src="fig/04-k1-change-file-content1.JPG" alt="04-k1-change-file-content1" width=50%>
 
-```output
-# Guacamole
-## Ingredients
-* avocado
-* lime
-* salt
-## Instructions
-```
+Note that the icon on the file tab shows a dark dark circle (&#x25CF;) indicating the file is changed and not saved, and the blue vertical line indicates where the change line is ("* lime"). When the file is saved, the icon becomes an `X` (**&#10005;**). 
 
-```bash
-$ git diff
-```
+<img src="fig/04-k2-file-saved.JPG" alt="04-k2-file-saved" width=50%>
 
-```output
-diff --git a/guacamole.md b/guacamole.md
-index 315bf3a..b36abfd 100644
---- a/guacamole.md
-+++ b/guacamole.md
-@@ -1,6 +1,6 @@
- # Guacamole
- ## Ingredients
- * avocado
--* lemon
-+* lime
- * salt
- ## Instructions
-```
+In `Source Control`, we see there is "1" change, and one file is indicated with an "M" for modified. This change compares content of the working directory and of commits.
+
+With the file saved, we can use `Changes` "+" "-" icon to show the changed lines.
+
+<img src="fig/04-k3-diff.JPG" alt="04-k3-diff" width=50%>
 
 So far, so good:
 we've replaced one line (shown with a `-` in the first column) with a new line
 (shown with a `+` in the first column).
 Now let's put that change in the staging area
-and see what `git diff` reports:
+and see what changes VS Code reports.
 
-```bash
-$ git add guacamole.md
-$ git diff
-```
+To add this file to the staging area, click the "+" icon next to the file. Remember that clicking the "+" icon next to `Changes` will do the same thing in this instance.
 
-There is no output:
-as far as Git can tell,
-there's no difference between what it's been asked to save permanently
-and what's currently in the directory.
-However,
-if we do this:
+<img src="fig/04-k4-add-to-staging-area.JPG" alt="04-k4-add-to-staging-area" width=50%>
 
-```bash
-$ git diff --staged
-```
+Git now proceeds to the next step that shows `Staged Changes`, with "1" change, and that change is for the file `guacamole.md` (also indicated with the "M"). In menu `Changes`, number of changes is "0". After saving the file, VS Code will show the "Git: Changes" window, which tells us "No Changed Files". This is correct, as far as Git can tell, there's no difference between what it's been asked to save permanently and what's currently in the directory.
 
-```output
-diff --git a/guacamole.md b/guacamole.md
-index 315bf3a..b36abfd 100644
---- a/guacamole.md
-+++ b/guacamole.md
-@@ -1,6 +1,6 @@
- # Guacamole
- ## Ingredients
- * avocado
--* lemon
-+* lime
- * salt
- ## Instructions
-```
+<img src="fig/04-k5-diff-no-change.JPG" alt="04-k5-diff-no-change" width=50%>
 
-it shows us the difference between
+To compare content of the staging area and commit, we click on the "+" next to `Staged Changes`. It shows us the difference between
 the last committed change
 and what's in the staging area.
+
+<img src="fig/04-k6-diff-staged-show-change.JPG" alt="04-k6-diff-staged-show-change" width=50%>
+
+
+<hr />
+<hr />
+<hr />
+
+
 Let's save our changes:
 
 ```bash
