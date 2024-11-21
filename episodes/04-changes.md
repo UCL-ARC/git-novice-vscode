@@ -347,59 +347,26 @@ and what's in the staging area.
 
 <img src="fig/04-k6-diff-staged-show-change.JPG" alt="04-k6-diff-staged-show-change" width=50%>
 
+Let's save our changes. Click Commit, enter commit message "Modify guacamole to the traditional recipe", and using the tick icon to finish this commit, and click "Save" in the confirmation dialog box.
+
+<img src="fig/04-k7-commit.JPG" alt="04-k7-commit" width=50%>
+
+VS Code then shows there is no changed file.
+
+<img src="fig/04-k8-commit-completed.JPG" alt="04-k8-commit-completed" width=50%>
+
+View in Git Graph (icon <img src="fig/Git-Graph.jpg" alt="Git-Graph icon" width=5%>)
+
+<img src="fig/04-k9-git-log1.JPG" alt="04-k9-git-log1" width=50%>
+
+Click on the latest log:
+
+<img src="fig/04-k10-git-log2.JPG" alt="04-k10-git-log2" width=50%>
+
 
 <hr />
 <hr />
 <hr />
-
-
-Let's save our changes:
-
-```bash
-$ git commit -m "Modify guacamole to the traditional recipe"
-```
-
-```output
-[main 005937f] Modify guacamole to the traditional recipe
- 1 file changed, 1 insertion(+)
-```
-
-check our status:
-
-```bash
-$ git status
-```
-
-```output
-On branch main
-nothing to commit, working tree clean
-```
-
-and look at the history of what we've done so far:
-
-```bash
-$ git log
-```
-
-```output
-commit 005937fbe2a98fb83f0ade869025dc2636b4dad5 (HEAD -> main)
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 10:14:07 2013 -0400
-
-    Modify guacamole to the traditional recipe
-
-commit 34961b159c27df3b475cfe4415d94a6d1fcd064d
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 10:07:21 2013 -0400
-
-    Add basic guacamole's ingredients
-
-commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 09:51:46 2013 -0400
-
-    Create a template for recipe
-```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
