@@ -27,15 +27,15 @@ You should be in the `recipes` directory.
 <img src="fig/04-a1-repo.JPG" alt="04-a1-repo" width=50%>
 
 Let's create a file called `guacamole.md` that contains the basic structure to
-have a recipe. 
+have a recipe. This can be created using Windows Explorer, or in VS Code, explained below.
 
 <hr >
 
-**Option 1 Windows Explorer**. You can do this in Windows explorer, menu `New` and then `New Text Document`:
+**Option 1 Windows Explorer**. Menu `New` and then `Text Document`:
 
 <img src="fig/04-a2-new-file.JPG" alt="04-a2-new-file" width=50%>
 
-Alternatively, context menu is available by right-clicking in the explorer for the pop-up menu and choose `New Text Document`:
+Alternatively, context menu is available by right-clicking in the explorer for the pop-up menu and choose `New` - `Text Document`:
 
 <img src="fig/04-a3-new-file.JPG" alt="04-a3-new-file" width=50%>
 
@@ -62,18 +62,20 @@ Name the text document `guacamole.md` - check that the file extension is `md` - 
 
 <hr >
 
-The new file is listed in the Primary Side Bar (left). Whether you created the file in VS Code or Windows Explorer, you can use either to edit the file. VS Code has the new file opened for editing when it is created. File edited in VS Code and be further edited in a Windows text editor, and vice versa.
+The new file is listed in the Primary Side Bar (left). Whether you first created the file in VS Code or Windows Explorer, you can use either to edit the file in the future. If VS Code is used to create the file, the file is then opened for editing.
+
+<img src="fig/04-a7-new-file-created.JPG" alt="04-a7-new-file-created" width=50%>
 
 **Text editor in MS WIndows.**
 If you prefer to edit the file in Windows Explorer, you will use your text editor of choice. Please ensure the editor saves in text format only: Windows `Notepad` is a good choice, but not `Write`. Other options include `Notepad++` and `Sublime Text`. To check an editor works as required, save the file, then open it in VS Code.
 
 VS Code keeps track of changes in your repository, it tells us that it's noticed the new file.  
-Here, the new file has a "U" on its right: both in the Primary Side Bar, and in the file tab. "U" indicates that VS Code is not keeping track of this file. We want to have VS Code to track this file for changes: we will do that later.
+Here, the new file has a "**U**" on its right: both in the Primary Side Bar, and in the file tab. "**U**" indicates that VS Code is not keeping track of this file ("Untracked"). We want to have VS Code to track this file for changes: we will do that later.
 
-<img src="fig/04-a7-new-file-created.JPG" alt="04-a7-new-file-created" width=50%>
+
 
 # Edit text file
-Type the text below into the `guacamole.md` file. Please take note that the text begins on the first line, with no space on the left, and each line begins with one or two '#' exactly as shown:
+Type the text below into the `guacamole.md` file. Please take note that the text begins on the first line, with no space on the left, and each line begins with one or two "**#**" exactly as shown:
 
 ```
 # Guacamole
@@ -98,53 +100,52 @@ To manage file versions, we switch over to source control view. As a reminder, h
 If VS Code top menu is visible, use `View` and `Source Control`. If the top menu is not available (because VS Code window is narrow), the menu is available from the menu shortcut on the left.
 
 <img src="fig/04-c2-source-control-menu.JPG" alt="04-c2-source-control-menu" width=30%>&nbsp;&nbsp;&nbsp;
-<img src="fig/04-c3-source-control-menu.JPG" alt="04-c3-source-control-menu" width=30%>
+<img src="fig/04-c3-source-control-menu.JPG" alt="04-c3-source-control-menu" width=43%>
 
-For clarity, please display all available source control functions from the Source Control sub-menu:
+For clarity, please display all available `Source Control` functions from the Source Control sub-menu (4 items ticked):
 
 <img src="fig/04-c4-source-control-sub-menu.JPG" alt="04-c4-source-control-sub-menu" width=30%>
 
-The source control view should look similar to this:
+The `Source Control` view should look similar to this:
 
 <img src="fig/04-c1-source-control-view.JPG" alt="04-c1-source-control-view" width=30%>
 
-In the above source control view, VS Code tells us that it's noticed one new file indicated with `1` and the `U`. Further, it tells us this is in repository branch "main".
+In the above `Source Control` view, VS Code tells us that it's noticed one new file indicated with `**1**` and the `**U**`. Further, it tells us this is in repository branch "main".
 
-We can tell Git to track this file by clicking the '**&#043;**' icon, for **staging** the file. Note that in this case we have only one file to track, we can either click the '**&#043;**' of the file, or the '**&#043;**' (second screenshot) which is for the whole set of file (where only file is available and to add to tracking). This process is called "staging" because it is the holding area before fully commiting this version.
+We can tell Git to track this file by clicking the '**&#043;**' icon, for **staging** the file. Note that in this case we have only one file to track, we can either click the '**&#043;**' of the file, or the '**&#043;**' of `Changes` (second screenshot) which is for the whole set of file (where only one file is available and to add to tracking). This process is called "staging" because it is the holding area before fully commiting this version.
 
-<img src="fig/04-e1-staging-file.JPG" alt="04-e1-staging-file" width=30%>
-<img src="fig/04-e2-staging-all.JPG" alt="04-e2-staging-all" width=30%>
+<img src="fig/04-e1-staging-file.JPG" alt="04-e1-staging-file" width=30%> &nbsp;&nbsp; <img src="fig/04-e2-staging-all.JPG" alt="04-e2-staging-all" width=30%>
 
-VS Code will carry out some steps to add the file. After a few seconds, it will show completion of the "staging" stage:
+VS Code will carry out some steps to add the file. After a few seconds, it will show completion of the staging stage:
 
 <img src="fig/04-f1-staging-done.JPG" alt="04-f1-staging-done" width=30%>
 
-Here, take note that there are '0' changes between the staging area and the working directory. Secondly, the file is added ('A') to staging. Staged Changes shows '1' to tell us that VS Code know there is one file being different between content of Staging and commit history.
+Here, take note that there are '**0**' changes between the staging area and the working directory. Secondly, the file is added ('**A**') to staging. Staged Changes shows '**1**' to tell us that VS Code knows there is one file being different between content of Staging and commit history.
 
 Git now knows that it's supposed to keep track of `guacamole.md`,
-but it hasn't recorded these changes as a commit yet. Before we run commit, there are a few helping things VS Code shows us. In VS Code's Explorer view, the file is shown as added to staging ('A'):
+but it hasn't recorded these changes as a commit yet. Before we run commit, there are a few helpful things VS Code shows us. In Explorer view, the file is also shown as added to staging ('**A**'):
 
 <img src="fig/04-f2-file-added.JPG" alt="04-f2-file-added" width=50%>
 
-Back in VS Code's Source Control view, under `Staged Changes`, we can click the file to show `Changes`. Here the left icon (with a "+" and "-" symbol) is to view changes between the version of the file in the repository and that in the Staging area. Clicking on that icon will show a pop-up message at the bottom of the screen.
+Back in VS Code's Source Control view, under `Staged Changes`, we can click the file to show `Changes`. Here the `View Changes` icon <img src="fig/View-changes-icon.jpg" alt="View-changes-icon" width=20px> (with a "+" and "-" symbol) compares the version of the file in the repository and that in the Staging area. Clicking on that icon will show a pop-up message at the bottom of the screen.
 
 <img src="fig/04-f2-staging-show-no-changes1.JPG" alt="04-f3-staging-show-no-changes1" width=30%>
 
 The pop-up message might be similar to this:
 
-<img src="fig/04-f3-staging-show-no-changes2.JPG" alt="04-f3-staging-show-no-changes2" width=30%>
+<img src="fig/04-f3-staging-show-no-changes2.JPG" alt="04-f3-staging-show-no-changes2" width=50%>
 
 Clicking the second left icon (the round arrow going to the left) will discard the changes, i.e. remove the Staging.
 
-The next icon, '**&#043;**', is for staging changes. Since there is no change (shown with the '0'), clicking on '**&#043;**' does not do anything. See below for the icons.
+The next icon, '**&#043;**', is for staging changes. Since there is no change (shown with the '**0**'), clicking on '**&#043;**' does not do anything. See below for the icons.
 
 <img src="fig/04-f5-staging-no-changes-no-action.JPG" alt="04-f5-staging-no-changes-no-action" width=30%>
 
-We see in the above image that on the right of "Staged Changes" is shown a "1". This means Git knows there is one item changed between the file version in the Staging area, and in Commit. Click in the first icon ("+" and "-" symbol), VS Code will show the differences in file content between the two versions:
+We see in the above image that on the right of `Staged Changes` is shown a "**1**". This means Git knows there is one item changed between the file version in the Staging area, and in Commit. Click in the first icon (<img src="fig/View-changes-icon.jpg" alt="View-changes-icon" width=20px>), VS Code will show the differences in file content between the two versions:
 
-<img src="fig/04-g1-git-diff-file-changes.JPG" alt="04-g1-git-diff-file-changes" width=30%>
+<img src="fig/04-g1-git-diff-file-changes.JPG" alt="04-g1-git-diff-file-changes" width=50%>
 
-To commit what is in the Staging area, we click the button "Commit".
+To commit what is in the Staging area, we click the button "**Commit**".
 
 <img src="fig/04-h1-commit-button.JPG" alt="04-h1-commit-button" width=30%>
 
@@ -153,23 +154,23 @@ VS Code then opens a new tab (named "COMMIT_EDITMSG") and waits for us to enter 
 
 `Create a template for recipe`
 
-As shown in the following image, there is an undo icon (the one with the round arrow pointing to the left) and a tick icon. The lines below, each beginning with "#" have further instructions, and can be left as they are. To commit with this message, click on the tick icon, and a confirmation dialog appears. Here click `Save`.
+As shown in the following image, there is an undo icon (the one with the round arrow pointing to the left) and a check icon. The lines below, each beginning with "**#**", have further instructions, and can be left as they are. To commit with this message, click on the tick icon, and a confirmation dialog appears. Here, click `Save`.
 
 <img src="fig/04-h2-commit-message.JPG" alt="04-h2-commit-message.JPG" width=50%>
 
 <img src="fig/04-h3-commit-confirmation-dialog.JPG" alt="04-h3-commit-confirmation-dialog" width=30%>
 
-The Source Control might show progress bar for a few seconds. And then the blue button, which showed "Commit" before, now shows "Publish Branch". Further under "Source Control Graph" is the first listing of our commit which is for the branch `main`.
+The `Source Control` might show a progress bar for a few seconds. And then the blue button, which showed "Commit" before, now shows "Publish Branch". Further, under `Source Control Graph` is the first listing of our commit. It also indicates this is for the branch `main`.
 
 <img src="fig/04-h4-commit-done.JPG" alt="04-h4-commit-done" width=30%>
 
-Click on the `main` link in Source Control Graph will show a summary of this commit. When we run `Commit`,
+Clicking on the `main` link in `Source Control Graph` will show a summary of this `commit`. When we click `Commit`,
 Git takes everything we have told it to save 
 and stores a copy permanently inside the special `.git` directory.
 This permanent copy is called a [commit](../learners/reference.md#commit)
 (or [revision](../learners/reference.md#revision)) and its short identifier is `eb8fac66`. Your commit may have another identifier.
 
-<img src="fig/04-h5-commit-summary.JPG" alt="04-h5-commit-summary" width=50%>
+<img src="fig/04-h5-commit-summary.JPG" alt="04-h5-commit-summary" width=75%>
 
 [Good commit messages][commit-messages] start with a brief (\<50 characters) statement about the
 changes made in the commit. Generally, the message should complete the sentence "If applied, this commit will" <commit message here>.
@@ -177,14 +178,14 @@ If you want to go into more detail, add a blank line between the summary line an
 
 Another useful feature in VS Code is that it tells us everything is up to date: the tick icon next to `Source Control Repositories` and `Source Control`.
 
-<img src="fig/04-h6-all-up-to-date.JPG" alt="04-h6-all-up-to-date" width=30%>
+<img src="fig/04-h6-all-up-to-date.JPG" alt="04-h6-all-up-to-date" width=50%>
 
 If we want to know what we've done recently,
-we can ask Git to show us the project's history using the Git Graph icon: either the one under `Source Control Repositories` or `Source Control`:
+we can ask Git to show us the project's history using the `Git Graph` icon (<img src="fig/Git-Graph.jpg" alt="Git-Graph icon" width=20px>): either the one under `Source Control Repositories` or `Source Control`:
 
-<img src="fig/04-h7-git-log.JPG" alt="04-h7-git-log" width=50%>
+<img src="fig/04-h7-git-log.JPG" alt="04-h7-git-log" width=75%>
 
-We can view details of this commit by clicking on the commit item. Git Graph lists all commits made to a repository in reverse chronological order.
+We can view details of this commit by clicking on the commit item. `Git Graph` lists all commits made to a repository in reverse chronological order.
 The listing for each commit includes
 the commit's full ID
 (which starts with the same characters as
@@ -204,14 +205,14 @@ and the commit message Git was given when the commit was created.
 If we look at the contents of our `recipes` folder, we will still see just one file called `guacamole.md`.
 That's because Git saves information about files' history
 in the special `.git` directory mentioned earlier
-so that our filesystem doesn't become cluttered
+so that our file system doesn't become cluttered
 (and so that we can't accidentally edit or delete an old version).
 
 <img src="fig/04-i1-recipes-file-explorer.JPG" alt="04-i1-recipes-file-explorer" width=50%>
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Now suppose Alfredo adds more information to the file as shown below. You can copy and paste either all the five lines, or the three lines of ingredients, into your VS Code editor. 
+Now suppose Alfredo adds more information to the file as shown below. You can copy and paste either all the five lines, or the three lines of ingredients, into your VS Code editor (or in Windows explorer, using another text editor of your choice). 
 
 ```output
 # Guacamole
@@ -222,38 +223,38 @@ Now suppose Alfredo adds more information to the file as shown below. You can co
 ## Instructions
 ```
 
-In the editor, the added lines are indicated with a solid green line on their left.
+In VS Code editor, the added lines are indicated with a solid green line on their left.
 
 <img src="fig/04-j1-add-content1.JPG" alt="04-j1-add-content1" width=50%>
 
-**Important**. Save the file (`File` - `Save`). The file tab shows the file is modified ('M'). In the Explorer file list, this file is indicated with an 'M'.
+**Important**. Save the file (`File` - `Save`). The file tab shows the file is modified ('M'). In the Explorer file list, this file is indicated with an '**M**'.
 
 <img src="fig/04-j2-add-content2.JPG" alt="04-j2-add-content2" width=50%>
 
-Go to `Source Control`, Git tells us that a file it already knows about has been modified, indicated by the 'M' in the `Source Control` - `Changes` list (bottom of the image). Clicking on this 'M' opens a `Working Tree` tab that shows what the changes are, in this case, the new lines are highlighted with a green background.
+Go to `Source Control`, Git tells us that a file it already knows about has been modified, indicated by the '**M**' in the `Source Control` - `Changes` list (bottom of the image). Clicking on this '**M**' opens a `Working Tree` tab that shows what the changes are, in this case, the new lines are highlighted with a green background.
 
 <img src="fig/04-j3-source-control1.JPG" alt="04-j3-source-control1" width=70%>
 
-Also, clicking on the '+' '-' icon (as shown below), will show `Git Changes` (see tab in the image above). There is no difference between this (`Git Changes`) and the `Working Tree` above.
+Also, clicking on the view changes icon <img src="fig/View-changes-icon.jpg" alt="View-changes-icon" width=20px> will show `Git Changes`. There is no difference between this (`Git Changes`) and the `Working Tree` above.
 
 <img src="fig/04-j4-source-control2.JPG" alt="04-j4-source-control2" width=30%>
 
-Of the lines in green background, note that there is also a `+` on the left of each line. Each shows where we added a line.
+Of the lines in green background, note that there is also a `**+**` on the left of each line. Each shows where we added a line.
 
-Git Graph tells us there are uncommitted changes (one) between our repository and the staging area, when the changes were made, and the number of added lines (shown by '+3') and deleted ones (in this case '-0').
+`Git Graph` tells us there are uncommitted changes (one) between our repository and the staging area, when the changes were made, and the number of added lines (shown by '**+3**') and deleted ones (in this case '**-0**').
 
-<img src="fig/04-j5-git-graph.JPG" alt="04-j5-git-graph" width=50%>
+<img src="fig/04-j5-git-graph.JPG" alt="04-j5-git-graph" width=75%>
 
 After reviewing our change, it's time to commit it. Click the commit button. Whoops:
 Git won't commit because we didn't add files to the staging area.
 
 <img src="fig/04-j6-git-commit-not-staged.JPG" alt="04-j6-git-commit-not-staged" width=50%>
 
-Let's fix that. Click `Cancel` on the dialog box, and click "+" next to file `guacamole.md` to add this file to the staging area. (As above, another option is to use the "+" icon next to `Changes`, a line above the file: this icon will appear along with the digit "1".)
+Let's fix that. Click `Cancel` on the dialog box, and click "**+**" next to file `guacamole.md` to add this file to the staging area. (As above, another option is to use the "**+**" icon next to `Changes`, a line above the file: this icon will appear along with the digit "**1**".)
 
 <img src="fig/04-j7-add-file to-staging-area.JPG" alt="04-j7-add-file to-staging-area" width=30%>
 
-Having done that, Source Control now shows `Staged Changes` and with a  digit "1", which indicates the number of changes (files), see image below. Further, the `Changes` menu that was shown before the staging is repeated after the staging, the differences being the digit of "0" says there is no change between the version in staging, and the working directory; secondly, there is no file listed under `Changes` (file `guacamole.md` is now listed in `Staged Changes`.)
+Having done that, `Source Control` now shows `Staged Changes` and with a  digit "**1**", which indicates the number of changes (files), as shown in the image below. Further, the `Changes` menu that was shown before the staging is repeated after the staging, the differences being that, now, the digit "**0**" says there is no change between the version in staging, and the working directory; secondly, there is no file listed under `Changes` (file `guacamole.md` is now listed in `Staged Changes`.)
 
 <img src="fig/04-j8-file-added-to-staging-area.JPG" alt="04-j8-file-added-to-staging-area" width=30%>
 
@@ -263,7 +264,7 @@ Enter commit message "Add basic guacamole's ingredients" and click the tick icon
 
 A confirmation dialog box appears, click `Save`.
 
-In Source Control Graph / Git Graph, click on the commit message to show its description. The file `guacamelo.md` is the changed file in this commit, and there were 3 insertions (3 lines), indicated by the digit "+3", and no deletions ("-0"). For reference the commit ID is shown, also the person who made the commit and the date and time this was made.
+In `Source Control Graph` / `Git Graph`, click on the commit message to show its description. The file `guacamelo.md` is the changed file in this commit, and there were 3 insertions (3 lines), indicated by the digit "**+3**", and no deletions ("**-0**"). For reference the commit ID is shown, also the person who made the commit and the date and time this was made.
 
 <img src="fig/04-j10-commit-details.JPG" alt="04-j10-commit-details" width=70%>
 
@@ -279,7 +280,7 @@ but *not* commit some of our work drafting the conclusion
 (which we haven't finished yet).
 
 To allow for this,
-Git has a special *staging area*
+Git has a special **staging area**
 where it keeps track of things that have been added to
 the current [changeset](../learners/reference.md#changeset)
 but not yet committed.
@@ -289,9 +290,9 @@ but not yet committed.
 ## Staging Area
 
 If you think of Git as taking snapshots of changes over the life of a project,
-using `Changes` "+" specifies *what* will go in a snapshot
+using `Changes` "+" specifies ***what*** will go in a snapshot
 (putting things in the staging area),
-and the `Commit` button then *actually takes* the snapshot, and
+and the `Commit` button then ***actually takes*** the snapshot, and
 makes a permanent record of it (as a commit).
 If you don't have anything staged when you want to commit,
 Git will prompt you to add files
@@ -307,7 +308,7 @@ than you would like!
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-![](fig/git-staging-area.svg){alt='A diagram showing how "git add" registers changes in the staging area, while "git commit" moves changes from the staging area to the repository'}
+![A diagram showing how "git add" registers changes in the staging area, while "git commit" moves changes from the staging area to the repository](fig/git-staging-area.svg)
 
 Let's watch as our changes to a file move from our editor
 to the staging area
@@ -321,33 +322,33 @@ Note that the icon on the file tab shows a dark dark circle (&#x25CF;) indicatin
 
 <img src="fig/04-k2-file-saved.JPG" alt="04-k2-file-saved" width=50%>
 
-In `Source Control`, we see there is "1" change, and one file is indicated with an "M" for modified. This change compares content of the working directory and of commits.
+In `Source Control`, we see there is "**1**" change, and one file is indicated with an "**M**" for modified. This change compares content of the working directory and of commits.
 
-With the file saved, we can use `Changes` "+" "-" icon to show the changed lines.
+With the file saved, we can use `Changes` view changes icon <img src="fig/View-changes-icon.jpg" alt="View-changes-icon" width=20px> to show the changed lines.
 
 <img src="fig/04-k3-diff.JPG" alt="04-k3-diff" width=50%>
 
 So far, so good:
-we've replaced one line (shown with a `-` in the first column) with a new line
-(shown with a `+` in the first column).
+we've replaced one line (shown with a `**-**` in the first column) with a new line
+(shown with a `**+**` in the first column).
 Now let's put that change in the staging area
 and see what changes VS Code reports.
 
-To add this file to the staging area, click the "+" icon next to the file. Remember that clicking the "+" icon next to `Changes` will do the same thing in this instance.
+To add this file to the staging area, click the "**+**" icon next to the file. Remember that clicking the "**+**" icon next to `Changes` will do the same thing in this instance.
 
 <img src="fig/04-k4-add-to-staging-area.JPG" alt="04-k4-add-to-staging-area" width=50%>
 
-Git now proceeds to the next step that shows `Staged Changes`, with "1" change, and that change is for the file `guacamole.md` (also indicated with the "M"). In menu `Changes`, number of changes is "0". After saving the file, VS Code will show the "Git: Changes" window, which tells us "No Changed Files". This is correct, as far as Git can tell, there's no difference between what it's been asked to save permanently and what's currently in the directory.
+Git now proceeds to the next step that shows `Staged Changes`, with "**1**" change, and that change is for the file `guacamole.md` (also indicated with the "**M**"). In menu `Changes`, number of changes is "**0**". After saving the file, VS Code will show the "Git: Changes" window, which tells us "No Changed Files". This is correct, as far as Git can tell, there's no difference between what it's been asked to save permanently and what's currently in the directory.
 
 <img src="fig/04-k5-diff-no-change.JPG" alt="04-k5-diff-no-change" width=50%>
 
-To compare content of the staging area and commit, we click on the "+" next to `Staged Changes`. It shows us the difference between
+To compare content of the staging area and commit, we click on the "**+**" next to `Staged Changes`. It shows us the difference between
 the last committed change
 and what's in the staging area.
 
 <img src="fig/04-k6-diff-staged-show-change.JPG" alt="04-k6-diff-staged-show-change" width=50%>
 
-Let's save our changes. Click Commit, enter commit message "Modify guacamole to the traditional recipe", and using the tick icon to finish this commit, and click "Save" in the confirmation dialog box.
+Let's save our changes. Click **Commit**, enter commit message "Modify guacamole to the traditional recipe", and using the tick icon to finish this commit, and click "Save" in the confirmation dialog box.
 
 <img src="fig/04-k7-commit.JPG" alt="04-k7-commit" width=50%>
 
@@ -355,11 +356,11 @@ VS Code then shows there is no changed file.
 
 <img src="fig/04-k8-commit-completed.JPG" alt="04-k8-commit-completed" width=50%>
 
-View in Git Graph (icon <img src="fig/Git-Graph.jpg" alt="Git-Graph icon" width=5%>)
+View in Git Graph (icon <img src="fig/Git-Graph.jpg" alt="Git-Graph icon" width=20px>)
 
 <img src="fig/04-k9-git-log1.JPG" alt="04-k9-git-log1" width=50%>
 
-Click on the latest log:
+Click on the latest log to show details:
 
 <img src="fig/04-k10-git-log2.JPG" alt="04-k10-git-log2" width=50%>
 
