@@ -524,25 +524,18 @@ When it is committed, we can view the details of this commit using `Git Graph`:
 
 ## Solution
 
-If needed, remove the `recipes` folder from VS Code explorer: in Explorer view, right-click on `recipes` and choose "Remove folder from Workspace".
+If needed, remove the `recipes` folder from VS Code explorer: in `Explorer` view, right-click on `recipes` and choose "Remove folder from Workspace".
 
-Then create a folder `bio` (either in VS Code) and VS Code will prompt to initialise the repository.
+Then create a directory `bio` (either in VS Code). In VS Code, use "Add folder to Workspace" and select this directory. VS Code will prompt to initialise the repository - if not, switch to `Source Control` view to initialise this repository.
 
-Create your biography file `me.txt` using `nano` or another text editor.
-Once in place, add and commit it to the repository:
+<img src="fig/n4-p1-add-folder-to-workspace.JPG" alt="n4-p1-add-folder-to-workspace" width=50%>
 
-```bash
-$ git add me.txt
-$ git commit -m "Add biography file"
-```
+Create your biography file `me.txt` and add 3 lines of text.
+Once in place, add and commit it to the repository using message "Add biography file".
 
-Modify the file as described (modify one line, add a fourth line).
-To display the differences
-between its updated state and its original state, use `git diff`:
+Modify the file as described (modify one line, add a fourth line). Then use View Changes to display their differences. The following shows differences after the changed file was added to staging and then committed.
 
-```bash
-$ git diff me.txt
-```
+<img src="fig/n4-p2-commit-view-changes.JPG" alt="n4-p2-commit-view-changes" width=50%>
 
 :::::::::::::::::::::::::
 
@@ -556,10 +549,10 @@ $ git diff me.txt
 
 :::::::::::::::::::::::::::::::::::::::: keypoints
 
-- `git status` shows the status of a repository.
+- `View Changes` shows the status of a repository.
 - Files can be stored in a project's working directory (which users see), the staging area (where the next commit is being built up) and the local repository (where commits are permanently recorded).
-- `git add` puts files in the staging area.
-- `git commit` saves the staged content as a new commit in the local repository.
+- `Stage All Changes` puts all changed files in the staging area.
+- `Commit` saves the staged content as a new commit in the local repository.
 - Write a commit message that accurately describes your changes.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
