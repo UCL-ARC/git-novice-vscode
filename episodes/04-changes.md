@@ -369,88 +369,7 @@ Click on the latest log to show details:
 <hr />
 <hr />
 
-:::::::::::::::::::::::::::::::::::::::::  callout
 
-## Word-based diffing
-
-Sometimes, e.g. in the case of the text documents a line-wise
-diff is too coarse. That is where the `--color-words` option of
-`git diff` comes in very useful as it highlights the changed
-words using colors.
-
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-## Paging the Log
-
-When the output of `git log` is too long to fit in your screen,
-`git` uses a program to split it into pages of the size of your screen.
-When this "pager" is called, you will notice that the last line in your
-screen is a `:`, instead of your usual prompt.
-
-- To get out of the pager, press <kbd>Q</kbd>.
-- To move to the next page, press <kbd>Spacebar</kbd>.
-- To search for `some_word` in all pages,
-  press <kbd>/</kbd>
-  and type `some_word`.
-  Navigate through matches pressing <kbd>N</kbd>.
-  
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::  callout
-
-## Limit Log Size
-
-To avoid having `git log` cover your entire terminal screen, you can limit the
-number of commits that Git lists by using `-N`, where `N` is the number of
-commits that you want to view. For example, if you only want information from
-the last commit you can use:
-
-```bash
-$ git log -1
-```
-
-```output
-commit 005937fbe2a98fb83f0ade869025dc2636b4dad5 (HEAD -> main)
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 10:14:07 2013 -0400
-
-   Modify guacamole to the traditional recipe
-```
-
-You can also reduce the quantity of information using the
-`--oneline` option:
-
-```bash
-$ git log --oneline
-```
-
-```output
-005937f (HEAD -> main) Modify guacamole to the traditional recipe
-34961b1 Add basic guacamole's ingredients
-f22b25e Create a template for recipe
-```
-
-You can also combine the `--oneline` option with others. One useful
-combination adds `--graph` to display the commit history as a text-based
-graph and to indicate which commits are associated with the
-current `HEAD`, the current branch `main`, or
-[other Git references][git-references]:
-
-```bash
-$ git log --oneline --graph
-```
-
-```output
-* 005937f (HEAD -> main) Modify guacamole to the traditional recipe
-* 34961b1 Add basic guacamole's ingredients
-* f22b25e Create a template for recipe
-```
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
@@ -460,51 +379,48 @@ Two important facts you should know about directories in Git.
 
 1. Git does not track directories on their own, only files within them.
   Try it for yourself:
+
+If you are not in `Explorer` view, switch to it using `View` - `Explorer`. Create a directory 'cakes' in the same directory as the file `guacamole.md`.
+
+<img src="fig/04-m1-add-directory-not-tracked.JPG" alt="04-m1-add-directory-not-tracked" width=50%>
+
+Then, switch to Source Control view (menu `View`). VS Code will run status check on the repository and will not report any changed items, that also means it has not made it possible to add the change (the new directory). If we click on the tick box under `Source Control Repositories`, we get a no changes to commit message. If we use the Stage All Changes option, nothing is done - VS Code carries out no action. Our newly created empty directory `cakes` does not appear in
+  the list of untracked files even if we explicitly add it to our
+  repository.
+
+<img src="fig/04-m2-no-changes-to-commit.JPG" alt="04-m2-no-changes-to-commit" width=50%>
+
+<img src="fig/04-m3-stage-all-changes.JPG" alt="04-m3-stage-all-changes" width=50%>
   
-  ```bash
-  $ mkdir cakes
-  $ git status
-  $ git add cakes
-  $ git status
-  ```
-  
-  Note, our newly created empty directory `cakes` does not appear in
-  the list of untracked files even if we explicitly add it (*via* `git add`) to our
-  repository. This is the reason why you will sometimes see `.gitkeep` files
-  in otherwise empty directories. Unlike `.gitignore`, these files are not special
-  and their sole purpose is to populate a directory so that Git adds it to
-  the repository. In fact, you can name such files anything you like.
 
 2. If you create a directory in your Git repository and populate it with files,
-  you can add all files in the directory at once by:
+  you can add all files in the directory at once using `Stage all changes`.
   
-  ```bash
-  git add <directory-with-files>
-  ```
-  
-  Try it for yourself:
-  
-  ```bash
-  $ touch cakes/brownie cakes/lemon_drizzle
-  $ git status
-  $ git add cakes
-  $ git status
-  ```
-  
-  Before moving on, we will commit these changes.
-  
-  ```bash
-  $ git commit -m "Add some initial cakes"
-  ```
+Try it for yourself:
+
+In directory `cakes`, create two empty files `brownie` and `lemmon_drizzle`.
+
+<img src="fig/04-m4-add-files-in-sub-directory.JPG" alt="04-m4-add-files-in-sub-directory" width=50%>
+
+In Source Control view, note that it knows about 2 untracked files. To add all changed / untracked files to the staging area, locate the "+" icon next to `Changes` (not the "+" next to the individual files). Click on that to stage all changes.
+
+<img src="fig/04-m5-source-control-stage-all-changes.JPG" alt="04-m5-source-control-stage-all-changes" width=50%>
+
+To commit, click on the commit button and use commit message "Add some initial cakes". This new commit is shown in the Source Control Graph.
+
+<img src="fig/04-m6-commit-with-message.JPG" alt="04-m6-commit-with-message" width=50%>
+
+<img src="fig/04-m7-commits.JPG" alt="04-m7-commits" width=50%>
+
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 To recap, when we want to add changes to our repository,
 we first need to add the changed files to the staging area
-(`git add`) and then commit the staged changes to the
-repository (`git commit`):
+and then commit the staged changes to the
+repository:
 
-![](fig/git-committing.svg){alt='A diagram showing two documents being separately staged using git add, before being combined into one commit using git commit'}
+![A diagram showing two documents being separately staged using git add, before being combined into one commit using git commit](fig/git-committing.svg){}
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -531,44 +447,7 @@ but answer 3 is good: short, descriptive, and imperative.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::::  challenge
 
-## Committing Changes to Git
-
-Which command(s) below would save the changes of `myfile.txt`
-to my local Git repository?
-
-1. ```bash
-   $ git commit -m "my recent changes"
-   ```
-2. ```bash
-   $ git init myfile.txt
-   $ git commit -m "my recent changes"
-   ```
-3. ```bash
-   $ git add myfile.txt
-   $ git commit -m "my recent changes"
-   ```
-4. ```bash
-   $ git commit -m myfile.txt "my recent changes"
-   ```
-
-:::::::::::::::  solution
-
-## Solution
-
-1. Would only create a commit if files have already been staged.
-2. Would try to create a new repository.
-3. Is correct: first add the file to the staging area, then commit.
-4. Would try to commit a file "my recent changes" with the message myfile.txt.
-  
-  
-
-:::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Committing Multiple Files
 
@@ -586,12 +465,9 @@ that you want to commit as a single snapshot.
 
 ## Solution
 
-First we make our changes to the `guacamole.md` and `groceries.md` files:
+First we make our changes to the `guacamole.md` and `groceries.md` files. Add the prices in `guacamole.md` (you can copy from the text after the next image):
 
-```bash
-$ nano guacamole.md
-$ cat guacamole.md
-```
+<img src="fig/04-n1-update-file.JPG" alt="04-n1-update-file" width=50%>
 
 ```output
 # Guacamole
@@ -601,10 +477,9 @@ $ cat guacamole.md
 * salt (2)
 ```
 
-```bash
-$ nano groceries.md
-$ cat groceries.md
-```
+Create a new file `groceries.md` with the following content:
+
+<img src="fig/04-n2-add-file.JPG" alt="04-n2-add-file" width=50%>
 
 ```output
 # Market A
@@ -613,31 +488,26 @@ $ cat groceries.md
 * salt: 2 per kg
 ```
 
-Now you can add both files to the staging area. We can do that in one line:
+Note that `guacamole.md` has an indicator "M" for modified, and the new file is "U" for untracked.
 
-```bash
-$ git add guacamole.md groceries.md
-```
+<img src="fig/04-n3-file-status.JPG" alt="04-n3-file-status" width=50%>
 
-Or with multiple commands:
+Now you can add both files to the staging area. We can do that using the "+" next to `Changes` to add all changed and untracked files to the staging area. Alternatively, we can the file individually, clicking the "+" next to each of the file.
 
-```bash
-$ git add guacamole.md
-$ git add groceries.md
-```
+<img src="fig/04-n4-stage-all-changes.JPG" alt="04-n4-stage-all-changes" width=50%>
 
-Now the files are ready to commit. You can check that using `git status`. If you are ready to commit use:
+In Source Control View, `Staged Changes` shows 2 items are in the staging area, and lists the two items, one being "A" for add (new untracked file), and the other being "M" (modified file). Using the View Changes icon <img src="fig/View-changes-icon.jpg" alt="View-changes-icon" width=20px>, Git shows us the changes between the version in the staging area, and most recent commit.
 
-```bash
-$ git commit -m "Write prices for ingredients and their source"
-```
+<img src="fig/04-n5-view-staged-changes.JPG" alt="04-n5-view-staged-changes" width=50%>
 
-```output
-[main cc127c2]
- Write prices for ingredients and their source
- 2 files changed, 7 insertions(+)
- create mode 100644 groceries.md
-```
+Now the files are ready to commit using the message "Write prices for ingredients and their source".
+
+<img src="fig/04-n6-commit-with-message.JPG" alt="04-n6-commit-with-message" width=50%>
+
+When it is committed, we can view the details of this commit using Git Graph:
+
+<img src="fig/n4-07-git-graph.JPG" alt="n4-07-git-graph" width=50%>
+
 
 :::::::::::::::::::::::::
 
@@ -658,24 +528,9 @@ $ git commit -m "Write prices for ingredients and their source"
 
 ## Solution
 
-If needed, move out of the `recipes` folder:
+If needed, remove the `recipes` folder from VS Code explorer: in Explorer view, right-click on `recipes` and choose "Remove folder from Workspace".
 
-```bash
-$ cd ..
-```
-
-Create a new folder called `bio` and 'move' into it:
-
-```bash
-$ mkdir bio
-$ cd bio
-```
-
-Initialise git:
-
-```bash
-$ git init
-```
+Then create a folder `bio` (either in VS Code) and VS Code will prompt to initialise the repository.
 
 Create your biography file `me.txt` using `nano` or another text editor.
 Once in place, add and commit it to the repository:
