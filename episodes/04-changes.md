@@ -365,10 +365,6 @@ Click on the latest log to show details:
 <img src="fig/04-k10-git-log2.JPG" alt="04-k10-git-log2" width=50%>
 
 
-<hr />
-<hr />
-<hr />
-
 
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -380,11 +376,11 @@ Two important facts you should know about directories in Git.
 1. Git does not track directories on their own, only files within them.
   Try it for yourself:
 
-If you are not in `Explorer` view, switch to it using `View` - `Explorer`. Create a directory 'cakes' in the same directory as the file `guacamole.md`.
+If you are not in `Explorer View`, switch to it using `View` - `Explorer`. Create a directory 'cakes' in the same directory as the file `guacamole.md`.
 
 <img src="fig/04-m1-add-directory-not-tracked.JPG" alt="04-m1-add-directory-not-tracked" width=50%>
 
-Then, switch to Source Control view (menu `View`). VS Code will run status check on the repository and will not report any changed items, that also means it has not made it possible to add the change (the new directory). If we click on the tick box under `Source Control Repositories`, we get a no changes to commit message. If we use the Stage All Changes option, nothing is done - VS Code carries out no action. Our newly created empty directory `cakes` does not appear in
+Then, switch to `Source Control` view (menu `View`). VS Code will run status check on the repository and will not report any changed items, that also means it has not made it possible to add the change (i.e. the new directory). If we click on the tick box under `Source Control Repositories`, we get a "no changes to commit" message. If we use the Stage All Changes option, nothing is done - VS Code carries out no action. Our newly created empty directory `cakes` does not appear in
   the list of untracked files even if we explicitly add it to our
   repository.
 
@@ -402,7 +398,7 @@ In directory `cakes`, create two empty files `brownie` and `lemmon_drizzle`.
 
 <img src="fig/04-m4-add-files-in-sub-directory.JPG" alt="04-m4-add-files-in-sub-directory" width=50%>
 
-In Source Control view, note that it knows about 2 untracked files. To add all changed / untracked files to the staging area, locate the "+" icon next to `Changes` (not the "+" next to the individual files). Click on that to stage all changes.
+In `Source Control` view, note that it knows about 2 untracked files. To add all changed / untracked files to the staging area, locate the `**+**` icon next to `Changes` (not the `+` next to the individual files). Click on that to stage all changes.
 
 <img src="fig/04-m5-source-control-stage-all-changes.JPG" alt="04-m5-source-control-stage-all-changes" width=50%>
 
@@ -488,25 +484,25 @@ Create a new file `groceries.md` with the following content:
 * salt: 2 per kg
 ```
 
-Note that `guacamole.md` has an indicator "M" for modified, and the new file is "U" for untracked.
+Note that `guacamole.md` has an indicator `**M**` for modified, and the new file is `**U**` for untracked.
 
 <img src="fig/04-n3-file-status.JPG" alt="04-n3-file-status" width=50%>
 
-Now you can add both files to the staging area. We can do that using the "+" next to `Changes` to add all changed and untracked files to the staging area. Alternatively, we can the file individually, clicking the "+" next to each of the file.
+Now you can add both files to the staging area. We can do that using the `**+**"`next to `Changes` to add all changed and untracked files to the staging area. Alternatively, we can add the file individually, clicking the `**+**` next to each of the file.
 
 <img src="fig/04-n4-stage-all-changes.JPG" alt="04-n4-stage-all-changes" width=50%>
 
-In Source Control View, `Staged Changes` shows 2 items are in the staging area, and lists the two items, one being "A" for add (new untracked file), and the other being "M" (modified file). Using the View Changes icon <img src="fig/View-changes-icon.jpg" alt="View-changes-icon" width=20px>, Git shows us the changes between the version in the staging area, and most recent commit.
+In `Source Control` View, `Staged Changes` shows 2 items are in the staging area, and lists the two items, one being `**A**` for add (new untracked file), and the other being `**M**` (modified file). Using the View Changes icon <img src="fig/View-changes-icon.jpg" alt="View-changes-icon" width=20px>, Git shows us the changes between the versions in the staging area, and most recent commit.
 
 <img src="fig/04-n5-view-staged-changes.JPG" alt="04-n5-view-staged-changes" width=50%>
 
-Now the files are ready to commit using the message "Write prices for ingredients and their source".
+Now the files are ready to commit, we do so using the message "Write prices for ingredients and their source".
 
 <img src="fig/04-n6-commit-with-message.JPG" alt="04-n6-commit-with-message" width=50%>
 
-When it is committed, we can view the details of this commit using Git Graph:
+When it is committed, we can view the details of this commit using `Git Graph`:
 
-<img src="fig/n4-07-git-graph.JPG" alt="n4-07-git-graph" width=50%>
+<img src="fig/n4-n7-git-graph.JPG" alt="n4-n7-git-graph" width=50%>
 
 
 :::::::::::::::::::::::::
