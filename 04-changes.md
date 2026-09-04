@@ -27,11 +27,12 @@ You should be in the `recipes` directory.
 $ cd ~/Desktop/recipes
 ```
 
-Let's create a file called `guacamole.md` that contains the basic structure to
-have a recipe.
-We'll use `nano` to edit the file;
-you can use whatever editor you like.
-In particular, this does not have to be the `core.editor` you set globally earlier. But remember, the bash command to create or edit a new file will depend on the editor you choose (it might not be `nano`). For a refresher on text editors, check out ["Which Editor?"](https://swcarpentry.github.io/shell-novice/03-create.html#which-editor) in [The Unix Shell](https://swcarpentry.github.io/shell-novice/) lesson.
+Let's create a file called `guacamole.md` that contains the basic structure of our first recipe.
+A file editor is a command that opens a specified file in the current shell and allows you to edit it; the file is created if it does not exist.
+
+In this lesson, we'll use `nano` as a file editor, but you can use whatever editor you like.
+In particular, this does not have to be the `core.editor` you set globally earlier during ["Setting Up Git"](https://swcarpentry.github.io/git-novice/02-setup.html).
+For a refresher on text editors, check out ["Which Editor?"](https://swcarpentry.github.io/shell-novice/03-create.html#which-editor) in [The Unix Shell](https://swcarpentry.github.io/shell-novice/) lesson.
 
 ```bash
 $ nano guacamole.md
@@ -45,7 +46,59 @@ Type the text below into the `guacamole.md` file:
 ## Instructions
 ```
 
-Let's first verify that the file was properly created by running the list command (`ls`):
+Now we need to save the file and exit the editor.
+In the case of `nano`, many shortcuts are available via the `^` (symbolizing `Ctrl`) key.
+For example, to save and exit the editor you should use the sequence: `Ctrl+X` to exit, `Y` to save, and finally `Enter` to validate.
+
+:::::::::::::::::::::::::::::::::::::::::  spoiler
+
+## Markdown
+
+Jimmy and Alfredo are using [Markdown](https://en.wikipedia.org/wiki/Markdown)
+to write their recipes. It is a simple plain-text format for writing lists,
+links and other things that might go into a web page.
+
++---------------------------------------+------------------------------------------------+
+| Markdown code                         | Rendered output                                |
++=======================================+================================================+
++---------------------------------------+------------------------------------------------+
+| ```                                   | <p></p>                                        |
+| *   Use asterisks                     | -   Use asterisks                              |
+| *   to create                         | -   to create                                  |
+| *   bullet lists.                     | -   bullet lists.                              |
+| ```                                   |                                                |
++---------------------------------------+------------------------------------------------+
++---------------------------------------+------------------------------------------------+
+| ```                                   | <p></p>                                        |
+| 1.   Use numbers                      | 1.   Use numbers                               |
+| 1.   to create                        | 2.   to create                                 |
+| 1.   numbered lists.                  | 3.   numbered lists.                           |
+| ```                                   |                                                |
++---------------------------------------+------------------------------------------------+
++---------------------------------------+------------------------------------------------+
+| ```                                   | <p></p>                                        |
+| *  You can use indents                | - You can use indents                          |
+|   *  To create sublists               |   - To create sublists                         |
+|   *  of the same type                 |   - of the same type                           |
+| *  Or sublists                        | - Or sublists                                  |
+|   1. Of different                     |   1. Of different                              |
+|   1. types                            |   2. types                                     |
+| ```                                   |                                                |
++---------------------------------------+------------------------------------------------+
++---------------------------------------+------------------------------------------------+
+| ```                                   | <p></p>                                        |
+| # A Level-1 Heading                   | ## A Level-1 Heading                           |
+| ```                                   |                                                |
++---------------------------------------+------------------------------------------------+
++---------------------------------------+------------------------------------------------+
+| ```                                   | <p></p>                                        |
+| ## A Level-2 Heading (etc.)           | ### A Level-2 Heading (etc.)                   |
+| ```                                   |                                                |
++---------------------------------------+------------------------------------------------+
+
+::::::::::::::::::::::::::::::::::::::::::::::::::
+
+Let’s verify that the file was properly created by running the list command (`ls`):
 
 ```bash
 $ ls
@@ -55,7 +108,8 @@ $ ls
 guacamole.md
 ```
 
-`guacamole.md` contains three lines, which we can see by running:
+The `cat` command prints the content of a file in the shell.
+We can use it to visualize the 3 lines we added to `guacamole.md`:
 
 ```bash
 $ cat guacamole.md
@@ -119,11 +173,11 @@ To get it to do that,
 we need to run one more command:
 
 ```bash
-$ git commit -m "Create a template for recipe"
+$ git commit -m "Create initial structure for a Guacamole recipe"
 ```
 
 ```output
-[main (root-commit) f22b25e] Create a template for recipe
+[main (root-commit) f22b25e] Create initial structure for a Guacamole recipe
  1 file changed, 1 insertion(+)
  create mode 100644 guacamole.md
 ```
@@ -168,7 +222,7 @@ commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
 Author: Alfredo Linguini <a.linguini@ratatouille.fr>
 Date:   Thu Aug 22 09:51:46 2013 -0400
 
-    Create a template for recipe
+    Create initial structure for a Guacamole recipe
 ```
 
 `git log` lists all commits  made to a repository in reverse chronological order.
@@ -237,8 +291,6 @@ but we haven't told Git we will want to save those changes
 nor have we saved them (which we do with `git commit`).
 So let's do that now. It is good practice to always review
 our changes before saving them. We do this using `git diff`.
-This shows us the differences between the current state
-of the file and the most recently saved version:
 
 ```bash
 $ git diff
@@ -277,8 +329,7 @@ If we break it down into pieces:
 After reviewing our change, it's time to commit it:
 
 ```bash
-$ git commit -m "Add basic guacamole's ingredients"
-$ git status
+$ git commit -m "Add ingredients for basic guacamole"
 ```
 
 ```output
@@ -298,11 +349,11 @@ Let's fix that:
 
 ```bash
 $ git add guacamole.md
-$ git commit -m "Add basic guacamole's ingredients"
+$ git commit -m "Add ingredients for basic guacamole"
 ```
 
 ```output
-[main 34961b1] Add basic guacamole's ingredient
+[main 34961b1] Add ingredients for basic guacamole
  1 file changed, 3 insertions(+)
 ```
 
@@ -399,12 +450,9 @@ $ git add guacamole.md
 $ git diff
 ```
 
-There is no output:
-as far as Git can tell,
-there's no difference between what it's been asked to save permanently
-and what's currently in the directory.
-However,
-if we do this:
+There is no output. Without any arguments, `git diff` compares the working directory and the staging area. After `git add`, the two versions are identical and there is nothing to show.
+
+However, if we do this:
 
 ```bash
 $ git diff --staged
@@ -425,10 +473,7 @@ index 315bf3a..b36abfd 100644
  ## Instructions
 ```
 
-it shows us the difference between
-the last committed change
-and what's in the staging area.
-Let's save our changes:
+we can see that by adding the `--staged` argument to the command we are now comparing what’s in the staged area to the last committed change.
 
 ```bash
 $ git commit -m "Modify guacamole to the traditional recipe"
@@ -467,13 +512,13 @@ commit 34961b159c27df3b475cfe4415d94a6d1fcd064d
 Author: Alfredo Linguini <a.linguini@ratatouille.fr>
 Date:   Thu Aug 22 10:07:21 2013 -0400
 
-    Add basic guacamole's ingredients
+    Add ingredients for basic guacamole
 
 commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
 Author: Alfredo Linguini <a.linguini@ratatouille.fr>
 Date:   Thu Aug 22 09:51:46 2013 -0400
 
-    Create a template for recipe
+    Create initial structure for a Guacamole recipe
 ```
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -537,8 +582,8 @@ $ git log --oneline
 
 ```output
 005937f (HEAD -> main) Modify guacamole to the traditional recipe
-34961b1 Add basic guacamole's ingredients
-f22b25e Create a template for recipe
+34961b1 Add ingredients for basic guacamole
+f22b25e Create initial structure for a Guacamole recipe
 ```
 
 You can also combine the `--oneline` option with others. One useful
@@ -553,8 +598,8 @@ $ git log --oneline --graph
 
 ```output
 * 005937f (HEAD -> main) Modify guacamole to the traditional recipe
-* 34961b1 Add basic guacamole's ingredients
-* f22b25e Create a template for recipe
+* 34961b1 Add ingredients for basic guacamole
+* f22b25e Create initial structure for a Guacamole recipe
 ```
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -578,18 +623,10 @@ Two important facts you should know about directories in Git.
   Note, our newly created empty directory `cakes` does not appear in
   the list of untracked files even if we explicitly add it (*via* `git add`) to our
   repository. This is the reason why you will sometimes see `.gitkeep` files
-  in otherwise empty directories. Unlike `.gitignore`, these files are not special
-  and their sole purpose is to populate a directory so that Git adds it to
-  the repository. In fact, you can name such files anything you like.
+  in otherwise empty directories. The sole purpose of `.gitkeep` files is to populate a directory so that Git adds it to the repository. The name `.gitkeep` is just a convention, and in fact, you can name these files anything you like.
 
 2. If you create a directory in your Git repository and populate it with files,
-  you can add all files in the directory at once by:
-  
-  ```bash
-  git add <directory-with-files>
-  ```
-  
-  Try it for yourself:
+  you can add all the files in the directory at once by referring to the directory in your `git add` command. Try it for yourself:
   
   ```bash
   $ touch cakes/brownie cakes/lemon_drizzle
@@ -621,8 +658,8 @@ Which of the following commit messages would be most appropriate for the
 last commit made to `guacamole.md`?
 
 1. "Changes"
-2. "Changed lemon for lime"
-3. "Guacamole modified to the traditional recipe"
+2. "Change lemon for lime"
+3. "Modify guacamole to the traditional recipe"
 
 :::::::::::::::  solution
 
@@ -678,6 +715,10 @@ to my local Git repository?
 :::::::::::::::::::::::::::::::::::::::  challenge
 
 ## Committing Multiple Files
+
+When you make changes, they often belong together as one logical improvement.
+Git lets you group related edits into a single commit so your project stays consistent.
+This is something word processors can’t easily do—each suggestion is separate, even if they depend on each other.
 
 The staging area can hold changes from any number of files
 that you want to commit as a single snapshot.

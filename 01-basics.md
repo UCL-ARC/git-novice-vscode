@@ -38,27 +38,27 @@ think of it as a recording of your progress: you can rewind to start at the base
 document and play back each change you made, eventually arriving at your
 more recent version.
 
-![](fig/play-changes.svg){alt='A diagram demonstrating how a single document grows as the result of sequential changes'}
+![](fig/play-changes.svg){alt='A diagram demonstrating how a single document grows as the result of sequential changes' width="40%"}
 
 Once you think of changes as separate from the document itself, you
 can then think about "playing back" different sets of changes on the base document, ultimately
 resulting in different versions of that document. For example, two users can make independent
 sets of changes on the same document.
 
-![](fig/versions.svg){alt='A diagram with one source document that has been modified in two different ways to produce two different versions of the document'}
+![](fig/versions.svg){alt='A diagram with one source document that has been modified in two different ways to produce two different versions of the document' width="60%"}
 
 Unless multiple users make changes to the same section of the document - a 
 [conflict](../learners/reference.md#conflict) - you can
 incorporate two sets of changes into the same base document.
 
-![](fig/merge.svg){alt='A diagram that shows the merging of two different document versions into one document that contains all of the changes from both versions'}
+![](fig/merge.svg){alt='A diagram that shows the merging of two different document versions into one document that contains all of the changes from both versions' width="60%"}
 
 A version control system is a tool that keeps track of these changes for us,
 effectively creating different versions of our files. It allows us to decide
 which changes will be made to the next version (each record of these changes is
 called a [commit](../learners/reference.md#commit)), and keeps useful metadata
-about them. The complete history of commits for a particular project and their
-metadata make up a [repository](../learners/reference.md#repository).
+about them, such as who made the change. The complete history of commits for a 
+particular project and their metadata make up a [repository](../learners/reference.md#repository).
 Repositories can be kept in sync across different computers, facilitating
 collaboration among different people.
 
@@ -71,13 +71,20 @@ Tools like [RCS](https://en.wikipedia.org/wiki/Revision_Control_System), [CVS](h
 many large companies.
 However, many of these are now considered legacy systems (i.e., outdated) due to various
 limitations in their capabilities.
-More modern systems, such as Git and [Mercurial](https://swcarpentry.github.io/hg-novice/),
+More modern systems, such as [Git](https://en.wikipedia.org/wiki/Git) and [Mercurial](https://en.wikipedia.org/wiki/Mercurial),
 are *distributed*, meaning that they do not need a centralized server to host the repository.
-These modern systems also include powerful merging tools that make it possible for
-multiple authors to work on
+These modern systems also include powerful merging tools that make it possible for multiple authors to work on
 the same files concurrently.
 
+Git was created by Linus Torvalds in 2005 
+as an alternative to BitKeeper, one of the first distributed version control
+systems, to track changes in the Linux kernel.
+Torvalds provided several explanations of the name, of varying degrees of
+politeness, which are enumerated in the 
+[project's README](https://github.com/git/git/blob/master/README.md?plain=1#L55),
+including "Global Information Tracker" for when "you're in a good mood".
 
+For those interested, The Carpentries has a [Version Control with Mercurial](https://swcarpentry.github.io/hg-novice/) lesson (2013-2018), which provides additional context and historical perspective.
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::  challenge
