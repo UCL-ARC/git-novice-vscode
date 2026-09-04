@@ -374,7 +374,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Automated Version Control</h1>
-        <p>Last updated on 2024-06-20 |
+        <p>Last updated on 2026-09-04 |
 
         <a href="https://github.com/swcarpentry/git-novice/edit/main/episodes/01-basics.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -429,20 +429,20 @@ then record changes you make each step of the way. You can think of it
 as a recording of your progress: you can rewind to start at the base
 document and play back each change you made, eventually arriving at your
 more recent version.</p>
-<figure><img src="../fig/play-changes.svg" alt="A diagram demonstrating how a single document grows as the result of sequential changes" class="figure mx-auto d-block"></figure><p>Once you think of changes as separate from the document itself, you
+<figure><img src="../fig/play-changes.svg" style="width:40.0%" alt="A diagram demonstrating how a single document grows as the result of sequential changes" class="figure mx-auto d-block"></figure><p>Once you think of changes as separate from the document itself, you
 can then think about “playing back” different sets of changes on the
 base document, ultimately resulting in different versions of that
 document. For example, two users can make independent sets of changes on
 the same document.</p>
-<figure><img src="../fig/versions.svg" alt="A diagram with one source document that has been modified in two different ways to produce two different versions of the document" class="figure mx-auto d-block"></figure><p>Unless multiple users make changes to the same section of the
+<figure><img src="../fig/versions.svg" style="width:60.0%" alt="A diagram with one source document that has been modified in two different ways to produce two different versions of the document" class="figure mx-auto d-block"></figure><p>Unless multiple users make changes to the same section of the
 document - a <a href="reference.html#conflict">conflict</a> - you can
 incorporate two sets of changes into the same base document.</p>
-<figure><img src="../fig/merge.svg" alt="A diagram that shows the merging of two different document versions into one document that contains all of the changes from both versions" class="figure mx-auto d-block"></figure><p>A version control system is a tool that keeps track of these changes
+<figure><img src="../fig/merge.svg" style="width:60.0%" alt="A diagram that shows the merging of two different document versions into one document that contains all of the changes from both versions" class="figure mx-auto d-block"></figure><p>A version control system is a tool that keeps track of these changes
 for us, effectively creating different versions of our files. It allows
 us to decide which changes will be made to the next version (each record
 of these changes is called a <a href="reference.html#commit">commit</a>), and keeps useful metadata
-about them. The complete history of commits for a particular project and
-their metadata make up a <a href="reference.html#repository">repository</a>. Repositories can be
+about them, such as who made the change. The complete history of commits
+for a particular project and their metadata make up a <a href="reference.html#repository">repository</a>. Repositories can be
 kept in sync across different computers, facilitating collaboration
 among different people.</p>
 <div id="the-long-history-of-version-control-systems" class="callout">
@@ -459,11 +459,21 @@ or <a href="https://en.wikipedia.org/wiki/Apache_Subversion" class="external-lin
 have been around since the early 1980s and are used by many large
 companies. However, many of these are now considered legacy systems
 (i.e., outdated) due to various limitations in their capabilities. More
-modern systems, such as Git and <a href="https://swcarpentry.github.io/hg-novice/" class="external-link">Mercurial</a>, are
+modern systems, such as <a href="https://en.wikipedia.org/wiki/Git" class="external-link">Git</a> and <a href="https://en.wikipedia.org/wiki/Mercurial" class="external-link">Mercurial</a>, are
 <em>distributed</em>, meaning that they do not need a centralized server
 to host the repository. These modern systems also include powerful
 merging tools that make it possible for multiple authors to work on the
 same files concurrently.</p>
+<p>Git was created by Linus Torvalds in 2005 as an alternative to
+BitKeeper, one of the first distributed version control systems, to
+track changes in the Linux kernel. Torvalds provided several
+explanations of the name, of varying degrees of politeness, which are
+enumerated in the <a href="https://github.com/git/git/blob/master/README.md?plain=1#L55" class="external-link">project’s
+README</a>, including “Global Information Tracker” for when “you’re in a
+good mood”.</p>
+<p>For those interested, The Carpentries has a <a href="https://swcarpentry.github.io/hg-novice/" class="external-link">Version Control with
+Mercurial</a> lesson (2013-2018), which provides additional context and
+historical perspective.</p>
 </div>
 </div>
 </div>
@@ -566,7 +576,7 @@ problems.</p></li>
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.21.0" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.2" class="external-link">varnish (1.1.2)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/" class="external-link">sandpaper (0.21.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/" class="external-link">varnish (1.1.2)</a></p>
 		</div>
 		</footer></div> <!-- / div.container -->
 	<div id="to-top">
@@ -588,8 +598,8 @@ problems.</p></li>
   "url": "https://swcarpentry.github.io/git-novice/instructor/01-basics.html",
   "identifier": "https://swcarpentry.github.io/git-novice/instructor/01-basics.html",
   "dateCreated": "2014-12-04",
-  "dateModified": "2024-06-20",
-  "datePublished": "2026-09-01"
+  "dateModified": "2026-09-04",
+  "datePublished": "2026-09-04"
 }
 
   </script><script>
