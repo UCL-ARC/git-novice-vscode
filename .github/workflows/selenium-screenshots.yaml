@@ -11,6 +11,10 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Put Homebrew in the PATH
+        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#homebrew-note
+        run: eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
       - name: Install VS Code
         run: brew install --cask visual-studio-code
 
