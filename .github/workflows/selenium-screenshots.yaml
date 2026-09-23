@@ -12,16 +12,13 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install VS Code
-        # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#homebrew-note
-        run: |
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" 
-          brew install --cask visual-studio-code
+        run: sudo snap install --classic code
 
       - name: Start VS Code Server
         run: code serve-web --port 8000 --without-connection-token --accept-server-license-terms
 
       - name: Install Python and dependencies
         run: uv pip install selenium
-        
+
       - name: Run screenshot scripts
         run: python tools/selenium/run.py
