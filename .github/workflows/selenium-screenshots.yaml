@@ -23,7 +23,7 @@ jobs:
         run: sudo snap install --classic code
 
       - name: Start VS Code Server
-        run: code serve-web --port 8000 --without-connection-token --accept-server-license-terms
+        run: nohup code serve-web --port 8000 --without-connection-token --accept-server-license-terms > /tmp/code-server.log 2>&1 &
 
       - name: Install dependencies
         run: uv pip install selenium
