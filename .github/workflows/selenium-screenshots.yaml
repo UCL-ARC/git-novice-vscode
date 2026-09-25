@@ -9,10 +9,14 @@ jobs:
   update-screenshots:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install the latest version of uv
         uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          python-version: "3.13"
+          activate-environment: true
 
       - name: Install VS Code
         run: sudo snap install --classic code
@@ -20,7 +24,7 @@ jobs:
       - name: Start VS Code Server
         run: code serve-web --port 8000 --without-connection-token --accept-server-license-terms
 
-      - name: Install Python and dependencies
+      - name: Install dependencies
         run: uv pip install selenium
 
       - name: Run screenshot scripts
