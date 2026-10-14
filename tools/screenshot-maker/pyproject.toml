@@ -1,0 +1,22 @@
+[project]
+name = "screenshot-maker"
+version = "0.1.0"
+description = "A simple screenshot maker for the Git Novice Carpentries lesson using Visual Studio Code"
+authors = [
+    { name = "Sam Cuniffe", email = "s.cunliffe@ucl.ac.uk" },
+    { name = "Henry Crosswell", email = "henry.crosswell.21@ucl.ac.uk" },
+    { name = "David Pérez Suárez", email = "d.perez-suarez@ucl.ac.uk" },
+]
+requires-python = ">=3.14"
+readme = "README.md"
+dependencies = [] # will be "selenium", "loguru"
+
+[project.scripts]
+screenshot-maker = "screenshot_maker:run"
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+
+[build-system]
+requires = ["uv_build>=0.13.0,<0.14"]
+build-backend = "uv_build"
