@@ -22,4 +22,4 @@ or
 python -m screenshot_maker.run
 ```
 
-Which is a calls the `run()` function in `screenshot_maker/run.py` (the code entry point of this package).
+This calls the `run()` function in `screenshot_maker/run.py`, the code entry point of this package.
