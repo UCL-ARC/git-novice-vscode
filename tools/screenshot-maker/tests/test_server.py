@@ -1,5 +1,3 @@
-from urllib.request import urlopen
-from time import sleep
 
 import pytest
 
