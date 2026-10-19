@@ -26,6 +26,14 @@ jobs:
       - name: Install Visual Studio Code
         run: sudo snap install --classic code
 
+      - name: Run some debug commands - check the VSCode installation
+        run: |
+          which code
+          type -a code
+          readlink -f "$(command -v code)"
+          snap list | grep -E '^code\b|vscode'
+          env | grep -i ozone
+
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker
         run: uv run pytest
