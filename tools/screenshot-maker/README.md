@@ -1,6 +1,6 @@
 # Screenshot maker
 
-This is a very small python package that uses [`selenium`](https://pypi.org/project/selenium/) to regenerate the screenshots of Visual Studio Code for this lesson.
+This is a very small python package that uses [Playwright](https://playwright.dev/docs/intro) to regenerate the screenshots of Visual Studio Code for this lesson.
 
 You can install it with `uv`.
 From the root of this repository, run:
@@ -22,4 +22,4 @@ or
 python -m screenshot_maker.run
 ```
 
-Which is a calls the `run()` function in `screenshot_maker/run.py` (the code entry point of this package).
+This calls the `run()` function in `screenshot_maker/run.py`, the code entry point of this package.

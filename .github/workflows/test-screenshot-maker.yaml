@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-screenshot-maker:
+  screenshot-maker-code-checks:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
