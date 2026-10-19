@@ -82,14 +82,12 @@ class CodeServer:
 
         logger.info("Stopping VS Code web server")
         self.process.terminate()
-        self.process.wait()
+        try:
+            self.process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            self.process.kill()
+            self.process.wait()
         logger.info("Terminated")
-        self.process.kill()
-        self.process.wait()
-        _ = subprocess.Popen(["kill", "-9", str(self.process.pid)])
-        self.process.kill()
-        self.process.wait()
-        logger.info("Killed")
 
     # Enter and exit methods to make this class into a context manager.
 
