@@ -19,7 +19,7 @@ jobs:
           python-version: "3.14"
           activate-environment: true
 
-      - name: Check the sreenshot-maker code style
+      - name: Check the screenshot-maker code style
         working-directory: ./tools/screenshot-maker
         run: uv run ruff check
 
