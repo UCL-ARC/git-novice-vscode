@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from selenium import webdriver
 
 from .episodes import episode_1
@@ -11,6 +12,11 @@ def run():
         driver = webdriver.Firefox(options=options)
         driver.get(cs.url)
         episode_1(driver)
+=======
+def run():
+    print("Running screenshot maker...")
+    # Add code here
+>>>>>>> main
 
 
 if __name__ == "__main__":

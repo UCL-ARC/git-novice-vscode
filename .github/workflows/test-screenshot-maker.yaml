@@ -7,7 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
+<<<<<<< HEAD
   update-screenshot-maker:
+=======
+  screenshot-maker-code-checks:
+>>>>>>> main
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -19,9 +23,15 @@ jobs:
           python-version: "3.14"
           activate-environment: true
 
+<<<<<<< HEAD
       - name: Check the sreenshot-maker code style
         working-directory: ./tools/screenshot-maker
         run: uv run ruff check --exit-zero
+=======
+      - name: Check the screenshot-maker code style
+        working-directory: ./tools/screenshot-maker
+        run: uv run ruff check
+>>>>>>> main
 
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker
