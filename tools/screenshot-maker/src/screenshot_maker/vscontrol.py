@@ -1,16 +1,18 @@
-from playwright.sync_api import sync_playwright
+import tempfile
 
-with sync_playwright() as p:
-    browser = p.firefox.launch(headless=False, slow_mo=200)
+from playwright.sync_api import expect, sync_playwright
+
+with tempfile.TemporaryDirectory() as desktop, sync_playwright() as p:
+    browser = p.firefox.launch()
     page = browser.new_page()
-    page.goto("http://localhost:3000")
+    page.goto(f"http://localhost:3000/?folder={desktop}")
 
     # Open and name folder
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
     page.get_by_role("menuitem", name="Open Folder...").click()
     folder_path = page.get_by_role("textbox", name="Folder path")
-    folder_path.type("Desktop/test_repo")
+    folder_path.type(f"{desktop}/test_repo")
     folder_path.press("Enter")
     page.keyboard.press("Enter")
 
@@ -42,7 +44,8 @@ with sync_playwright() as p:
 
     # Look through files and take a screenshot
     page.keyboard.press("Control+Shift+`")
-    page.get_by_role("tab", name="Terminal (⌃`)").click()
-    page.get_by_role("textbox", name="Terminal").press_sequentially("ls -a")
-    page.get_by_role("textbox", name="Terminal").press("Enter")
+    prompts = page.locator(".terminal-command-decoration")
+    expect(prompts).to_have_count(1)
+    page.get_by_role("textbox", name="Terminal").press_sequentially("ls -a\n")
+    expect(prompts).to_have_count(2)
     page.screenshot(path="example.png")

@@ -80,7 +80,7 @@ class CodeServer:
         if self.process is None or self.process.poll() is not None:
             return
 
-        logger.info(f"Stopping VS Code web server")
+        logger.info("Stopping VS Code web server")
         self.process.terminate()
 
         try:
