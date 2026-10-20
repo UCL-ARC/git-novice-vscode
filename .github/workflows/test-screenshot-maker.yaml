@@ -20,6 +20,7 @@ jobs:
           activate-environment: true
 
       - name: Check the screenshot-maker code style
+        working-directory: ./tools/screenshot-maker
         run: uv run prek --all-files
 
       - name: Install Visual Studio Code

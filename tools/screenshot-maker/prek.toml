@@ -2,19 +2,17 @@
 # See https://prek.j178.dev for more information.
 #:schema https://www.schemastore.org/prek.json
 
-files = { glob = ["tools/screenshot-maker/**"] }
-
 [[repos]]
 repo = "https://github.com/astral-sh/ruff-pre-commit"
 rev = "v0.17.1"
 
 [[repos.hooks]]
 id = "ruff-check"
-args = ["--config=tools/screenshot-maker/pyproject.toml"]
+args = ["--config=pyproject.toml"]
 
 [[repos.hooks]]
 id = "ruff-format"
-args = ["--config=tools/screenshot-maker/pyproject.toml"]
+args = ["--config=pyproject.toml"]
 
 
 [[repos]]
@@ -23,7 +21,7 @@ rev = "v2.4.0"
 
 [[repos.hooks]]
 id = "mypy"
-args = ["--config-file=tools/screenshot-maker/pyproject.toml"]
+args = ["--config-file=pyproject.toml"]
 additional_dependencies = ["types-requests", "loguru"]
 
 
