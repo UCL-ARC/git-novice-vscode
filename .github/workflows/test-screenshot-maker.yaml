@@ -19,6 +19,9 @@ jobs:
           python-version: "3.14"
           activate-environment: true
 
+      - name: Check the screenshot-maker code style
+        working-directory: ./tools/screenshot-maker
+        run: uv run prek --all-files
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker
         run: uv run pytest
