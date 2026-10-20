@@ -26,23 +26,12 @@ jobs:
       - name: Install Visual Studio Code
         run: sudo snap install --classic code
 
-      - name: Run some debug commands - check the VSCode installation
-        run: |
-          which code
-          type -a code
-          readlink -f "$(command -v code)"
-          snap list | grep -E '^code\b|vscode'
-          env | grep -i ozone || true
-          ls /snap/code/current/
-          cat /snap/code/current/snap/snapcraft.yaml 2>/dev/null || cat /snap/code/current/meta/snap.yaml
-          grep -rn "ozone-platform" /snap/code/current/ --include="*.sh" --include="code" -s | head || true
-
-      - name: Get the executable path of VSCode
+      - name: Get the path to the VSCode binary
         run: |
           SNAP_CODE_ROOT="$(readlink -f /snap/code/current)"
           CODE_BIN="$(find "$SNAP_CODE_ROOT" -type f -name code | head -n 1)"
-          echo "Using: $CODE_BIN"
           "$CODE_BIN" --version
+          echo "CODE_BIN=$CODE_BIN" >> $GITHUB_ENV
 
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker

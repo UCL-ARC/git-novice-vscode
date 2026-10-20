@@ -23,6 +23,7 @@ class CodeServer:
     port: int = 8000
     timeout_seconds: float = 30
     process: subprocess.Popen | None = field(default=None, init=False)
+    code_binary: str = os.getenv("CODE_BIN", "code")
 
     @property
     def url(self):
@@ -48,7 +49,7 @@ class CodeServer:
         logger.info(f"Starting VS Code web server at {self.url}...")
         self.process = subprocess.Popen(
             [
-                "code",
+                self.code_binary,
                 "serve-web",
                 "--host",
                 self.host,
