@@ -10,11 +10,11 @@ rev = "v0.17.1"
 
 [[repos.hooks]]
 id = "ruff-check"
-args = ["--config=pyproject.toml"]
+args = ["--config=tools/screenshot-maker/pyproject.toml"]
 
 [[repos.hooks]]
 id = "ruff-format"
-args = ["--config=pyproject.toml"]
+args = ["--config=tools/screenshot-maker/pyproject.toml"]
 
 
 [[repos]]
@@ -23,7 +23,8 @@ rev = "v2.4.0"
 
 [[repos.hooks]]
 id = "mypy"
-additional_dependencies = ["types-requests"]
+args = ["--config-file=tools/screenshot-maker/pyproject.toml"]
+additional_dependencies = ["types-requests", "loguru"]
 
 
 [[repos]]

@@ -99,7 +99,6 @@ class CodeServer:
             logger.warning(
                 "Process group not found. The server may already be stopped."
             )
-            pass
 
     def stop(self):
         if self.process is None or self.process.poll() is not None:
