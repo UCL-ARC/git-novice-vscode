@@ -1,6 +1,3 @@
-
-import pytest
-
 from screenshot_maker.server import CodeServer
 
 
@@ -10,7 +7,6 @@ def test_server_starts():
         assert cs.url == "http://127.0.0.1:8000", "The server isn't at the default URL"
 
 
-@pytest.mark.skip("Can't stop the server: vscode survives if the process is killed!")
 def test_server_stops():
     server = CodeServer(port=8919)
     server.start()
