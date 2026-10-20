@@ -21,7 +21,7 @@ jobs:
 
       - name: Check the screenshot-maker code style
         working-directory: ./tools/screenshot-maker
-        run: uv run ruff check
+        run: uv run prek --all-files
 
       - name: Install Visual Studio Code
         run: sudo snap install --classic code
