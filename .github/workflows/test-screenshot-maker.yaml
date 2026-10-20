@@ -18,6 +18,7 @@ jobs:
         with:
           python-version: "3.14"
           activate-environment: true
+
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker
         run: uv run pytest
