@@ -14,9 +14,8 @@ class CodeServer:
     """
     A context manager class that handles the Visual Studio Code server instance.
 
-    If a server is already running on the specified host and port, it won't
-    start a new one, but also won't take ownership. If no server is running,
-    it will start one and stop when the context manager exits.
+    If the server is already running on the specified host and port: don't start a new one, don't
+    take ownership. If no server is running: start one and stop when the context manager exits.
     """
 
     host: str = "127.0.0.1"
@@ -33,11 +32,9 @@ class CodeServer:
         try:
             with urlopen(self.url, timeout=1):
                 if self.process:
-                    logger.info(
-                        f"VS Code web server is ready at {self.url} with PID {self.process.pid}"
-                    )
+                    logger.info(f"VS Code server ready at {self.url} with ID {self.process.pid}")
                 else:
-                    logger.info(f"VS Code web server is already ready at {self.url}")
+                    logger.info(f"VS Code server already ready at {self.url}")
                 return True
         except OSError, URLError, TimeoutError:
             return False
@@ -46,7 +43,7 @@ class CodeServer:
         if self._is_reachable():
             return self
 
-        logger.info(f"Starting VS Code web server at {self.url}...")
+        logger.info(f"Starting VS Code server {self.url}...")
         self.process = subprocess.Popen(
             [
                 self.code_binary,
@@ -76,14 +73,12 @@ class CodeServer:
             if self._is_reachable():
                 break
             if self.process.poll() is not None:
-                raise RuntimeError(
-                    "The VS Code web server exited before becoming ready"
-                )
+                raise RuntimeError("The VS Code server exited before becoming ready")
             time.sleep(0.2)
         else:
             self.stop()
             raise TimeoutError(
-                f"VS Code web server did not become ready at {self.url} after {self.timeout_seconds} seconds"
+                f"VS Code server did not become ready at {self.url} after {self.timeout_seconds} seconds"
             )
 
         return self
@@ -96,9 +91,7 @@ class CodeServer:
             # The group id is equal to the launcher's pid.
             os.killpg(self.process.pid, sig)
         except ProcessLookupError:
-            logger.warning(
-                "Process group not found. The server may already be stopped."
-            )
+            logger.warning("Process group not found. The server may already be stopped.")
 
     def stop(self):
         if self.process is None or self.process.poll() is not None:
