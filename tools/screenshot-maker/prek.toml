@@ -22,7 +22,7 @@ rev = "v2.4.0"
 [[repos.hooks]]
 id = "mypy"
 args = ["--config-file=pyproject.toml"]
-additional_dependencies = ["types-requests", "loguru"]
+additional_dependencies = ["types-requests", "loguru", "playwright"]
 
 
 [[repos]]
