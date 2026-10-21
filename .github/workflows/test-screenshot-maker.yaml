@@ -23,6 +23,16 @@ jobs:
         working-directory: ./tools/screenshot-maker
         run: uv run prek --all-files
 
+      - name: Install Visual Studio Code
+        run: sudo snap install --classic code
+
+      - name: Get the path to the VSCode binary
+        run: |
+          SNAP_CODE_ROOT="$(readlink -f /snap/code/current)"
+          CODE_BIN="$(find "$SNAP_CODE_ROOT" -type f -name code | head -n 1)"
+          "$CODE_BIN" --version
+          echo "CODE_BIN=$CODE_BIN" >> $GITHUB_ENV
+
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker
         run: uv run pytest
