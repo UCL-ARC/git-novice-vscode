@@ -9,7 +9,7 @@ authors = [
 ]
 requires-python = ">=3.14"
 readme = "README.md"
-dependencies = ["playwright", "loguru"] # will be "selenium", "loguru"
+dependencies = ["playwright", "loguru"]
 
 [project.scripts]
 screenshot-maker = "screenshot_maker:run"
