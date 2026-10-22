@@ -25,7 +25,7 @@ jobs:
 
       - name: Get the path to the VSCode binary
         run: |
-          CODE_BIN="$(brew --prefix visual-studio-code)/bin/code"
+          CODE_BIN="/opt/homebrew/bin/code" # brittle hack from reading outpuut of the brew install command
           "$CODE_BIN" --version
           echo "CODE_BIN=$CODE_BIN" >> $GITHUB_ENV
 
