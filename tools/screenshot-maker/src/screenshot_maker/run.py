@@ -56,6 +56,7 @@ def run():
         # Look through files and take a screenshot
         page.keyboard.press("Control+Shift+`")
         prompts = page.locator(".terminal-command-decoration")
+        prompts.wait_for()
         expect(prompts).to_have_count(1)
         page.get_by_role("textbox", name="Terminal").press_sequentially("ls -a\n")
         expect(prompts).to_have_count(2)
