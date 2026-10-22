@@ -1,3 +1,4 @@
+import re
 import tempfile
 from pathlib import Path
 
@@ -17,18 +18,21 @@ def run():
         browser = p.firefox.launch()
         page = browser.new_page()
         page.goto(f"{server.url}/?folder={desktop}")
+        restricted_mode = page.get_by_role("button", name="Restricted Mode: Some")
 
         # Open and name folder
-        page.get_by_role("menuitem", name="Application Menu").click()
-        page.get_by_role("menuitem", name="File", exact=True).click()
-        page.get_by_role("menuitem", name="Open Folder...").click()
+        expect(restricted_mode).to_be_visible()
+        page.keyboard.press("F1")
+        command = page.get_by_role("textbox", name="Type the name of a command to run.")
+        command.fill(">File: Open Folder...")
+        command.press("Enter")
         folder_path = page.get_by_role("textbox", name="Folder path")
         folder_path.type(f"{desktop}/test_repo")
         folder_path.press("Enter")
         page.keyboard.press("Enter")
 
         # Trust folder and Init repo
-        page.get_by_role("button", name="Restricted Mode: Some").click()
+        restricted_mode.click()
         page.get_by_role("button", name="Trust", exact=True).click()
         page.get_by_role("button", name="Close Modal Editor (Escape)").click()
         page.keyboard.press("Control+Shift+G")
@@ -55,11 +59,9 @@ def run():
 
         # Look through files and take a screenshot
         page.keyboard.press("Control+Shift+`")
-        prompts = page.locator(".terminal-command-decoration")
-        prompts.wait_for()
-        expect(prompts).to_have_count(1)
-        page.get_by_role("textbox", name="Terminal").press_sequentially("ls -a\n")
-        expect(prompts).to_have_count(2)
+        terminal = page.get_by_role("textbox", name=re.compile(r"^Terminal \d+, "))
+        terminal.press_sequentially("ls -a\n")
+        expect(page.locator(".codicon-terminal-decoration-success")).to_be_visible()
         page.screenshot(path="example.png")
 
 
