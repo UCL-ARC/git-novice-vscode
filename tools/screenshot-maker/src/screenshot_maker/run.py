@@ -14,25 +14,23 @@ def run():
         sync_playwright() as p,
     ):
         desktop = Path(tmp_path) / "home" / "student" / "Desktop"
+        desktop = Path(tmp_path) / "home" / "student" / "Desktop"
         desktop.mkdir(parents=True)
         browser = p.firefox.launch()
         page = browser.new_page()
         page.goto(f"{server.url}/?folder={desktop}")
-        restricted_mode = page.get_by_role("button", name="Restricted Mode: Some")
 
         # Open and name folder
-        expect(restricted_mode).to_be_visible()
-        page.keyboard.press("F1")
-        command = page.get_by_role("textbox", name="Type the name of a command to run.")
-        command.fill(">File: Open Folder...")
-        command.press("Enter")
+        page.get_by_role("menuitem", name="Application Menu").click()
+        page.get_by_role("menuitem", name="File", exact=True).click()
+        page.get_by_role("menuitem", name="Open Folder...").click()
         folder_path = page.get_by_role("textbox", name="Folder path")
         folder_path.type(f"{desktop}/test_repo")
         folder_path.press("Enter")
         page.keyboard.press("Enter")
 
         # Trust folder and Init repo
-        restricted_mode.click()
+        page.get_by_role("button", name="Restricted Mode: Some").click()
         page.get_by_role("button", name="Trust", exact=True).click()
         page.get_by_role("button", name="Close Modal Editor (Escape)").click()
         page.keyboard.press("Control+Shift+G")
