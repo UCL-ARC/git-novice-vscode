@@ -59,7 +59,7 @@ def run():
         page.keyboard.press("Control+Shift+`")
         terminal = page.get_by_role("textbox", name=re.compile(r"^Terminal \d+, "))
         terminal.press_sequentially("ls -a\n")
-        expect(page.locator(".codicon-terminal-decoration-success")).to_be_visible(timeout=5_000)
+        expect(page.locator(".codicon-terminal-decoration-success")).to_be_visible(timeout=20_000)
         page.screenshot(path="example.png")
 
 
