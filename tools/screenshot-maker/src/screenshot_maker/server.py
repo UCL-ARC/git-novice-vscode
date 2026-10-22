@@ -3,10 +3,14 @@ import signal
 import subprocess
 import time
 from dataclasses import dataclass, field
+from pathlib import Path
 from urllib.error import URLError
 from urllib.request import urlopen
 
 from loguru import logger
+
+_PROJECT_ROOT = Path(__file__).resolve().parents[2]
+_SERVER_DATA_DIR = _PROJECT_ROOT / "server-data"
 
 
 @dataclass
@@ -25,7 +29,7 @@ class CodeServer:
     code_binary: str = os.getenv("CODE_BIN", "code")
 
     @property
-    def url(self):
+    def url(self) -> str:
         return f"http://{self.host}:{self.port}"
 
     def _is_reachable(self):
@@ -54,6 +58,9 @@ class CodeServer:
                 str(self.port),
                 "--without-connection-token",
                 "--accept-server-license-terms",
+                "--disable-telemetry",
+                "--server-data-dir",
+                str(_SERVER_DATA_DIR),
             ],
             stdout=subprocess.DEVNULL,
             # Own process group, so stop() can kill the child processes `code` spawns.

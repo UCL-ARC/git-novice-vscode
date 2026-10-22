@@ -1,0 +1,8 @@
+# Ignore everything in this server-data directory except for Machine/settings.json.
+# When the server is started a log of logs and cached data is written here. We never want to commit it.
+*
+!.gitignore
+!/data/
+!/data/Machine/
+/data/Machine/*
+!/data/Machine/settings.json

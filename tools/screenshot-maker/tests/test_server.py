@@ -1,4 +1,4 @@
-from screenshot_maker.server import CodeServer
+from screenshot_maker.server import _SERVER_DATA_DIR, CodeServer
 
 
 def test_server_starts():
@@ -31,3 +31,9 @@ def test_server_doesnt_respawn():
 
         second_instance.start()  # should do nothing
         assert second_instance.process is None
+
+
+def test_globals_server_data_directory():
+    assert _SERVER_DATA_DIR.exists(), "The server data dir should exist"
+    assert _SERVER_DATA_DIR.is_dir(), "The server data dir should be a directory"
+    assert (_SERVER_DATA_DIR / "data" / "Machine").is_dir(), "Settings directory should exist"
