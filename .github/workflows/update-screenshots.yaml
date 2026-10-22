@@ -1,0 +1,41 @@
+name: "Update Visual Studio Code screenshots"
+on:
+  schedule:
+    - cron: "0 0 15 * *" # run every month on the 15th at midnight
+  pull_request: # for now on every PR - we can be smarter later: only run when the tools/screenshot-maker code is changed
+  #  paths:
+  #    - "tools/screenshot-maker/**"
+  workflow_dispatch:
+
+jobs:
+  update-screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
+        with:
+          python-version: "3.14"
+          activate-environment: true
+
+      - name: Install Visual Studio Code
+        run: sudo snap install --classic code
+
+      - name: Get the path to the VSCode binary
+        run: |
+          SNAP_CODE_ROOT="$(readlink -f /snap/code/current)"
+          CODE_BIN="$(find "$SNAP_CODE_ROOT" -type f -name code | head -n 1)"
+          "$CODE_BIN" --version
+          echo "CODE_BIN=$CODE_BIN" >> $GITHUB_ENV
+
+      - name: Install the screenshot maker code
+        working-directory: ./tools/screenshot-maker
+        run: |
+          uv sync
+          uv run playwright install
+
+      - name: Run the screenshot maker
+        working-directory: ./tools/screenshot-maker
+        run: uv run screenshot-maker
