@@ -1,4 +1,3 @@
-import re
 import tempfile
 from pathlib import Path
 
@@ -57,9 +56,11 @@ def run():
 
         # Look through files and take a screenshot
         page.keyboard.press("Control+Shift+`")
-        terminal = page.get_by_role("textbox", name=re.compile(r"^Terminal \d+, "))
-        terminal.press_sequentially("ls -a\n")
-        expect(page.locator(".codicon-terminal-decoration-success")).to_be_visible(timeout=20_000)
+        prompts = page.locator(".terminal-command-decoration")
+        prompts.wait_for()
+        expect(prompts).to_have_count(1)
+        page.get_by_role("textbox", name="Terminal").press_sequentially("ls -a\n")
+        expect(prompts).to_have_count(2)
         page.screenshot(path="example.png")
 
 
