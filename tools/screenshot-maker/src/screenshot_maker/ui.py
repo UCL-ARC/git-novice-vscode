@@ -5,7 +5,9 @@ If a helper gives an action a clear name and hides repeated Playwright mechanics
 If it only wraps one obvious locator call and is used once, leave it in the episode.
 """
 
-from playwright.sync_api import Page
+from pathlib import Path
+
+from playwright.sync_api import Page, expect
 
 
 def commit_changes(page: Page, message: str) -> None:
@@ -16,3 +18,23 @@ def commit_changes(page: Page, message: str) -> None:
     message_box = page.get_by_role("textbox", name="Message")
     message_box.press_sequentially(message)
     message_box.press("ControlOrMeta+Enter")
+
+
+def make_folder(page: Page, desktop: Path, name: str) -> None:
+    page.get_by_role("menuitem", name="Application Menu").click()
+    page.get_by_role("menuitem", name="File", exact=True).click()
+    page.get_by_role("menuitem", name="Open Folder...").click(delay=100)
+    folder_path = page.get_by_role("textbox", name="Folder path")
+    expect(folder_path).to_have_value(f"{desktop.parent}/")
+    folder_path.fill(f"{desktop}/{name}")
+    expect(page.get_by_role("option", name="Desktop")).to_be_hidden()
+    page.get_by_role("button", name="OK").click()  # "create new folder"
+    page.get_by_text(f"The folder {name} does not").wait_for()
+    page.get_by_role("button", name="OK").click()  # "are you sure?"
+    page.wait_for_url(f"**/{name}")
+
+
+def trust_folder(page: Page) -> None:
+    page.get_by_role("button", name="Restricted Mode: Some").click()
+    page.get_by_role("button", name="Trust", exact=True).click()
+    page.get_by_role("button", name="Close Modal Editor (Escape)").click()
