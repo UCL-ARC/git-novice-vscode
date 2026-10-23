@@ -5,10 +5,10 @@ If a helper gives an action a clear name and hides repeated Playwright mechanics
 If it only wraps one obvious locator call and is used once, leave it in the episode.
 """
 
-from loguru import logger
 from pathlib import Path
 
-from playwright.sync_api import Page, expect, expect
+from loguru import logger
+from playwright.sync_api import Page, expect
 
 
 def close_annoying_modals(page: Page) -> None:
