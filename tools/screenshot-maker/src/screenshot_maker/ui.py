@@ -29,28 +29,6 @@ def commit_changes(page: Page, message: str) -> None:
     message_box.press("ControlOrMeta+Enter")
 
 
-def open_terminal_and_type(page: Page, commands: list[str]) -> None:
-    """
-    Open the terminal pane and type commands.
-
-    The commands should end with \n to simulate pressing Enter.
-
-    Args:
-        page: The Playwright page object.
-        commands: A list of commands to type into the terminal.
-    """
-    if not all(command.endswith("\n") for command in commands):
-        raise ValueError("All commands must end with a newline character '\\n'.")
-
-    page.keyboard.press("Control+Shift+`")
-    terminal = page.get_by_role("textbox", name="Terminal 1")
-    terminal_output = page.locator(".xterm-rows")
-    expect(terminal_output).to_contain_text("$")
-    logger.info("Typing into terminal pane...")
-    for command in commands:
-        terminal.press_sequentially(command)
-
-
 def init_workspace(page: Page, desktop: Path, name: str) -> None:
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()

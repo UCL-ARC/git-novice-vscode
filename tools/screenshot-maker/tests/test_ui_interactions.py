@@ -9,10 +9,15 @@ don't add this to the fixture, so we get a more helpful error if the test fails 
 (which is likely if VSCode changes the modals in later versions).
 """
 
-import pytest
 from playwright.sync_api import expect
 
-from screenshot_maker.ui import close_annoying_modals, open_terminal_and_type
+from screenshot_maker.ui import (
+    close_annoying_modals,
+    open_terminal,
+    write_terminal,
+    write_file,
+    make_subfolder,
+)
 
 
 def test_00_close_annoying_modals(vscode_page) -> None:
@@ -23,24 +28,26 @@ def test_00_close_annoying_modals(vscode_page) -> None:
     vscode_page.get_by_role("menuitem", name="File", exact=True).click()
 
 
-@pytest.mark.parametrize(
-    "bad_input",
-    [
-        ["ls -l"],  # one command without newline
-        ["ls -l\n", "pwd"],  # one command with newline, one without
-        ["ls -l", "pwd\n"],  # one command without newline, one with
-        ["ls -l", "pwd"],  # two commands without newlines
-    ],
-)
-def test_terminal_interaction_bad_input(bad_input) -> None:
-    with pytest.raises(expected_exception=ValueError):
-        open_terminal_and_type(None, commands=bad_input)  # type: ignore[arg-type]
-
-
-def test_terminal_interaction_good_input(vscode_page) -> None:
+def test_terminal_interaction(vscode_page) -> None:
     # Should be able to Ctrl/Cmd + ` to open a terminal and type something.
     close_annoying_modals(vscode_page)
-    open_terminal_and_type(vscode_page, commands=["echo 'Hello, World!'\n"])
+    open_terminal(vscode_page)
+    write_terminal(vscode_page, command="echo 'Hello, World!'")
+    expect(vscode_page.locator(".xterm-rows")).to_contain_text("Hello, World!")
 
-    terminal_output = vscode_page.locator(".xterm-rows")
-    expect(terminal_output).to_contain_text("Hello, World!")
+
+def test_make_subfolder(vscode_page_and_path) -> None:
+    # Should be able to make a subfolder in the workspace.
+    vscode_page, tmp_path = vscode_page_and_path
+    close_annoying_modals(vscode_page)
+    make_subfolder(vscode_page, name="test_folder")
+    assert (tmp_path / "test_folder").exists()
+    assert (tmp_path / "test_folder").is_dir()
+
+
+def test_write_file(vscode_page_and_path) -> None:
+    # Should be able to write a file in the workspace.
+    vscode_page, tmp_path = vscode_page_and_path
+    close_annoying_modals(vscode_page)
+    write_file(vscode_page, "test_file.txt", "Hello, World!")
+    assert (tmp_path / "test_file.txt").exists()
