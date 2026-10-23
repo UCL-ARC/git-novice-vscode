@@ -10,6 +10,14 @@ from pathlib import Path
 from playwright.sync_api import Page, expect
 
 
+def close_annoying_modals(page: Page) -> None:
+    """Get rid of the annoying modals and popups that block interaction with the page."""
+    # None of this is important but it does introduce a brittleness.
+    page.get_by_role("button", name="Restricted Mode: Some").click()
+    page.get_by_role("button", name="Trust", exact=True).click()
+    page.get_by_role("button", name="Close Modal Editor (Escape)").click()
+
+
 def commit_changes(page: Page, message: str) -> None:
     page.keyboard.press("Control+Shift+G")
     page.get_by_role("treeitem", name="Changes", exact=True).hover()

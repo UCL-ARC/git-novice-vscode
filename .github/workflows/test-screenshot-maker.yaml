@@ -33,6 +33,12 @@ jobs:
           "$CODE_BIN" --version
           echo "CODE_BIN=$CODE_BIN" >> $GITHUB_ENV
 
+      - name: Install the screenshot maker code
+        working-directory: ./tools/screenshot-maker
+        run: |
+          uv sync
+          uv run playwright install
+
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker
-        run: uv run pytest
+        run: uv run pytest --cov
