@@ -4,54 +4,34 @@ from pathlib import Path
 
 from playwright.sync_api import Page, expect
 
-from ..ui import commit_changes
+from ..ui import (
+    commit_changes,
+    init_repo,
+    init_workspace,
+    open_terminal,
+    write_file,
+    write_terminal,
+)
 
 
 def example(page: Page, desktop: Path, output: Path) -> None:
-    # Open and name folder
-    page.get_by_role("menuitem", name="Application Menu").click()
-    page.get_by_role("menuitem", name="File", exact=True).click()
-    page.get_by_role("menuitem", name="Open Folder...").click(delay=100)
-    folder_path = page.get_by_role("textbox", name="Folder path")
-    expect(folder_path).to_have_value(f"{desktop.parent}/")
-    folder_path.fill(f"{desktop}/test_repo")
-    expect(page.get_by_role("option", name="Desktop")).to_be_hidden()
-    page.get_by_role("button", name="OK").click()  # "create new folder"
-    page.get_by_text("The folder test_repo does not").wait_for()
-    page.get_by_role("button", name="OK").click()  # "are you sure?"
-    page.wait_for_url("**/test_repo")
-
-    # Trust folder and Init repo
-    page.get_by_role("button", name="Restricted Mode: Some").click()
-    page.get_by_role("button", name="Trust", exact=True).click()
-    page.get_by_role("button", name="Close Modal Editor (Escape)").click()
-    page.keyboard.press("Control+Shift+G")
-    page.get_by_role("button", name="Initialize Repository").click()
-    page.get_by_role("textbox", name="Message").wait_for()
+    # Open, name and trust folder, then init repo
+    init_workspace(page, desktop, "test_repo")
+    init_repo(page)
 
     # Set git identity
-    page.keyboard.press("Control+Shift+`")
-    terminal = page.get_by_role("textbox", name="Terminal 1")
-    terminal_output = page.locator(".xterm-rows")
-    expect(terminal_output).to_contain_text("$")
-    terminal.press_sequentially('git config user.name "Alfredo Linguini"\n')
-    terminal.press_sequentially('git config user.email "a.linguini@ratatouille.fr"\n')
+    open_terminal(page)
+    write_terminal(page, 'git config user.name "Alfredo Linguini"')
+    write_terminal(page, 'git config user.email "a.linguini@ratatouille.fr"')
 
     # Make new file and fill with Gucamole
-    page.keyboard.press("ControlOrMeta+Shift+E")
-    page.get_by_role("button", name="New File...", exact=True).click()
-    file_name = page.get_by_role("textbox", name="Type file name")
-    file_name.fill("guacamole.md")
-    file_name.press("Enter")
-    editor = page.get_by_role("textbox", name="guacamole.md")
-    editor.press_sequentially("# Guacamole\n## Ingredients\n\n## Instructions\n")
-    editor.press("ControlOrMeta+s")
+    write_file(page, "guacamole.md", "# Guacamole\n## Ingredients\n\n## Instructions\n")
 
     commit_changes(page, "Defines template")
     expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
 
     # Look through files and take a screenshot
-    terminal.press_sequentially("clear\n")
-    terminal.press_sequentially("ls -a\n")
-    expect(terminal_output).to_contain_text(".git")
+    write_terminal(page, "clear")
+    write_terminal(page, "ls -a")
+    expect(page.locator(".xterm-rows")).to_contain_text(".git")
     page.screenshot(path=output / "fin.png")
