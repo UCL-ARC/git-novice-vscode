@@ -8,15 +8,18 @@ from ..ui import commit_changes
 
 
 def example(page: Page, desktop: Path) -> None:
-
     # Open and name folder
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
-    page.get_by_role("menuitem", name="Open Folder...").click()
+    page.get_by_role("menuitem", name="Open Folder...").click(delay=100)
     folder_path = page.get_by_role("textbox", name="Folder path")
-    folder_path.type(f"{desktop}/test_repo")
-    folder_path.press("Enter")
-    page.keyboard.press("Enter")
+    expect(folder_path).to_have_value(f"{desktop.parent}/")
+    folder_path.fill(f"{desktop}/test_repo")
+    expect(page.get_by_role("option", name="Desktop")).to_be_hidden()
+    page.get_by_role("button", name="OK").click()  # "create new folder"
+    page.get_by_text("The folder test_repo does not").wait_for()
+    page.get_by_role("button", name="OK").click()  # "are you sure?"
+    page.wait_for_url("**/test_repo")
 
     # Trust folder and Init repo
     page.get_by_role("button", name="Restricted Mode: Some").click()
@@ -24,6 +27,15 @@ def example(page: Page, desktop: Path) -> None:
     page.get_by_role("button", name="Close Modal Editor (Escape)").click()
     page.keyboard.press("Control+Shift+G")
     page.get_by_role("button", name="Initialize Repository").click()
+    page.get_by_role("textbox", name="Message").wait_for()
+
+    # Set git identity
+    page.keyboard.press("Control+Shift+`")
+    terminal = page.get_by_role("textbox", name="Terminal 1")
+    terminal_output = page.locator(".xterm-rows")
+    expect(terminal_output).to_contain_text("$")
+    terminal.press_sequentially('git config user.name "Alfredo Linguini"\n')
+    terminal.press_sequentially('git config user.email "a.linguini@ratatouille.fr"\n')
 
     # Make new file and fill with Gucamole
     page.keyboard.press("ControlOrMeta+Shift+E")
@@ -36,11 +48,10 @@ def example(page: Page, desktop: Path) -> None:
     editor.press("ControlOrMeta+s")
 
     commit_changes(page, "Defines template")
+    expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
 
     # Look through files and take a screenshot
-    page.keyboard.press("Control+Shift+`")
-    prompts = page.locator(".terminal-command-decoration")
-    expect(prompts).to_have_count(1, timeout=30_000)
-    page.get_by_role("textbox", name="Terminal").press_sequentially("ls -a\n")
-    expect(prompts).to_have_count(2)
-    page.screenshot(path="example.png")
+    terminal.press_sequentially("clear\n")
+    terminal.press_sequentially("ls -a\n")
+    expect(terminal_output).to_contain_text(".git")
+    page.screenshot(path="fin.png")

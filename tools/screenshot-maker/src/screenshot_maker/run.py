@@ -21,7 +21,10 @@ def run() -> None:
         sync_playwright() as playwright_context,
     ):
         desktop = _make_student_desktop(tmp_path)
-        page = playwright_context.firefox.launch().new_page()
+        browser = playwright_context.firefox.launch()
+        context = browser.new_context()
+        context.tracing.start(screenshots=True, snapshots=True, sources=True)
+        page = context.new_page()
         page.goto(f"{server.url}/?folder={desktop}")
 
         for episode in EPISODES:
