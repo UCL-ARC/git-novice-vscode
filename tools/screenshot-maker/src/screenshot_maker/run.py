@@ -56,7 +56,6 @@ def run():
         message = page.get_by_role("textbox", name="Message")
         message.press_sequentially("Defines template")
         message.press("ControlOrMeta+Enter")
-        page.locator("circle").first.wait_for()
 
         # Look through files and take a screenshot
         page.keyboard.press("Control+Shift+`")
