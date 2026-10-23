@@ -9,14 +9,15 @@ don't add this to the fixture, so we get a more helpful error if the test fails 
 (which is likely if VSCode changes the modals in later versions).
 """
 
+import pytest
 from playwright.sync_api import expect
 
 from screenshot_maker.ui import (
     close_annoying_modals,
-    open_terminal,
-    write_terminal,
-    write_file,
     make_subfolder,
+    open_terminal,
+    write_file,
+    write_terminal,
 )
 
 

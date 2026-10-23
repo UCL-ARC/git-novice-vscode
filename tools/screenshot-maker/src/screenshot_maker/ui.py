@@ -7,7 +7,6 @@ If it only wraps one obvious locator call and is used once, leave it in the epis
 
 from pathlib import Path
 
-from loguru import logger
 from playwright.sync_api import Page, expect
 
 
