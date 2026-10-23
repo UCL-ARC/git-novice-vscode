@@ -9,7 +9,10 @@ on:
 
 jobs:
   update-screenshots:
-    runs-on: macos-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -25,7 +28,7 @@ jobs:
 
       - name: Get the path to the VSCode binary
         run: |
-          CODE_BIN="/opt/homebrew/bin/code" # brittle hack from reading outpuut of the brew install command
+          CODE_BIN="/opt/homebrew/bin/code"
           "$CODE_BIN" --version
           echo "CODE_BIN=$CODE_BIN" >> $GITHUB_ENV
 
