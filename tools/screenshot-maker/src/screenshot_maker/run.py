@@ -59,11 +59,12 @@ def run():
 
         # Look through files and take a screenshot
         page.keyboard.press("Control+Shift+`")
-        terminal = page.get_by_role("textbox", name="Terminal 1, bash Run the")
+        terminal = page.get_by_role("textbox", name="Terminal 1")
+        terminal_output = page.locator(".xterm-rows")
+        expect(terminal_output).to_contain_text("$")
         terminal.press_sequentially("clear\n")
-        terminal.wait_for()
         terminal.press_sequentially("ls -a\n")
-        terminal.wait_for()
+        expect(terminal_output).to_contain_text(".git")
         page.screenshot(path="fin.png")
 
 
