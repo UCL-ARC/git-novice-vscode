@@ -43,3 +43,18 @@ def make_subfolder(page: Page, name: str) -> None:
     folder_name = page.get_by_role("textbox", name="Type file name")
     folder_name.fill(name)
     folder_name.press("Enter")
+
+
+def init_repo(page: Page) -> None:
+    page.keyboard.press("Control+Shift+G")
+    page.get_by_role("button", name="Initialize Repository").click()
+    page.get_by_role("textbox", name="Message").wait_for()
+
+
+def open_terminal(page: Page) -> None:
+    page.keyboard.press("Control+Shift+`")
+    expect(page.locator(".xterm-rows")).to_contain_text("$")
+
+
+def write_terminal(page: Page, command: str) -> None:
+    page.get_by_role("textbox", name="Terminal 1").press_sequentially(f"{command}\n")
