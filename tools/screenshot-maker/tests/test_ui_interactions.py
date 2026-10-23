@@ -10,7 +10,7 @@ don't add this to the fixture, so we get a more helpful error if the test fails 
 """
 
 import pytest
-from playwright.sync_api import expect, Page
+from playwright.sync_api import expect
 
 from screenshot_maker.ui import close_annoying_modals, open_terminal_and_type
 
@@ -34,7 +34,7 @@ def test_00_close_annoying_modals(vscode_page) -> None:
 )
 def test_terminal_interaction_bad_input(bad_input) -> None:
     with pytest.raises(expected_exception=ValueError):
-        open_terminal_and_type(None, commands=bad_input)
+        open_terminal_and_type(None, commands=bad_input)  # type: ignore[arg-type]
 
 
 def test_terminal_interaction_good_input(vscode_page) -> None:

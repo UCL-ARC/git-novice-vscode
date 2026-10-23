@@ -1,6 +1,7 @@
 import pytest
-from screenshot_maker.server import CodeServer
 from playwright.sync_api import sync_playwright
+
+from screenshot_maker.server import CodeServer
 
 
 @pytest.fixture
