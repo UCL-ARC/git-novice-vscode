@@ -27,6 +27,7 @@ def run():
         folder_path = page.get_by_role("textbox", name="Folder path")
         expect(folder_path).to_have_value(f"{desktop.parent}/")
         folder_path.fill(f"{desktop}/test_repo")
+        expect(page.get_by_role("option", name="Desktop")).to_be_hidden()
         page.get_by_role("button", name="OK").click()  # "create new folder"
         page.get_by_text("The folder test_repo does not").wait_for()
         page.get_by_role("button", name="OK").click()  # "are you sure?"
