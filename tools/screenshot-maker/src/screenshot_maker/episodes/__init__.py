@@ -7,7 +7,7 @@ from .ep0_example import example
 from .ep2_setting_up_git import setting_up_git  # noqa: F401
 from .ep3_creating_a_repository import creating_a_repository  # noqa: F401
 
-Episode = Callable[[Page, Path], None]
+Episode = Callable[[Page, Path, Path], None]
 
 
 EPISODES: list[Episode] = [
