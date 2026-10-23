@@ -14,7 +14,7 @@ def _make_student_desktop(tmp_path: str) -> Path:
     return desktop
 
 
-def run() -> None:
+def run(output: Path) -> None:
     with (
         tempfile.TemporaryDirectory() as tmp_path,
         CodeServer() as server,
@@ -28,8 +28,8 @@ def run() -> None:
         page.goto(f"{server.url}/?folder={desktop}")
 
         for episode in EPISODES:
-            episode(page, desktop)
+            episode(page, desktop, output)
 
 
 if __name__ == "__main__":
-    run()
+    run(output=Path("./screenshots"))

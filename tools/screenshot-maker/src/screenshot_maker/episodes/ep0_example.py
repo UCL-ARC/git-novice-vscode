@@ -14,7 +14,7 @@ from ..ui import (
 )
 
 
-def example(page: Page, desktop: Path) -> None:
+def example(page: Page, desktop: Path, output: Path) -> None:
     # Open, name and trust folder, then init repo
     init_workspace(page, desktop, "test_repo")
     init_repo(page)
@@ -34,4 +34,4 @@ def example(page: Page, desktop: Path) -> None:
     write_terminal(page, "clear")
     write_terminal(page, "ls -a")
     expect(page.locator(".xterm-rows")).to_contain_text(".git")
-    page.screenshot(path="fin.png")
+    page.screenshot(path=output / "fin.png")
