@@ -8,7 +8,6 @@ from ..ui import commit_changes
 
 
 def example(page: Page, desktop: Path, output: Path) -> None:
-
     # Open and name folder
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
