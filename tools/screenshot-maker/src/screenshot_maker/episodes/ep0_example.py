@@ -8,8 +8,6 @@ from ..ui import close_annoying_modals, commit_changes, open_terminal_and_type
 
 
 def example(page: Page, desktop: Path) -> None:
-    close_annoying_modals(page)
-
     # Open and name folder
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
