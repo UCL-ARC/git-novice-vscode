@@ -28,6 +28,7 @@ def run():
         expect(folder_path).to_have_value(f"{desktop.parent}/")
         folder_path.fill(f"{desktop}/test_repo")
         page.get_by_role("button", name="OK").click()  # "create new folder"
+        page.get_by_text("The folder test_repo does not").wait_for()
         page.get_by_role("button", name="OK").click()  # "are you sure?"
         page.wait_for_url("**/test_repo")
 
