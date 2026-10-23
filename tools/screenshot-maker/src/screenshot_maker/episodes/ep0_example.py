@@ -7,7 +7,7 @@ from playwright.sync_api import Page, expect
 from ..ui import commit_changes
 
 
-def example(page: Page, desktop: Path) -> None:
+def example(page: Page, desktop: Path, output: Path) -> None:
 
     # Open and name folder
     page.get_by_role("menuitem", name="Application Menu").click()
@@ -43,4 +43,4 @@ def example(page: Page, desktop: Path) -> None:
     expect(prompts).to_have_count(1, timeout=30_000)
     page.get_by_role("textbox", name="Terminal").press_sequentially("ls -a\n")
     expect(prompts).to_have_count(2)
-    page.screenshot(path="example.png")
+    page.screenshot(path=output / "example.png")
