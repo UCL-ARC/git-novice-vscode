@@ -35,4 +35,4 @@ jobs:
 
       - name: Run the screenshot-maker tests
         working-directory: ./tools/screenshot-maker
-        run: uv run pytest
+        run: uv run pytest --cov
