@@ -1,4 +1,3 @@
-// ensure that the vscode for screenshots looks plain with a vanilla bash terminal
 {
     "terminal.integrated.profiles.linux": {
         "bash": {
@@ -21,7 +20,5 @@
     },
     "terminal.integrated.defaultProfile.osx": "bash",
     "terminal.integrated.shellIntegration.enabled": false,
-    // dark mode - just to be sure we're actually using this settings.json file (remove eventually)
-    "workbench.colorTheme": "Solarized Dark",
     "terminal.integrated.gpuAcceleration": "off"
 }
