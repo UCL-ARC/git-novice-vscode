@@ -4,10 +4,12 @@ from pathlib import Path
 
 from playwright.sync_api import Page, expect
 
-from ..ui import commit_changes
+from ..ui import close_annoying_modals, commit_changes, open_terminal_and_type
 
 
 def example(page: Page, desktop: Path) -> None:
+    close_annoying_modals(page)
+
     # Open and name folder
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
@@ -30,12 +32,11 @@ def example(page: Page, desktop: Path) -> None:
     page.get_by_role("textbox", name="Message").wait_for()
 
     # Set git identity
-    page.keyboard.press("Control+Shift+`")
-    terminal = page.get_by_role("textbox", name="Terminal 1")
-    terminal_output = page.locator(".xterm-rows")
-    expect(terminal_output).to_contain_text("$")
-    terminal.press_sequentially('git config user.name "Alfredo Linguini"\n')
-    terminal.press_sequentially('git config user.email "a.linguini@ratatouille.fr"\n')
+    git_config_commands = [
+        'git config user.name "Alfredo Linguini"\n',
+        'git config user.email "a.linguini@ratatouille.fr"\n',
+    ]
+    open_terminal_and_type(page, git_config_commands)
 
     # Make new file and fill with Gucamole
     page.keyboard.press("ControlOrMeta+Shift+E")
@@ -51,7 +52,8 @@ def example(page: Page, desktop: Path) -> None:
     expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
 
     # Look through files and take a screenshot
-    terminal.press_sequentially("clear\n")
-    terminal.press_sequentially("ls -a\n")
+    terminal_output = page.locator(".xterm-rows")
+    open_terminal_and_type(page, ["clear\n", "ls -a\n"])
+    expect(terminal_output).to_contain_text(".git")
     expect(terminal_output).to_contain_text(".git")
     page.screenshot(path="fin.png")
