@@ -56,7 +56,7 @@ def open_terminal(page: Page) -> None:
     expect(page.locator(".xterm-rows")).to_contain_text("$")
 
 
-def write_terminal(page: Page, command: str) -> None:
+def type_into_terminal(page: Page, command: str) -> None:
     page.get_by_role("textbox", name="Terminal 1").press_sequentially(f"{command}\n")
 
 
