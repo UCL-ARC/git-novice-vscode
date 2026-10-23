@@ -39,6 +39,15 @@ def run():
         page.get_by_role("button", name="Close Modal Editor (Escape)").click()
         page.keyboard.press("Control+Shift+G")
         page.get_by_role("button", name="Initialize Repository").click()
+        page.get_by_role("textbox", name="Message").wait_for()
+
+        # Set git identity
+        page.keyboard.press("Control+Shift+`")
+        terminal = page.get_by_role("textbox", name="Terminal 1")
+        terminal_output = page.locator(".xterm-rows")
+        expect(terminal_output).to_contain_text("$")
+        terminal.press_sequentially('git config user.name "Alfredo Linguini"\n')
+        terminal.press_sequentially('git config user.email "a.linguini@ratatouille.fr"\n')
 
         # Make new file and fill with Gucamole
         page.keyboard.press("ControlOrMeta+Shift+E")
@@ -58,12 +67,9 @@ def run():
         message = page.get_by_role("textbox", name="Message")
         message.press_sequentially("Defines template")
         message.press("ControlOrMeta+Enter")
+        expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
 
         # Look through files and take a screenshot
-        page.keyboard.press("Control+Shift+`")
-        terminal = page.get_by_role("textbox", name="Terminal 1")
-        terminal_output = page.locator(".xterm-rows")
-        expect(terminal_output).to_contain_text("$")
         terminal.press_sequentially("clear\n")
         terminal.press_sequentially("ls -a\n")
         expect(terminal_output).to_contain_text(".git")
