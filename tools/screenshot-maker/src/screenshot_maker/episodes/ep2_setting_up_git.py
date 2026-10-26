@@ -35,10 +35,8 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
         page, "git config --global --edit", output / "02-setup-edit-config.png"
     )
     type_into_terminal(page, ":wq")
+    type_into_terminal(page, "git config --list --global")
     type_into_terminal_and_screenshot(
-        page,
-        "git config --list --global",
-        output / "02-setup-list-config.png",
-        expected="init.defaultbranch=main",
+        page, "G", output / "02-setup-list-config.png", expected="init.defaultbranch=main"
     )
     type_into_terminal(page, "q")
