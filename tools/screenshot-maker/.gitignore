@@ -5,5 +5,7 @@ __pycache__/
 .pytest_cache/
 .coverage
 
+test-results/
+
 # can track in future
 uv.lock 
