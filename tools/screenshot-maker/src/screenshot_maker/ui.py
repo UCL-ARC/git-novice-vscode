@@ -84,7 +84,7 @@ def type_into_terminal(page: Page, command: str) -> None:
     page.get_by_role("textbox", name="Terminal 1").press_sequentially(f"{command}\n")
 
 
-def write_file(page: Page, name: str, content: str) -> None:
+def write_file(page: Page, name: str, content: str | None) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.get_by_role("button", name="New File...", exact=True).click()
     file_name = page.get_by_role("textbox", name="Type file name")
