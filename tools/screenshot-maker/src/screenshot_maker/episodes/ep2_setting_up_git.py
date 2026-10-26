@@ -2,10 +2,16 @@ from pathlib import Path
 
 from playwright.sync_api import Page, expect
 
-from ..ui import open_terminal, type_into_terminal, type_into_terminal_and_screenshot
+from ..ui import (
+    close_annoying_modals,
+    open_terminal,
+    type_into_terminal,
+    type_into_terminal_and_screenshot,
+)
 
 
 def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
+    close_annoying_modals(page)
     open_terminal(page)
 
     type_into_terminal(page, 'git config --global user.name "Alfredo Linguini"')
