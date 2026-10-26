@@ -72,6 +72,14 @@ def type_into_terminal(page: Page, command: str) -> None:
     page.get_by_role("textbox", name="Terminal 1").press_sequentially(f"{command}\n")
 
 
+def type_into_terminal_and_screenshot(
+    page: Page, command: str, screenshot_output_path: Path, expected: str | None = None
+) -> None:
+    type_into_terminal(page, command)
+    expect_terminal_to_contain(page, expected or command)
+    page.screenshot(path=screenshot_output_path)
+
+
 def write_file(page: Page, name: str, content: str) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.get_by_role("button", name="New File...", exact=True).click()
