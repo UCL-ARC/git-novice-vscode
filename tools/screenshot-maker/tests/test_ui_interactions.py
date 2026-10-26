@@ -17,7 +17,7 @@ from screenshot_maker.ui import (
     make_subfolder,
     open_terminal,
     write_file,
-    write_terminal,
+    type_into_terminal,
 )
 
 
@@ -35,7 +35,7 @@ def test_terminal_interaction(vscode_page) -> None:
     open_terminal(vscode_page)
 
     # The typed command contains the pieces separately, so the joined text only appears if it ran.
-    write_terminal(vscode_page, command="echo 'Hello, ''World''!'")
+    type_into_terminal(vscode_page, command="echo 'Hello, ''World''!'")
 
     terminal_output = vscode_page.locator(".xterm-rows")
     expect(terminal_output).to_contain_text("'Hello, ''World''!'")  # the command should be visible
