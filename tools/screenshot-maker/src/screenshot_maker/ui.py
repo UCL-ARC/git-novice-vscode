@@ -10,6 +10,14 @@ from pathlib import Path
 from playwright.sync_api import Page, expect
 
 
+def close_annoying_modals(page: Page) -> None:
+    """Get rid of the annoying modals and popups that block interaction with the page."""
+    # None of this is important but it does introduce a brittleness.
+    page.get_by_role("button", name="Restricted Mode: Some").click()
+    page.get_by_role("button", name="Trust", exact=True).click()
+    page.get_by_role("button", name="Close Modal Editor (Escape)").click()
+
+
 def commit_changes(page: Page, message: str) -> None:
     page.keyboard.press("Control+Shift+G")
     page.get_by_role("treeitem", name="Changes", exact=True).hover()
@@ -51,9 +59,15 @@ def init_repo(page: Page) -> None:
     page.get_by_role("textbox", name="Message").wait_for()
 
 
+def expect_terminal_to_contain(page: Page, expected: str) -> None:
+    """Use this to check (or wait for) terminal output from a call to `type_into_terminal`."""
+    terminal_output = page.locator(".xterm-rows")
+    expect(terminal_output).to_contain_text(expected)
+
+
 def open_terminal(page: Page) -> None:
     page.keyboard.press("Control+Shift+`")
-    expect(page.locator(".xterm-rows")).to_contain_text("$")
+    expect_terminal_to_contain(page, "$")
 
 
 def type_into_terminal(page: Page, command: str) -> None:
@@ -68,4 +82,4 @@ def write_file(page: Page, name: str, content: str) -> None:
     file_name.press("Enter")
     editor = page.get_by_role("textbox", name=name)
     editor.press_sequentially(content)
-    editor.press("ControlOrMeta+s")
+    editor.press("ControlOrMeta+s", delay=100)
