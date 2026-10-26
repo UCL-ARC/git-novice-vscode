@@ -9,20 +9,20 @@ from ..ui import (
     init_repo,
     init_workspace,
     open_terminal,
+    type_into_terminal,
     write_file,
-    write_terminal,
 )
 
 
-def example(page: Page, desktop: Path) -> None:
+def example(page: Page, desktop: Path, output: Path) -> None:
     # Open, name and trust folder, then init repo
     init_workspace(page, desktop, "test_repo")
     init_repo(page)
 
     # Set git identity
     open_terminal(page)
-    write_terminal(page, 'git config user.name "Alfredo Linguini"')
-    write_terminal(page, 'git config user.email "a.linguini@ratatouille.fr"')
+    type_into_terminal(page, 'git config user.name "Alfredo Linguini"')
+    type_into_terminal(page, 'git config user.email "a.linguini@ratatouille.fr"')
 
     # Make new file and fill with Gucamole
     write_file(page, "guacamole.md", "# Guacamole\n## Ingredients\n\n## Instructions\n")
@@ -31,7 +31,7 @@ def example(page: Page, desktop: Path) -> None:
     expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
 
     # Look through files and take a screenshot
-    write_terminal(page, "clear")
-    write_terminal(page, "ls -a")
+    type_into_terminal(page, "clear")
+    type_into_terminal(page, "ls -a")
     expect(page.locator(".xterm-rows")).to_contain_text(".git")
-    page.screenshot(path="fin.png")
+    page.screenshot(path=output / "fin.png")
