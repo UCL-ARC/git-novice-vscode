@@ -88,4 +88,4 @@ def write_file(page: Page, name: str, content: str) -> None:
     file_name.press("Enter")
     editor = page.get_by_role("textbox", name=name)
     editor.press_sequentially(content)
-    editor.press("ControlOrMeta+s", delay=100)
+    editor.press("ControlOrMeta+s", delay=500)
