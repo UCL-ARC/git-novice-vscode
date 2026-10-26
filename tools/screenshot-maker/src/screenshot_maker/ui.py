@@ -73,10 +73,10 @@ def type_into_terminal(page: Page, command: str) -> None:
 
 
 def type_into_terminal_and_screenshot(
-    page: Page, command: str, screenshot_output_path: Path, expected: str | None = None
+    page: Page, command: str, screenshot_output_path: Path, expected: str
 ) -> None:
     type_into_terminal(page, command)
-    expect_terminal_to_contain(page, expected or command)
+    expect_terminal_to_contain(page, expected)
     page.screenshot(path=screenshot_output_path)
 
 

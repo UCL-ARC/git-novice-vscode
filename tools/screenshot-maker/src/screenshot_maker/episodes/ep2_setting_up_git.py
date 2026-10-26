@@ -19,20 +19,31 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
         page,
         'git config --global user.email "a.linguini@ratatouille.fr"',
         output / "02-setup-name-and-email.png",
+        expected='ratatouille.fr"bash-',
     )
     type_into_terminal_and_screenshot(
-        page, "git config --global core.autocrlf input", output / "02-setup-line-endings.png"
+        page,
+        "git config --global core.autocrlf input",
+        output / "02-setup-line-endings.png",
+        expected="inputbash-",
     )
     type_into_terminal_and_screenshot(
-        page, 'git config --global core.editor "vim"', output / "02-setup-editor.png"
+        page,
+        'git config --global core.editor "vim"',
+        output / "02-setup-editor.png",
+        expected='"vim"bash-',
     )
     type_into_terminal_and_screenshot(
         page,
         "git config --global init.defaultBranch main",
         output / "02-setup-default-branch.png",
+        expected="mainbash-",
     )
     type_into_terminal_and_screenshot(
-        page, "git config --global --edit", output / "02-setup-edit-config.png"
+        page,
+        "git config --global --edit",
+        output / "02-setup-edit-config.png",
+        expected='.gitconfig"',
     )
     type_into_terminal(page, ":wq")
     type_into_terminal(page, "git config --list --global")
