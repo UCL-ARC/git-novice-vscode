@@ -58,3 +58,5 @@ def test_write_file(vscode_page_and_path) -> None:
     close_annoying_modals(vscode_page)
     write_file(vscode_page, "test_file.txt", "Hello, World!")
     assert (tmp_path / "test_file.txt").exists()
+    assert (tmp_path / "test_file.txt").is_file()
+    assert (tmp_path / "test_file.txt").read_text() == "Hello, World!"
