@@ -24,7 +24,7 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
         page, "git config --global core.autocrlf input", output / "02-setup-line-endings.png"
     )
     type_into_terminal_and_screenshot(
-        page, 'git config --global core.editor "code --wait"', output / "02-setup-editor.png"
+        page, 'git config --global core.editor "vim"', output / "02-setup-editor.png"
     )
     type_into_terminal_and_screenshot(
         page,
