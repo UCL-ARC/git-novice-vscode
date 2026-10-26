@@ -16,8 +16,8 @@ from screenshot_maker.ui import (
     close_annoying_modals,
     make_subfolder,
     open_terminal,
-    write_file,
     type_into_terminal,
+    write_file,
 )
 
 
