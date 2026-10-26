@@ -74,20 +74,12 @@ def type_into_terminal(page: Page, command: str) -> None:
     page.get_by_role("textbox", name="Terminal 1").press_sequentially(f"{command}\n")
 
 
-def write_file(page: Page, fname: str, content: str) -> None:
+def write_file(page: Page, name: str, content: str) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.get_by_role("button", name="New File...", exact=True).click()
     file_name = page.get_by_role("textbox", name="Type file name")
-    file_name.fill(fname)
+    file_name.fill(name)
     file_name.press("Enter")
-    editor = page.get_by_role("textbox", name=fname)
+    editor = page.get_by_role("textbox", name=name)
     editor.press_sequentially(content)
-    # expect(editor).to_contain_text(content)
     editor.press("ControlOrMeta+s", delay=100)
-    # page.get_by_role("menuitem", name="Application Menu").click()
-    # page.get_by_role("menuitem", name="File", exact=True).click()
-    # page.get_by_role("menuitem", name="Save ⌘S").click(delay=100)
-    # page.get_by_role("menuitem", name="Save As... ⇧⌘S")
-
-    # page.get_by_role("tab", name=fname).get_by_role("button", name="Close (⌘W)").click()
-    # page.get_by_role("tree", name="Files Explorer").locator("a").filter(has_text=fname).click()
