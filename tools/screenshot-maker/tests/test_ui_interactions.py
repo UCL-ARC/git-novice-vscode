@@ -33,8 +33,13 @@ def test_terminal_interaction(vscode_page) -> None:
     # Should be able to Ctrl/Cmd + ` to open a terminal and type something.
     close_annoying_modals(vscode_page)
     open_terminal(vscode_page)
-    write_terminal(vscode_page, command="echo 'Hello, World!'")
-    expect(vscode_page.locator(".xterm-rows")).to_contain_text("Hello, World!")
+
+    # The typed command contains the pieces separately, so the joined text only appears if it ran.
+    write_terminal(vscode_page, command="echo 'Hello, ''World''!'")
+
+    terminal_output = vscode_page.locator(".xterm-rows")
+    expect(terminal_output).to_contain_text("'Hello, ''World''!'")  # the command should be visible
+    expect(terminal_output).to_contain_text("Hello, World!")  # the output of the command
 
 
 @pytest.mark.skip(reason="Failing for some wait reason.")
