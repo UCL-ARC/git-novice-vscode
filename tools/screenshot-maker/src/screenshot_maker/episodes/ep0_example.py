@@ -6,6 +6,7 @@ from playwright.sync_api import Page, expect
 
 from ..ui import (
     commit_changes,
+    expect_terminal_to_contain,
     init_repo,
     init_workspace,
     open_terminal,
@@ -33,5 +34,7 @@ def example(page: Page, desktop: Path, output: Path) -> None:
     # Look through files and take a screenshot
     type_into_terminal(page, "clear")
     type_into_terminal(page, "ls -a")
-    expect(page.locator(".xterm-rows")).to_contain_text(".git")
+    expect_terminal_to_contain(page, ".git")
+    type_into_terminal(page, "cat guacamole.md")
+    expect_terminal_to_contain(page, "# Guacamole")
     page.screenshot(path=output / "fin.png")
