@@ -19,7 +19,7 @@ def close_annoying_modals(page: Page) -> None:
 
 
 def commit_changes(page: Page, message: str) -> None:
-    page.keyboard.press("Control+Shift+G")
+    open_source_control(page)
     page.get_by_role("treeitem", name="Changes", exact=True).hover()
     page.get_by_role("button", name="Stage All Changes").click()
     page.get_by_role("treeitem", name="Staged Changes").wait_for()
@@ -53,8 +53,23 @@ def make_subfolder(page: Page, name: str) -> None:
     folder_name.press("Enter")
 
 
-def init_repo(page: Page) -> None:
+def open_source_control(page: Page) -> None:
     page.keyboard.press("Control+Shift+G")
+    expect(page.get_by_role("heading", name="Source Control")).to_be_visible(timeout=10_000)
+
+
+def open_file_explorer(page: Page) -> None:
+    page.keyboard.press("Control+Shift+E")
+    expect(page.get_by_role("heading", name="Explorer", exact=True)).to_be_visible()
+
+
+def open_terminal(page: Page) -> None:
+    page.keyboard.press("Control+Shift+`")
+    expect_terminal_to_contain(page, "$")
+
+
+def init_repo(page: Page) -> None:
+    open_source_control(page)
     page.get_by_role("button", name="Initialize Repository").click()
     page.get_by_role("textbox", name="Message").wait_for()
 
@@ -63,11 +78,6 @@ def expect_terminal_to_contain(page: Page, expected: str) -> None:
     """Use this to check (or wait for) terminal output from a call to `type_into_terminal`."""
     terminal_output = page.locator(".xterm-rows")
     expect(terminal_output).to_contain_text(expected)
-
-
-def open_terminal(page: Page) -> None:
-    page.keyboard.press("Control+Shift+`")
-    expect_terminal_to_contain(page, "$")
 
 
 def type_into_terminal(page: Page, command: str) -> None:
@@ -79,7 +89,8 @@ def write_file(page: Page, name: str, content: str) -> None:
     page.get_by_role("button", name="New File...", exact=True).click()
     file_name = page.get_by_role("textbox", name="Type file name")
     file_name.fill(name)
-    file_name.press("Enter")
-    editor = page.get_by_role("textbox", name=name)
-    editor.press_sequentially(content)
-    editor.press("ControlOrMeta+s", delay=100)
+    file_name.press("Enter", delay=100)
+    if content:
+        editor = page.get_by_role("textbox", name=name)
+        editor.press_sequentially(content)
+        editor.press("ControlOrMeta+s", delay=100)
