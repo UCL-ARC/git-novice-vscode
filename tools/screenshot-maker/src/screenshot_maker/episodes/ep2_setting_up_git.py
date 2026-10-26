@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
 
 from ..ui import (
     init_workspace,
@@ -31,17 +31,14 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
         "git config --global init.defaultBranch main",
         output / "02-setup-default-branch.png",
     )
-
-    type_into_terminal(page, "git config --global --edit")
-    config_tab = page.get_by_role("tab", name=".gitconfig")
-    expect(config_tab).to_be_visible()
-    page.screenshot(path=output / "02-setup-edit.png")
-    config_tab.get_by_role("button", name="Close").click()
-    expect(config_tab).to_be_hidden()
-
+    type_into_terminal_and_screenshot(
+        page, "git config --global --edit", output / "02-setup-edit-config.png"
+    )
+    type_into_terminal(page, ":wq\n")
     type_into_terminal_and_screenshot(
         page,
         "git config --list --global",
-        output / "02-setup-list.png",
+        output / "02-setup-list-config.png",
         expected="init.defaultbranch=main",
     )
+    type_into_terminal(page, "q\n")
