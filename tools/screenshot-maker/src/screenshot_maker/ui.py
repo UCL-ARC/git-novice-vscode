@@ -40,9 +40,7 @@ def init_workspace(page: Page, desktop: Path, name: str) -> None:
     page.get_by_text(f"The folder {name} does not").wait_for()
     page.get_by_role("button", name="OK").click()  # "are you sure?"
     page.wait_for_url(f"**/{name}")
-    page.get_by_role("button", name="Restricted Mode: Some").click()
-    page.get_by_role("button", name="Trust", exact=True).click()
-    page.get_by_role("button", name="Close Modal Editor (Escape)").click()
+    close_annoying_modals(page)
 
 
 def make_subfolder(page: Page, name: str) -> None:
