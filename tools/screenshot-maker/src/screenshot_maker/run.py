@@ -16,11 +16,16 @@ def _make_student_desktop(tmp_path: str) -> Path:
 
 def run(output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory() as tmp_path:
+    # bash is still writing session files into the fake home as the server shuts down.
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_path:
         desktop = _make_student_desktop(tmp_path)
-        git_config = {"GIT_CONFIG_GLOBAL": str(desktop.parent / ".gitconfig")}
+        student_env = {
+            "HOME": str(desktop.parent),
+            "GIT_CONFIG_GLOBAL": str(desktop.parent / ".gitconfig"),
+            "VSCODE_CLI_DATA_DIR": str(Path.home() / ".vscode" / "cli"),
+        }
         with (
-            CodeServer(additional_env=git_config) as server,
+            CodeServer(additional_env=student_env) as server,
             sync_playwright() as playwright_context,
         ):
             browser = playwright_context.firefox.launch()

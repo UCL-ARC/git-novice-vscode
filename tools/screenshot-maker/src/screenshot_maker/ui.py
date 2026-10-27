@@ -38,12 +38,21 @@ def screenshot_with_dot(
     img.save(output)
 
 
-def close_annoying_modals(page: Page) -> None:
+def close_annoying_modals(page: Page, screenshot_output_path: Path | None = None) -> None:
     """Get rid of the annoying modals and popups that block interaction with the page."""
     # None of this is important but it does introduce a brittleness.
-    page.get_by_role("button", name="Restricted Mode: Some").click()
-    page.get_by_role("button", name="Trust", exact=True).click()
-    page.get_by_role("button", name="Close Modal Editor (Escape)").click()
+    buttons = {
+        "restricted-mode": page.get_by_role("button", name="Restricted Mode: Some"),
+        "trust": page.get_by_role("button", name="Trust", exact=True),
+        "close-modal": page.get_by_role("button", name="Close Modal Editor (Escape)"),
+    }
+    for suffix, button in buttons.items():
+        if screenshot_output_path:
+            screenshot_name = screenshot_output_path.stem
+            screenshot_with_dot(
+                page, button, screenshot_output_path.with_stem(f"{screenshot_name}-{suffix}")
+            )
+        button.click()
 
 
 def commit_changes(page: Page, message: str) -> None:
@@ -72,23 +81,32 @@ def init_workspace_and_screenshot(
     expect(folder_path).to_have_value(f"{desktop.parent}/")
     folder_path.fill(f"{desktop}/{name}")
     expect(page.get_by_role("option", name="Desktop")).to_be_hidden()
-    page.get_by_role("button", name="OK").click()  # "create new folder"
+    ok_button = page.get_by_role("button", name="OK")
+    screenshot_name = screenshot_output_path.stem
+    screenshot_with_dot(
+        page, ok_button, screenshot_output_path.with_stem(f"{screenshot_name}-new-folder")
+    )
+    ok_button.click()  # "create new folder"
     page.get_by_text(f"The folder {name} does not").wait_for()
-    page.get_by_role("button", name="OK").click()  # "are you sure?"
+    screenshot_with_dot(
+        page, ok_button, screenshot_output_path.with_stem(f"{screenshot_name}-confirm")
+    )
+    ok_button.click()  # "are you sure?"
     page.wait_for_url(f"**/{name}")
-    close_annoying_modals(page)
+    close_annoying_modals(page, screenshot_output_path)
 
 
 def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path: Path) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
     new_folder = page.get_by_role("button", name="New Folder...", exact=True)
+    screenshot_name = screenshot_output_path.stem
     screenshot_with_dot(page, new_folder, screenshot_output_path)
     new_folder.click()
-    page.screenshot(path=screenshot_output_path)
+    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-name"))
     folder_name = page.get_by_role("textbox", name="Type file name")
     folder_name.fill(name)
     folder_name.press("Enter")
-    page.screenshot(path=f"{screenshot_output_path}-after")
+    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
 
 def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
@@ -96,7 +114,8 @@ def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
     page.screenshot(path=screenshot_output_path)
     page.get_by_role("button", name="Initialize Repository").click()
     page.get_by_role("textbox", name="Message").wait_for()
-    page.screenshot(path=f"{screenshot_output_path}-after-click")
+    screenshot_name = screenshot_output_path.stem
+    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after-click"))
 
 
 def expect_terminal_to_contain(page: Page, expected: str) -> None:
