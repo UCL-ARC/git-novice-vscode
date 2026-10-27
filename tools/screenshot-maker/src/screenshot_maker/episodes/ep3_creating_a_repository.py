@@ -2,7 +2,7 @@ from pathlib import Path
 
 from playwright.sync_api import Page, expect
 
-from ..ui import init_repo
+from ..ui import init_repo, screenshot_with_dot
 
 
 def creating_a_repository(page: Page, desktop: Path, output: Path) -> None:
@@ -10,5 +10,8 @@ def creating_a_repository(page: Page, desktop: Path, output: Path) -> None:
     page.screenshot(path=output / "03-create-init.png")
 
     page.keyboard.press("ControlOrMeta+Shift+E")
-    expect(page.get_by_role("button", name="New File...", exact=True)).to_be_visible()
+    file_location = page.get_by_role("button", name="New File...", exact=True)
+    expect(file_location).to_be_visible()
+    screenshot_with_dot(page, file_location, output / "03-create-file.png", radius=16)
+
     page.screenshot(path=output / "03-create-ls.png")

@@ -5,8 +5,10 @@ If a helper gives an action a clear name and hides repeated Playwright mechanics
 If it only wraps one obvious locator call and is used once, leave it in the episode.
 """
 
+from io import BytesIO
 from pathlib import Path
 
+from PIL import Image, ImageDraw
 from playwright.sync_api import Page, expect
 
 
@@ -89,3 +91,18 @@ def write_file(page: Page, name: str, content: str) -> None:
     editor = page.get_by_role("textbox", name=name)
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
+
+
+def screenshot_with_dot(page, locator, screenshot_output_path, radius=7, width=3):
+    locator.hover()
+    box = locator.bounding_box()
+    x = box["x"] + box["width"] / 2
+    y = box["y"] + box["height"] / 2
+
+    scale = page.evaluate("window.devicePixelRatio")
+    x, y, r, w = x * scale, y * scale, radius * scale, round(width * scale)
+
+    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
+    draw = ImageDraw.Draw(img)
+    draw.ellipse((x - r, y - r, x + r, y + r), outline="red", width=w)
+    img.save(screenshot_output_path)
