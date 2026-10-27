@@ -12,6 +12,7 @@ from ..ui import (
 
 def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
     init_workspace(page, desktop, "recipes")
+    page.keyboard.press("ControlOrMeta+Shift+B")  # Hide pre-created folder
     open_terminal(page)
 
     type_into_terminal(page, 'git config --global user.name "Alfredo Linguini"')
