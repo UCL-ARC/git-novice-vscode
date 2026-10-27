@@ -5,6 +5,7 @@ If a helper gives an action a clear name and hides repeated Playwright mechanics
 If it only wraps one obvious locator call and is used once, leave it in the episode.
 """
 
+import re
 from pathlib import Path
 
 from playwright.sync_api import Page, expect
@@ -44,24 +45,33 @@ def init_workspace(page: Page, desktop: Path, name: str) -> None:
 
 
 def make_subfolder(page: Page, name: str) -> None:
-    page.keyboard.press("ControlOrMeta+Shift+E")
+    open_file_explorer(page)
     page.get_by_role("button", name="New Folder...", exact=True).click()
     folder_name = page.get_by_role("textbox", name="Type file name")
     folder_name.fill(name)
     folder_name.press("Enter")
 
 
+def _open_sidebar_view(page: Page, name: str) -> None:
+    # Shortcuts are swallowed when e.g. an image preview has focus, so click the tab instead.
+    tab = page.get_by_role("tab", name=re.compile(rf"^{name}"))
+    if tab.get_attribute("aria-selected") != "true":
+        tab.click()
+    expect(page.get_by_role("heading", name=name, exact=True)).to_be_visible(timeout=10_000)
+
+
 def open_source_control(page: Page) -> None:
-    page.keyboard.press("Control+Shift+G")
-    expect(page.get_by_role("heading", name="Source Control")).to_be_visible(timeout=10_000)
+    """Clicks the 'Source Control' tab in the sidebar and waits for it to be visible."""
+    _open_sidebar_view(page, "Source Control")
 
 
 def open_file_explorer(page: Page) -> None:
-    page.keyboard.press("Control+Shift+E")
-    expect(page.get_by_role("heading", name="Explorer", exact=True)).to_be_visible()
+    """Clicks the 'File Explorer' tab in the sidebar and waits for it to be visible."""
+    _open_sidebar_view(page, "Explorer")
 
 
 def open_terminal(page: Page) -> None:
+    """Opens the terminal and waits for the bash prompt to be ready."""
     page.keyboard.press("Control+Shift+`")
     expect_terminal_to_contain(page, "$")
 
@@ -91,7 +101,7 @@ def type_into_terminal_and_screenshot(
 
 
 def write_file(page: Page, name: str, content: str = "") -> None:
-    page.keyboard.press("ControlOrMeta+Shift+E")
+    open_file_explorer(page)
     page.get_by_role("button", name="New File...", exact=True).click()
     file_name = page.get_by_role("textbox", name="Type file name")
     file_name.fill(name)

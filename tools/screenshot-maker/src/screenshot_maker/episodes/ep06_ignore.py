@@ -21,13 +21,13 @@ def ignoring_things(page: Page, desktop: Path, output: Path):
     page.get_by_label(f"{desktop}/pictures", exact=True).locator("div").filter(
         has_text=re.compile(r"^pictures$")
     )
-    page.screenshot(path=output / "ep06_ignore_01_pictures.png")
+    page.screenshot(path=output / "06-ignore-empty-images.png")
 
     # Open the Source Control pane and take a screenshot of the untracked files.
     open_source_control(page)
-    page.screenshot(path=output / "ep06_ignore_02_untracked_image_files.png")
+    page.screenshot(path=output / "06-ignore-untracked-image-files.png")
 
     # Add a .gitignore
     write_file(page, ".gitignore", content="*.png\npictures/\n")
     open_source_control(page)
-    page.screenshot(path=output / "ep06_ignore_03_ignored_images.png")
+    page.screenshot(path=output / "06-ignore-gitignored.png")
