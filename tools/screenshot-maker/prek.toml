@@ -21,7 +21,7 @@ rev = "v2.4.0"
 [[repos.hooks]]
 id = "mypy"
 args = ["--fix", "--python-version=3.14"]
-additional_dependencies = ["types-requests", "loguru", "playwright", "pytest"]
+additional_dependencies = ["types-requests", "loguru", "playwright", "pytest", "pillow"]
 
 
 [[repos]]
