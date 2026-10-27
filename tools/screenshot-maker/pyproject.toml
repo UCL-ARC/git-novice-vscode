@@ -9,13 +9,13 @@ authors = [
 ]
 requires-python = ">=3.14"
 readme = "README.md"
-dependencies = ["playwright", "loguru"]
+dependencies = ["playwright", "loguru", "pillow"]
 
 [project.scripts]
 screenshot-maker = "screenshot_maker:cli"
 
 [dependency-groups]
-dev = ["prek>=0.5.6", "pytest", "pytest-cov>=7.1.0", "pytest-playwright", "pillow"]
+dev = ["prek>=0.5.6", "pytest", "pytest-cov>=7.1.0", "pytest-playwright"]
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14"]
