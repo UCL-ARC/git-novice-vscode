@@ -15,7 +15,7 @@ dependencies = ["playwright", "loguru"]
 screenshot-maker = "screenshot_maker:cli"
 
 [dependency-groups]
-dev = ["prek>=0.5.6", "pytest", "pytest-cov>=7.1.0", "pytest-playwright"]
+dev = ["prek>=0.5.6", "pytest", "pytest-cov>=7.1.0", "pytest-playwright", "pillow"]
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14"]
