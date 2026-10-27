@@ -13,7 +13,7 @@ from ..ui import (
 def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
     # Use folder in this lesson but create in next.
     init_workspace_and_screenshot(page, desktop, "recipes", output / "03-create-workspace.png")
-    page.keyboard.press("ControlOrMeta+Shift+B")  # Hide pre-created folder
+    page.keyboard.press("ControlOrMeta+B")  # Hide pre-created folder
     open_terminal(page)
 
     type_into_terminal(page, 'git config --global user.name "Alfredo Linguini"')
