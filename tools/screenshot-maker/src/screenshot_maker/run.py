@@ -18,7 +18,10 @@ def run(output: Path) -> None:
     with tempfile.TemporaryDirectory() as tmp_path:
         desktop = _make_student_desktop(tmp_path)
         git_config = {"GIT_CONFIG_GLOBAL": str(desktop.parent / ".gitconfig")}
-        with CodeServer(env=git_config) as server, sync_playwright() as playwright_context:
+        with (
+            CodeServer(additional_env=git_config) as server,
+            sync_playwright() as playwright_context,
+        ):
             browser = playwright_context.firefox.launch()
             context = browser.new_context()
             context.tracing.start(screenshots=True, snapshots=True, sources=True)
