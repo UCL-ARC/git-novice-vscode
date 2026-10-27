@@ -28,10 +28,17 @@ def commit_changes(page: Page, message: str) -> None:
     message_box.press("ControlOrMeta+Enter")
 
 
-def init_workspace(page: Page, desktop: Path, name: str) -> None:
+def init_workspace_and_screenshot(
+    page: Page,
+    desktop: Path,
+    name: str,
+) -> None:
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
+    # page.get_by_role("menuitem", name="Open Folder...").hover(delay=100)
+    # Draw bounding box and screenshot with dot here - named for ep 3
     page.get_by_role("menuitem", name="Open Folder...").click(delay=100)
+
     folder_path = page.get_by_role("textbox", name="Folder path")
     expect(folder_path).to_have_value(f"{desktop.parent}/")
     folder_path.fill(f"{desktop}/{name}")
@@ -43,18 +50,23 @@ def init_workspace(page: Page, desktop: Path, name: str) -> None:
     close_annoying_modals(page)
 
 
-def make_subfolder(page: Page, name: str) -> None:
+def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path: Path) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.get_by_role("button", name="New Folder...", exact=True).click()
+    # Hover bounding box click needed
+    page.screenshot(path=screenshot_output_path)
     folder_name = page.get_by_role("textbox", name="Type file name")
     folder_name.fill(name)
     folder_name.press("Enter")
+    page.screenshot(path=f"{screenshot_output_path}-after")
 
 
-def init_repo(page: Page) -> None:
+def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
     page.keyboard.press("Control+Shift+G")
+    page.screenshot(path=screenshot_output_path)
     page.get_by_role("button", name="Initialize Repository").click()
     page.get_by_role("textbox", name="Message").wait_for()
+    page.screenshot(path=f"{screenshot_output_path}-after-click")
 
 
 def expect_terminal_to_contain(page: Page, expected: str) -> None:

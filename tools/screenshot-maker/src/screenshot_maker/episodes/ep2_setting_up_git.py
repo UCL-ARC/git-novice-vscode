@@ -3,7 +3,7 @@ from pathlib import Path
 from playwright.sync_api import Page
 
 from ..ui import (
-    init_workspace,
+    init_workspace_and_screenshot,
     open_terminal,
     type_into_terminal,
     type_into_terminal_and_screenshot,
@@ -11,7 +11,7 @@ from ..ui import (
 
 
 def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
-    init_workspace(page, desktop, "recipes")
+    init_workspace_and_screenshot(page, desktop, "recipes")
     page.keyboard.press("ControlOrMeta+Shift+B")  # Hide pre-created folder
     open_terminal(page)
 
