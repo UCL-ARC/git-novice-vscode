@@ -15,6 +15,7 @@ def _make_student_desktop(tmp_path: str) -> Path:
 
 
 def run(output: Path) -> None:
+    output.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory() as tmp_path:
         desktop = _make_student_desktop(tmp_path)
         git_config = {"GIT_CONFIG_GLOBAL": str(desktop.parent / ".gitconfig")}
