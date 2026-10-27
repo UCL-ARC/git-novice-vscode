@@ -97,6 +97,6 @@ def write_file(page: Page, name: str, content: str = "") -> None:
     file_name.fill(name)
     file_name.press("Enter", delay=100)
     if content:
-        editor = page.get_by_role("textbox", name=name)
+        editor = page.get_by_role("textbox", name=Path(name).name)
         editor.press_sequentially(content)
         editor.press("ControlOrMeta+s", delay=100)
