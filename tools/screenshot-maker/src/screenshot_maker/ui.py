@@ -5,9 +5,11 @@ If a helper gives an action a clear name and hides repeated Playwright mechanics
 If it only wraps one obvious locator call and is used once, leave it in the episode.
 """
 
+from io import BytesIO
 from pathlib import Path
 
-from playwright.sync_api import Page, expect
+from PIL import Image, ImageDraw
+from playwright.sync_api import FloatRect, Locator, Page, Position, expect
 
 
 def close_annoying_modals(page: Page) -> None:
@@ -89,3 +91,29 @@ def write_file(page: Page, name: str, content: str) -> None:
     editor = page.get_by_role("textbox", name=name)
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
+
+
+def _centre(box: FloatRect) -> Position:
+    x = box["x"] + box["width"] / 2
+    y = box["y"] + box["height"] / 2
+    return Position(x=x, y=y)
+
+
+def screenshot_with_dot(
+    page: Page, locator: Locator, output: Path, radius: int = 7, width: int = 3
+):
+    locator.hover()
+
+    box = locator.bounding_box()
+    if box is None:
+        raise ValueError(f"Could not get a bounding box from {locator}")
+    point = _centre(box)
+
+    scale = page.evaluate("window.devicePixelRatio")
+    x, y = point["x"] * scale, point["y"] * scale
+    r, w = radius * scale, round(width * scale)
+
+    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
+    draw = ImageDraw.Draw(img)
+    draw.ellipse((x - r, y - r, x + r, y + r), outline="red", width=w)
+    img.save(output)
