@@ -27,6 +27,7 @@ class CodeServer:
     timeout_seconds: float = 30
     process: subprocess.Popen | None = field(default=None, init=False)
     code_binary: str = os.getenv("CODE_BIN", "code")
+    additional_env: dict[str, str] = field(default_factory=dict)
 
     @property
     def url(self) -> str:
@@ -63,6 +64,7 @@ class CodeServer:
                 str(_SERVER_DATA_DIR),
             ],
             stdout=subprocess.DEVNULL,
+            env={**os.environ, **self.additional_env},
             # Own process group, so stop() can kill the child processes `code` spawns.
             # POSIX only (macOS/Linux): Windows isn't supported.
             start_new_session=True,

@@ -40,9 +40,7 @@ def init_workspace(page: Page, desktop: Path, name: str) -> None:
     page.get_by_text(f"The folder {name} does not").wait_for()
     page.get_by_role("button", name="OK").click()  # "are you sure?"
     page.wait_for_url(f"**/{name}")
-    page.get_by_role("button", name="Restricted Mode: Some").click()
-    page.get_by_role("button", name="Trust", exact=True).click()
-    page.get_by_role("button", name="Close Modal Editor (Escape)").click()
+    close_annoying_modals(page)
 
 
 def make_subfolder(page: Page, name: str) -> None:
@@ -84,7 +82,15 @@ def type_into_terminal(page: Page, command: str) -> None:
     page.get_by_role("textbox", name="Terminal 1").press_sequentially(f"{command}\n")
 
 
-def write_file(page: Page, name: str, content: str | None) -> None:
+def type_into_terminal_and_screenshot(
+    page: Page, command: str, screenshot_output_path: Path, expected: str
+) -> None:
+    type_into_terminal(page, command)
+    expect_terminal_to_contain(page, expected)
+    page.screenshot(path=screenshot_output_path)
+
+
+def write_file(page: Page, name: str, content: str = "") -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.get_by_role("button", name="New File...", exact=True).click()
     file_name = page.get_by_role("textbox", name="Type file name")
