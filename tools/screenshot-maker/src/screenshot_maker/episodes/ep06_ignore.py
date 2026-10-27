@@ -12,10 +12,10 @@ from ..ui import (
 
 def ignoring_things(page: Page, desktop: Path, output: Path):
     # Create some files and a subfolder in the workspace.
-    write_file(page, "a.png", content=None)
-    write_file(page, "b.png", content=None)
-    write_file(page, "pictures/cake1.jpg", content=None)
-    write_file(page, "cake2.jpg", content=None)
+    write_file(page, "a.png")
+    write_file(page, "b.png")
+    write_file(page, "pictures/cake1.jpg")
+    write_file(page, "cake2.jpg")  # will be in the subdirectory
 
     # Take a screenshot of the "pictures" folder in the file explorer.
     page.get_by_label(f"{desktop}/pictures", exact=True).locator("div").filter(
