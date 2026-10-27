@@ -12,6 +12,32 @@ from PIL import Image, ImageDraw
 from playwright.sync_api import FloatRect, Locator, Page, Position, expect
 
 
+def _centre(box: FloatRect) -> Position:
+    x = box["x"] + box["width"] / 2
+    y = box["y"] + box["height"] / 2
+    return Position(x=x, y=y)
+
+
+def screenshot_with_dot(
+    page: Page, locator: Locator, output: Path, radius: int = 7, width: int = 3
+):
+    locator.hover()
+
+    box = locator.bounding_box()
+    if box is None:
+        raise ValueError(f"Could not get a bounding box from {locator}")
+    point = _centre(box)
+
+    scale = page.evaluate("window.devicePixelRatio")
+    x, y = point["x"] * scale, point["y"] * scale
+    r, w = radius * scale, round(width * scale)
+
+    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
+    draw = ImageDraw.Draw(img)
+    draw.ellipse((x - r, y - r, x + r, y + r), outline="red", width=w)
+    img.save(output)
+
+
 def close_annoying_modals(page: Page) -> None:
     """Get rid of the annoying modals and popups that block interaction with the page."""
     # None of this is important but it does introduce a brittleness.
@@ -34,12 +60,13 @@ def init_workspace_and_screenshot(
     page: Page,
     desktop: Path,
     name: str,
+    screenshot_output_path: Path,
 ) -> None:
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
-    # page.get_by_role("menuitem", name="Open Folder...").hover(delay=100)
-    # Draw bounding box and screenshot with dot here - named for ep 3
-    page.get_by_role("menuitem", name="Open Folder...").click(delay=100)
+    open_folder = page.get_by_role("menuitem", name="Open Folder...")
+    screenshot_with_dot(page, open_folder, screenshot_output_path)
+    open_folder.click(delay=100)
 
     folder_path = page.get_by_role("textbox", name="Folder path")
     expect(folder_path).to_have_value(f"{desktop.parent}/")
@@ -54,8 +81,9 @@ def init_workspace_and_screenshot(
 
 def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path: Path) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
-    page.get_by_role("button", name="New Folder...", exact=True).click()
-    # Hover bounding box click needed
+    new_folder = page.get_by_role("button", name="New Folder...", exact=True)
+    screenshot_with_dot(page, new_folder, screenshot_output_path)
+    new_folder.click()
     page.screenshot(path=screenshot_output_path)
     folder_name = page.get_by_role("textbox", name="Type file name")
     folder_name.fill(name)
@@ -103,29 +131,3 @@ def write_file(page: Page, name: str, content: str) -> None:
     editor = page.get_by_role("textbox", name=name)
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
-
-
-def _centre(box: FloatRect) -> Position:
-    x = box["x"] + box["width"] / 2
-    y = box["y"] + box["height"] / 2
-    return Position(x=x, y=y)
-
-
-def screenshot_with_dot(
-    page: Page, locator: Locator, output: Path, radius: int = 7, width: int = 3
-):
-    locator.hover()
-
-    box = locator.bounding_box()
-    if box is None:
-        raise ValueError(f"Could not get a bounding box from {locator}")
-    point = _centre(box)
-
-    scale = page.evaluate("window.devicePixelRatio")
-    x, y = point["x"] * scale, point["y"] * scale
-    r, w = radius * scale, round(width * scale)
-
-    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
-    draw = ImageDraw.Draw(img)
-    draw.ellipse((x - r, y - r, x + r, y + r), outline="red", width=w)
-    img.save(output)
