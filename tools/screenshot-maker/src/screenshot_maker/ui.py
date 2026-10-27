@@ -105,7 +105,8 @@ def screenshot_with_dot(
     locator.hover()
 
     box = locator.bounding_box()
-    assert box is not None
+    if box is None:
+        raise ValueError(f"Could not get a bounding box from {locator}")
     point = _centre(box)
 
     scale = page.evaluate("window.devicePixelRatio")
