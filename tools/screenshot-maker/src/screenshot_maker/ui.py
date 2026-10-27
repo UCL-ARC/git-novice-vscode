@@ -9,7 +9,7 @@ from io import BytesIO
 from pathlib import Path
 
 from PIL import Image, ImageDraw
-from playwright.sync_api import Page, expect
+from playwright.sync_api import FloatRect, Locator, Page, Position, expect
 
 
 def close_annoying_modals(page: Page) -> None:
@@ -93,16 +93,26 @@ def write_file(page: Page, name: str, content: str) -> None:
     editor.press("ControlOrMeta+s", delay=500)
 
 
-def screenshot_with_dot(page, locator, screenshot_output_path, radius=7, width=3):
-    locator.hover()
-    box = locator.bounding_box()
+def _centre(box: FloatRect) -> Position:
     x = box["x"] + box["width"] / 2
     y = box["y"] + box["height"] / 2
+    return Position(x=x, y=y)
+
+
+def screenshot_with_dot(
+    page: Page, locator: Locator, output: Path, radius: int = 7, width: int = 3
+):
+    locator.hover()
+
+    box = locator.bounding_box()
+    assert box is not None
+    point = _centre(box)
 
     scale = page.evaluate("window.devicePixelRatio")
-    x, y, r, w = x * scale, y * scale, radius * scale, round(width * scale)
+    x, y = point["x"] * scale, point["y"] * scale
+    r, w = radius * scale, round(width * scale)
 
     img = Image.open(BytesIO(page.screenshot())).convert("RGB")
     draw = ImageDraw.Draw(img)
     draw.ellipse((x - r, y - r, x + r, y + r), outline="red", width=w)
-    img.save(screenshot_output_path)
+    img.save(output)
