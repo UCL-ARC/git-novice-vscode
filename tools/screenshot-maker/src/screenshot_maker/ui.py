@@ -102,9 +102,9 @@ def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path:
     screenshot_name = screenshot_output_path.stem
     screenshot_with_dot(page, new_folder, screenshot_output_path)
     new_folder.click()
-    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-name"))
     folder_name = page.get_by_role("textbox", name="Type file name")
     folder_name.fill(name)
+    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-name"))
     folder_name.press("Enter")
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
