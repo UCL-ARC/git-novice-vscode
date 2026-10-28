@@ -3,6 +3,7 @@ from pathlib import Path
 from playwright.sync_api import Page
 
 from ..ui import (
+    expect_terminal_to_contain,
     init_workspace_and_screenshot,
     open_terminal,
     type_into_terminal,
@@ -48,6 +49,7 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
         expected='.gitconfig"',
     )
     type_into_terminal(page, ":wq")
+    expect_terminal_to_contain(page, "--editbash-")
     type_into_terminal(page, "git config --list --global")
     type_into_terminal_and_screenshot(
         page, "G", output / "02-setup-list-config.png", expected="init.defaultbranch=main"
