@@ -34,10 +34,6 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
         output / "04-changes-commit.png",
     )
 
-    page.get_by_role("treeitem", name="Create initial structure for a Guacamole recipe").hover()
-    page.get_by_role("tooltip").wait_for()
-    page.screenshot(path=output / "04-changes-log.png")
-
     edit_file(
         page,
         "guacamole.md",
