@@ -106,6 +106,7 @@ def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path:
     folder_name.fill(name)
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-name"))
     folder_name.press("Enter")
+    page.get_by_role("treeitem", name=name).wait_for()
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
 
