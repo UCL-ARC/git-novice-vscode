@@ -20,7 +20,7 @@ rev = "v2.4.0"
 
 [[repos.hooks]]
 id = "mypy"
-args = ["--fix", "--python-version=3.14", "--config-file=tools/screenshot-maker/pyproject.toml"]
+args = ["--fix", "--python-version=3.14", "--config-file=pyproject.toml"]
 additional_dependencies = ["types-requests", "loguru", "playwright", "pytest", "pillow"]
 
 
