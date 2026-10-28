@@ -22,7 +22,6 @@ def screenshot_with_dot(
     page: Page, locator: Locator, output: Path, radius: int = 7, width: int = 3
 ):
     locator.hover()
-
     box = locator.bounding_box()
     if box is None:
         raise ValueError(f"Could not get a bounding box from {locator}")
