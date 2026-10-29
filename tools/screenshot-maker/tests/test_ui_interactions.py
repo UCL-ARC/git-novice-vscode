@@ -9,12 +9,16 @@ don't add this to the fixture, so we get a more helpful error if the test fails 
 (which is likely if VSCode changes the modals in later versions).
 """
 
+from pathlib import Path
+
 from playwright.sync_api import expect
 
+from screenshot_maker.compare import _images_differ
 from screenshot_maker.ui import (
     close_annoying_modals,
     make_subfolder_and_screenshot,
     open_terminal,
+    screenshot_with_dot,
     type_into_terminal,
     write_file,
 )
@@ -63,3 +67,23 @@ def test_write_file(vscode_page_and_path) -> None:
     assert (tmp_path / "test_file.txt").exists()
     assert (tmp_path / "test_file.txt").is_file()
     assert (tmp_path / "test_file.txt").read_text() == "Hello, World!"
+
+
+PATH_TO_DEMO_PAGE = Path(__file__).parent.resolve() / "data" / "demo-page.html"
+
+
+def _assert_images_are_equal(actual: Path, expected: Path) -> None:
+    assert not _images_differ(actual, expected), f"Images differ: {actual} vs {expected}"
+
+
+def test_screenshot_with_dot(page, tmp_path) -> None:
+    assert PATH_TO_DEMO_PAGE.is_file()
+    page.goto(f"file://{PATH_TO_DEMO_PAGE}")
+    demo_button = page.get_by_role("button", name="click me")
+
+    obtained = tmp_path / "demo-button-dot.png"
+    screenshot_with_dot(page, demo_button, obtained)
+    assert obtained.is_file(), "Screenshot was not created"
+
+    expected = PATH_TO_DEMO_PAGE.parent / "demo-button-dot.png"
+    _assert_images_are_equal(obtained, expected)
