@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from loguru import logger
 from PIL import Image, ImageChops
 
 
@@ -20,5 +21,6 @@ def _images_differ(a: Path, b: Path) -> bool:
     """Compare two images and return True if they are different, False if the same."""
     with Image.open(a) as imagea, Image.open(b) as imageb:
         if imagea.size != imageb.size:
+            logger.warning(f"Images have different sizes: {imagea.size} vs {imageb.size}")
             return True
         return ImageChops.difference(imagea, imageb).getbbox() is not None
