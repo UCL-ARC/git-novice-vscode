@@ -97,6 +97,7 @@ def init_workspace_and_screenshot(
 
 def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path: Path) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
+    page.get_by_role("button", name="Explorer Section:").hover()
     new_folder = page.get_by_role("button", name="New Folder...", exact=True)
     screenshot_name = screenshot_output_path.stem
     screenshot_with_dot(page, new_folder, screenshot_output_path)
@@ -180,6 +181,7 @@ def write_file(
     page: Page, name: str, content: str, screenshot_output_path: Path | None = None
 ) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
+    page.get_by_role("button", name="Explorer Section:").hover()
     new_file = page.get_by_role("button", name="New File...", exact=True)
     if screenshot_output_path:
         screenshot_name = screenshot_output_path.stem
