@@ -19,4 +19,6 @@ def compare_screenshots(new_screenshots: Path, existing_screenshots: Path) -> No
 def _images_differ(a: Path, b: Path) -> bool:
     """Compare two images and return True if they are different, False if the same."""
     with Image.open(a) as imagea, Image.open(b) as imageb:
+        if imagea.size != imageb.size:
+            return True
         return ImageChops.difference(imagea, imageb).getbbox() is not None
