@@ -3,8 +3,11 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+from .compare import compare_screenshots
 from .episodes import EPISODES
 from .server import CodeServer
+
+EPISODE_FIGURES = Path(__file__).parents[4] / "episodes" / "fig"
 
 
 def _make_student_desktop(tmp_path: str) -> Path:
@@ -36,6 +39,8 @@ def run(output: Path) -> None:
 
             for episode in EPISODES:
                 episode(page, desktop, output)
+
+    compare_screenshots(output, EPISODE_FIGURES)
 
 
 if __name__ == "__main__":
