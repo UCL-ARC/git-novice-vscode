@@ -9,12 +9,11 @@ don't add this to the fixture, so we get a more helpful error if the test fails 
 (which is likely if VSCode changes the modals in later versions).
 """
 
-import pytest
 from playwright.sync_api import expect
 
 from screenshot_maker.ui import (
     close_annoying_modals,
-    make_subfolder,
+    make_subfolder_and_screenshot,
     open_terminal,
     type_into_terminal,
     write_file,
@@ -42,14 +41,18 @@ def test_terminal_interaction(vscode_page) -> None:
     expect(terminal_output).to_contain_text("Hello, World!")  # the output of the command
 
 
-@pytest.mark.skip(reason="Failing for some wait reason.")
-def test_make_subfolder(vscode_page_and_path) -> None:
-    # Should be able to make a subfolder in the workspace.
+def test_make_subfolder(vscode_page_and_path, tmp_path_factory) -> None:
+    # Should be able to make a subfolder in the workspace, with a screenshot of each step.
     vscode_page, tmp_path = vscode_page_and_path
+    screenshots = tmp_path_factory.mktemp("screenshots")
     close_annoying_modals(vscode_page)
-    make_subfolder(vscode_page, name="test_folder")
-    assert (tmp_path / "test_folder").exists()
+    make_subfolder_and_screenshot(vscode_page, "test_folder", screenshots / "subfolder.png")
     assert (tmp_path / "test_folder").is_dir()
+    assert sorted(path.name for path in screenshots.iterdir()) == [
+        "subfolder-after.png",
+        "subfolder-name.png",
+        "subfolder.png",
+    ]
 
 
 def test_write_file(vscode_page_and_path) -> None:

@@ -23,6 +23,8 @@ build-backend = "uv_build"
 
 [tool.mypy]
 python_version = "3.14"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
+files = ["src", "tests"]
 
 [tool.ruff]
 line-length = 99
