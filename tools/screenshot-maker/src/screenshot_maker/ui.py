@@ -131,12 +131,15 @@ def stage_file_and_screenshot(page: Page, name: str, screenshot_output_path: Pat
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
 
-def open_diff_and_screenshot(page: Page, name: str, screenshot_output_path: Path) -> None:
+def open_diff_and_screenshot(
+    page: Page, name: str, screenshot_output_path: Path, staged: bool = False
+) -> None:
     page.keyboard.press("Control+Shift+G")
     file = page.get_by_role("treeitem", name=f"{name}, ")
     screenshot_with_dot(page, file, screenshot_output_path)
     file.click()
-    page.get_by_role("tab", name=f"{name} (").wait_for()
+    side = "Index" if staged else "Working Tree"
+    page.get_by_role("tab", name=f"{name} ({side})").wait_for()
     screenshot_name = screenshot_output_path.stem
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
