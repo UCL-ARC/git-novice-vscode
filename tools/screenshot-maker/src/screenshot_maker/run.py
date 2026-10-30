@@ -6,6 +6,8 @@ from playwright.sync_api import sync_playwright
 from .episodes import EPISODES
 from .server import CodeServer
 
+FIGURES = Path(__file__).parents[4] / "episodes" / "fig"
+
 
 def _make_student_desktop(tmp_path: str) -> Path:
     """Create a fake 'Desktop' folder: students should work on their desktops."""
@@ -39,4 +41,4 @@ def run(output: Path) -> None:
 
 
 if __name__ == "__main__":
-    run(output=Path("./screenshots"))
+    run(output=FIGURES)

@@ -3,7 +3,7 @@
 import argparse
 from pathlib import Path
 
-from .run import run
+from .run import FIGURES, run
 
 
 def _setup_parser() -> argparse.ArgumentParser:
@@ -15,7 +15,7 @@ def _setup_parser() -> argparse.ArgumentParser:
         "--output",
         "-o",
         type=Path,
-        default=Path("./screenshots"),
+        default=FIGURES,
         help="Output directory to save screenshots",
     )
     return parser
