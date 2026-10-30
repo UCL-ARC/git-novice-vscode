@@ -71,7 +71,9 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     )
     open_diff_and_screenshot(page, "guacamole.md", output / "04-changes-lime-diff.png")
     stage_file_and_screenshot(page, "guacamole.md", output / "04-changes-lime-add.png")
-    open_diff_and_screenshot(page, "guacamole.md", output / "04-changes-lime-diff-staged.png")
+    open_diff_and_screenshot(
+        page, "guacamole.md", output / "04-changes-lime-diff-staged.png", staged=True
+    )
     commit_and_screenshot(
         page, "Modify guacamole to the traditional recipe", output / "04-changes-lime-commit.png"
     )
