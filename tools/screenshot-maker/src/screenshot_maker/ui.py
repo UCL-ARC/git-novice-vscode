@@ -5,6 +5,7 @@ If a helper gives an action a clear name and hides repeated Playwright mechanics
 If it only wraps one obvious locator call and is used once, leave it in the episode.
 """
 
+import re
 from io import BytesIO
 from pathlib import Path
 
@@ -55,7 +56,7 @@ def close_annoying_modals(page: Page, screenshot_output_path: Path | None = None
 
 
 def commit_changes(page: Page, message: str) -> None:
-    page.keyboard.press("Control+Shift+G")
+    open_source_control(page)
     page.get_by_role("treeitem", name="Changes", exact=True).hover()
     page.get_by_role("button", name="Stage All Changes").click()
     page.get_by_role("treeitem", name="Staged Changes").wait_for()
@@ -110,8 +111,32 @@ def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path:
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
 
+def _open_sidebar_view(page: Page, name: str) -> None:
+    # Shortcuts are swallowed when e.g. an image preview has focus, so click the tab instead.
+    tab = page.get_by_role("tab", name=re.compile(rf"^{name}"))
+    if tab.get_attribute("aria-selected") != "true":
+        tab.click()
+    expect(page.get_by_role("heading", name=name, exact=True)).to_be_visible(timeout=10_000)
+
+
+def open_source_control(page: Page) -> None:
+    """Clicks the 'Source Control' tab in the sidebar and waits for it to be visible."""
+    _open_sidebar_view(page, "Source Control")
+
+
+def open_file_explorer(page: Page) -> None:
+    """Clicks the 'File Explorer' tab in the sidebar and waits for it to be visible."""
+    _open_sidebar_view(page, "Explorer")
+
+
+def open_terminal(page: Page) -> None:
+    """Opens the terminal and waits for the bash prompt to be ready."""
+    page.keyboard.press("Control+Shift+`")
+    expect_terminal_to_contain(page, "$")
+
+
 def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
-    page.keyboard.press("Control+Shift+G")
+    open_source_control(page)
     page.screenshot(path=screenshot_output_path)
     page.get_by_role("button", name="Initialize Repository").click()
     page.get_by_role("textbox", name="Message").wait_for()
@@ -163,11 +188,6 @@ def expect_terminal_to_contain(page: Page, expected: str) -> None:
     expect(terminal_output).to_contain_text(expected)
 
 
-def open_terminal(page: Page) -> None:
-    page.keyboard.press("Control+Shift+`")
-    expect_terminal_to_contain(page, "$")
-
-
 def type_into_terminal(page: Page, command: str) -> None:
     page.get_by_role("textbox", name="Terminal 1").press_sequentially(f"{command}\n")
 
@@ -181,7 +201,7 @@ def type_into_terminal_and_screenshot(
 
 
 def write_file(
-    page: Page, name: str, content: str, screenshot_output_path: Path | None = None
+    page: Page, name: str, content: str = "", screenshot_output_path: Path | None = None
 ) -> None:
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.get_by_role("button", name="Explorer Section:").hover()
@@ -195,9 +215,10 @@ def write_file(
     if screenshot_output_path:
         page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-name"))
     file_name.press("Enter")
-    editor = page.get_by_role("textbox", name=name)
-    editor.press_sequentially(content)
-    editor.press("ControlOrMeta+s", delay=500)
+    if content:
+        editor = page.get_by_role("textbox", name=name)
+        editor.press_sequentially(content)
+        editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
         page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 

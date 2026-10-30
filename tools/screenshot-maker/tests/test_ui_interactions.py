@@ -16,6 +16,8 @@ from playwright.sync_api import expect
 from screenshot_maker.compare import _images_differ
 from screenshot_maker.ui import (
     close_annoying_modals,
+    open_file_explorer,
+    open_source_control,
     make_subfolder_and_screenshot,
     open_terminal,
     screenshot_with_dot,
@@ -67,6 +69,32 @@ def test_write_file(vscode_page_and_path) -> None:
     assert (tmp_path / "test_file.txt").exists()
     assert (tmp_path / "test_file.txt").is_file()
     assert (tmp_path / "test_file.txt").read_text() == "Hello, World!"
+
+
+def test_write_file_into_subfolder(vscode_page_and_path) -> None:
+    # Should be able to write a file in the workspace with a subfolder in the file name.
+    vscode_page, tmp_path = vscode_page_and_path
+    close_annoying_modals(vscode_page)
+    write_file(vscode_page, "test_folder/test_file.txt", "Hello, World!")
+    assert (tmp_path / "test_folder").exists()
+    assert (tmp_path / "test_folder").is_dir()
+    assert (tmp_path / "test_folder" / "test_file.txt").exists()
+    assert (tmp_path / "test_folder" / "test_file.txt").is_file()
+    assert (tmp_path / "test_folder" / "test_file.txt").read_text() == "Hello, World!"
+
+
+def test_open_source_control(vscode_page) -> None:
+    # Should be able to open the source control pane.
+    close_annoying_modals(vscode_page)
+    open_source_control(vscode_page)
+    expect(vscode_page.get_by_role("heading", name="Source Control")).to_be_visible()
+
+
+def test_open_file_explorer(vscode_page) -> None:
+    # Should be able to open the file explorer pane.
+    close_annoying_modals(vscode_page)
+    open_file_explorer(vscode_page)
+    expect(vscode_page.get_by_role("heading", name="Explorer", exact=True)).to_be_visible()
 
 
 PATH_TO_DEMO_PAGE = Path(__file__).parent.resolve() / "data" / "demo-page.html"
