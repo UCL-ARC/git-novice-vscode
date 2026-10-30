@@ -62,3 +62,21 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     commit_and_screenshot(
         page, "Add ingredients for basic guacamole", output / "04-changes-commit-ingredients.png"
     )
+
+    edit_file(
+        page,
+        "guacamole.md",
+        "# Guacamole\n## Ingredients\n* avocado\n* lime\n* salt\n## Instructions\n",
+        output / "04-changes-lime.png",
+    )
+    open_diff_and_screenshot(page, "guacamole.md", output / "04-changes-lime-diff.png")
+    stage_file_and_screenshot(page, "guacamole.md", output / "04-changes-lime-add.png")
+    open_diff_and_screenshot(
+        page, "guacamole.md", output / "04-changes-lime-diff-staged.png", staged=True
+    )
+    commit_and_screenshot(
+        page, "Modify guacamole to the traditional recipe", output / "04-changes-lime-commit.png"
+    )
+
+    page.get_by_role("treeitem", name="Modify guacamole to the traditional recipe").wait_for()
+    page.screenshot(path=output / "04-changes-log.png")

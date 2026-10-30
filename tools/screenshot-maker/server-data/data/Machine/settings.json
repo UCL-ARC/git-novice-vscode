@@ -20,5 +20,6 @@
     },
     "terminal.integrated.defaultProfile.osx": "bash",
     "terminal.integrated.shellIntegration.enabled": false,
-    "terminal.integrated.gpuAcceleration": "off"
+    "terminal.integrated.gpuAcceleration": "off",
+    "editor.acceptSuggestionOnEnter": "off"
 }
