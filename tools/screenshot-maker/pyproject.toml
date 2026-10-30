@@ -15,7 +15,13 @@ dependencies = ["playwright", "loguru", "pillow"]
 screenshot-maker = "screenshot_maker:cli"
 
 [dependency-groups]
-dev = ["prek>=0.5.6", "pytest", "pytest-cov>=7.1.0", "pytest-playwright"]
+dev = [
+    "prek>=0.5.6",
+    "pytest",
+    "pytest-cov>=7.1.0",
+    "pytest-playwright",
+    "pytest-repeat>=0.9.4",
+]
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14"]
@@ -23,6 +29,8 @@ build-backend = "uv_build"
 
 [tool.mypy]
 python_version = "3.14"
+mypy_path = "$MYPY_CONFIG_FILE_DIR/src"
+files = ["src", "tests"]
 
 [tool.ruff]
 line-length = 99

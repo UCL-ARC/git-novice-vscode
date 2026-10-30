@@ -8,7 +8,7 @@ on:
 
 jobs:
   screenshot-maker-code-checks:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -24,12 +24,11 @@ jobs:
         run: uv run prek --all-files
 
       - name: Install Visual Studio Code
-        run: sudo snap install --classic code
+        run: brew install --cask visual-studio-code
 
       - name: Get the path to the VSCode binary
         run: |
-          SNAP_CODE_ROOT="$(readlink -f /snap/code/current)"
-          CODE_BIN="$(find "$SNAP_CODE_ROOT" -type f -name code | head -n 1)"
+          CODE_BIN="/opt/homebrew/bin/code" # brittle hack from reading outpuut of the brew install command
           "$CODE_BIN" --version
           echo "CODE_BIN=$CODE_BIN" >> $GITHUB_ENV
 

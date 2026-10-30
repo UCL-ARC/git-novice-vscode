@@ -9,15 +9,18 @@ don't add this to the fixture, so we get a more helpful error if the test fails 
 (which is likely if VSCode changes the modals in later versions).
 """
 
-import pytest
+from pathlib import Path
+
 from playwright.sync_api import expect
 
+from screenshot_maker.compare import _images_differ
 from screenshot_maker.ui import (
     close_annoying_modals,
-    make_subfolder,
     open_file_explorer,
     open_source_control,
+    make_subfolder_and_screenshot,
     open_terminal,
+    screenshot_with_dot,
     type_into_terminal,
     write_file,
 )
@@ -44,14 +47,18 @@ def test_terminal_interaction(vscode_page) -> None:
     expect(terminal_output).to_contain_text("Hello, World!")  # the output of the command
 
 
-@pytest.mark.skip(reason="Failing for some wait reason.")
-def test_make_subfolder(vscode_page_and_path) -> None:
-    # Should be able to make a subfolder in the workspace.
+def test_make_subfolder(vscode_page_and_path, tmp_path_factory) -> None:
+    # Should be able to make a subfolder in the workspace, with a screenshot of each step.
     vscode_page, tmp_path = vscode_page_and_path
+    screenshots = tmp_path_factory.mktemp("screenshots")
     close_annoying_modals(vscode_page)
-    make_subfolder(vscode_page, name="test_folder")
-    assert (tmp_path / "test_folder").exists()
+    make_subfolder_and_screenshot(vscode_page, "test_folder", screenshots / "subfolder.png")
     assert (tmp_path / "test_folder").is_dir()
+    assert sorted(path.name for path in screenshots.iterdir()) == [
+        "subfolder-after.png",
+        "subfolder-name.png",
+        "subfolder.png",
+    ]
 
 
 def test_write_file(vscode_page_and_path) -> None:
@@ -88,3 +95,23 @@ def test_open_file_explorer(vscode_page) -> None:
     close_annoying_modals(vscode_page)
     open_file_explorer(vscode_page)
     expect(vscode_page.get_by_role("heading", name="Explorer", exact=True)).to_be_visible()
+
+
+PATH_TO_DEMO_PAGE = Path(__file__).parent.resolve() / "data" / "demo-page.html"
+
+
+def _assert_images_are_equal(actual: Path, expected: Path) -> None:
+    assert not _images_differ(actual, expected), f"Images differ: {actual} vs {expected}"
+
+
+def test_screenshot_with_dot(page, tmp_path) -> None:
+    assert PATH_TO_DEMO_PAGE.is_file()
+    page.goto(f"file://{PATH_TO_DEMO_PAGE}")
+    demo_button = page.get_by_role("button", name="click me")
+
+    obtained = tmp_path / "demo-button-dot.png"
+    screenshot_with_dot(page, demo_button, obtained)
+    assert obtained.is_file(), "Screenshot was not created"
+
+    expected = PATH_TO_DEMO_PAGE.parent / "demo-button-dot.png"
+    _assert_images_are_equal(obtained, expected)

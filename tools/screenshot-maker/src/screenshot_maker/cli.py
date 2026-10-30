@@ -25,6 +25,5 @@ def cli() -> int:
     """The command-line interface wrapper for the `run` function."""
     parser = _setup_parser()
     args = parser.parse_args()
-    args.output.mkdir(parents=True, exist_ok=True)
     run(output=args.output)
     return 0
