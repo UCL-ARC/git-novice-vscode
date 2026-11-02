@@ -30,12 +30,30 @@ $ mkdir recipes
 $ cd recipes
 ```
 
+![](fig/03-create-workspace.png)
+
+![](fig/03-create-workspace-new-folder.png)
+
+![](fig/03-create-workspace-confirm.png)
+
+![](fig/03-create-workspace-restricted-mode.png)
+
+![](fig/03-create-workspace-trust.png)
+
+![](fig/03-create-workspace-close-modal.png)
+
 Then we tell Git to make `recipes` a [repository](../learners/reference.md#repository)
 \-- a place where Git can store versions of our files:
 
 ```bash
 $ git init
 ```
+
+![](fig/03-create-repo.png)
+
+![](fig/03-create-repo-after-click.png)
+
+![](fig/03-create-file.png)
 
 It is important to note that `git init` will create a repository that
 can include subdirectories and their files---there is no need to create
@@ -51,6 +69,8 @@ it appears that nothing has changed:
 $ ls
 ```
 
+![](fig/03-create-ls.png)
+
 But if we add the `-a` flag to show everything,
 we can see that Git has created a hidden directory within `recipes` called `.git`:
 
@@ -61,6 +81,8 @@ $ ls -a
 ```output
 .	..	.git
 ```
+
+![](fig/03-create-ls-a.png)
 
 Git uses this special subdirectory to store all the information about the project,
 including the tracked files and sub-directories located within the project's directory.
@@ -80,6 +102,8 @@ No commits yet
 
 nothing to commit (create/copy files and use "git add" to track)
 ```
+
+![](fig/03-create-status.png)
 
 If you are using a different version of `git`, the exact
 wording of the output might be slightly different.
@@ -102,6 +126,12 @@ $ cd desserts    # go into desserts subdirectory
 $ git init        # make the desserts subdirectory a Git repository
 $ ls -a           # ensure the .git subdirectory is present indicating we have created a new Git repository
 ```
+
+![](fig/03-create-dessert.png)
+
+![](fig/03-create-dessert-name.png)
+
+![](fig/03-create-dessert-after.png)
 
 Is the `git init` command, run inside the `desserts` subdirectory, required for
 tracking files stored in the `desserts` subdirectory?
