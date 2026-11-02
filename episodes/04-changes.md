@@ -46,6 +46,12 @@ Type the text below into the `guacamole.md` file:
 ## Instructions
 ```
 
+![](fig/04-changes-create-file.png)
+
+![](fig/04-changes-create-file-name.png)
+
+![](fig/04-changes-create-file-after.png)
+
 Now we need to save the file and exit the editor.
 In the case of `nano`, many shortcuts are available via the `^` (symbolizing `Ctrl`) key.
 For example, to save and exit the editor you should use the sequence: `Ctrl+X` to exit, `Y` to save, and finally `Enter` to validate.
@@ -141,6 +147,8 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
+![](fig/04-changes-status-untracked.png)
+
 The "untracked files" message means that there's a file in the directory
 that Git isn't keeping track of.
 We can tell Git to track a file using `git add`:
@@ -148,6 +156,10 @@ We can tell Git to track a file using `git add`:
 ```bash
 $ git add guacamole.md
 ```
+
+![](fig/04-changes-add.png)
+
+![](fig/04-changes-add-after.png)
 
 and then check that the right thing happened:
 
@@ -181,6 +193,10 @@ $ git commit -m "Create initial structure for a Guacamole recipe"
  1 file changed, 1 insertion(+)
  create mode 100644 guacamole.md
 ```
+
+![](fig/04-changes-commit.png)
+
+![](fig/04-changes-commit-after.png)
 
 When we run `git commit`,
 Git takes everything we have told it to save by using `git add`
@@ -265,6 +281,10 @@ $ cat guacamole.md
 ## Instructions
 ```
 
+![](fig/04-changes-edit-ingredients.png)
+
+![](fig/04-changes-edit-ingredients-after.png)
+
 When we run `git status` now,
 it tells us that a file it already knows about has been modified:
 
@@ -282,6 +302,8 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
+
+![](fig/04-changes-status-modified.png)
 
 The last line is the key phrase:
 "no changes added to commit".
@@ -309,6 +331,10 @@ index df0654a..315bf3a 100644
 +* salt
  ## Instructions
 ```
+
+![](fig/04-changes-diff.png)
+
+![](fig/04-changes-diff-after.png)
 
 The output is cryptic because
 it is actually a series of commands for tools like editors and `patch`
@@ -343,6 +369,10 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
+![](fig/04-changes-commit-unstaged.png)
+
+![](fig/04-changes-commit-unstaged-dialog.png)
+
 Whoops:
 Git won't commit because we didn't use `git add` first.
 Let's fix that:
@@ -356,6 +386,14 @@ $ git commit -m "Add ingredients for basic guacamole"
 [main 34961b1] Add ingredients for basic guacamole
  1 file changed, 3 insertions(+)
 ```
+
+![](fig/04-changes-add-ingredients.png)
+
+![](fig/04-changes-add-ingredients-after.png)
+
+![](fig/04-changes-commit-ingredients.png)
+
+![](fig/04-changes-commit-ingredients-after.png)
 
 Git insists that we add files to the set we want to commit
 before actually committing anything. This allows us to commit our
@@ -420,6 +458,10 @@ $ cat guacamole.md
 ## Instructions
 ```
 
+![](fig/04-changes-lime.png)
+
+![](fig/04-changes-lime-after.png)
+
 ```bash
 $ git diff
 ```
@@ -439,6 +481,10 @@ index 315bf3a..b36abfd 100644
  ## Instructions
 ```
 
+![](fig/04-changes-lime-diff.png)
+
+![](fig/04-changes-lime-diff-after.png)
+
 So far, so good:
 we've replaced one line (shown with a `-` in the first column) with a new line
 (shown with a `+` in the first column).
@@ -449,6 +495,10 @@ and see what `git diff` reports:
 $ git add guacamole.md
 $ git diff
 ```
+
+![](fig/04-changes-lime-add.png)
+
+![](fig/04-changes-lime-add-after.png)
 
 There is no output. Without any arguments, `git diff` compares the working directory and the staging area. After `git add`, the two versions are identical and there is nothing to show.
 
@@ -473,6 +523,10 @@ index 315bf3a..b36abfd 100644
  ## Instructions
 ```
 
+![](fig/04-changes-lime-diff-staged.png)
+
+![](fig/04-changes-lime-diff-staged-after.png)
+
 we can see that by adding the `--staged` argument to the command we are now comparing what’s in the staged area to the last committed change.
 
 ```bash
@@ -483,6 +537,10 @@ $ git commit -m "Modify guacamole to the traditional recipe"
 [main 005937f] Modify guacamole to the traditional recipe
  1 file changed, 1 insertion(+)
 ```
+
+![](fig/04-changes-lime-commit.png)
+
+![](fig/04-changes-lime-commit-after.png)
 
 check our status:
 
@@ -520,6 +578,8 @@ Date:   Thu Aug 22 09:51:46 2013 -0400
 
     Create initial structure for a Guacamole recipe
 ```
+
+![](fig/04-changes-log.png)
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
