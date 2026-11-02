@@ -104,29 +104,6 @@ links and other things that might go into a web page.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Let’s verify that the file was properly created by running the list command (`ls`):
-
-```bash
-$ ls
-```
-
-```output
-guacamole.md
-```
-
-The `cat` command prints the content of a file in the shell.
-We can use it to visualize the 3 lines we added to `guacamole.md`:
-
-```bash
-$ cat guacamole.md
-```
-
-```output
-# Guacamole
-## Ingredients
-## Instructions
-```
-
 If we check the status of our project again,
 Git tells us that it's noticed the new file:
 

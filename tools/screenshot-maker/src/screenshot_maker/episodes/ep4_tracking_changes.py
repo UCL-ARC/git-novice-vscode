@@ -27,8 +27,9 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     )
 
     page.keyboard.press("Control+Shift+G")
-    page.get_by_role("treeitem", name="guacamole.md, Untracked").wait_for()
-    page.screenshot(path=output / "04-changes-status-untracked.png")
+    untracked = page.get_by_role("treeitem", name="guacamole.md, Untracked")
+    untracked.wait_for()
+    screenshot_with_box(page, untracked, output / "04-changes-status-untracked.png")
 
     stage_file_and_screenshot(page, "guacamole.md", output / "04-changes-add.png")
     commit_and_screenshot(
