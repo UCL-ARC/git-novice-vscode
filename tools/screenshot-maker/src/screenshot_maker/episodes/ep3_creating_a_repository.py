@@ -22,7 +22,7 @@ def creating_a_repository(page: Page, desktop: Path, output: Path) -> None:
     screenshot_with_dot(page, file_location, output / "03-create-file.png", radius=16)
     file_location.click()
 
-    type_into_terminal_and_screenshot(page, "ls", output / "03-create-ls.png", expected="$")
+    type_into_terminal_and_screenshot(page, "ls", output / "03-create-ls.png", expected="lsbash-")
     type_into_terminal_and_screenshot(
         page, "ls -a", output / "03-create-ls-a.png", expected=".git"
     )
