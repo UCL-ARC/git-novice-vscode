@@ -112,8 +112,9 @@ def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path:
 
 def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
     page.keyboard.press("Control+Shift+G")
-    page.screenshot(path=screenshot_output_path)
-    page.get_by_role("button", name="Initialize Repository").click()
+    initialise = page.get_by_role("button", name="Initialize Repository")
+    screenshot_with_dot(page, initialise, screenshot_output_path)
+    initialise.click()
     page.get_by_role("textbox", name="Message").wait_for()
     screenshot_name = screenshot_output_path.stem
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after-click"))
