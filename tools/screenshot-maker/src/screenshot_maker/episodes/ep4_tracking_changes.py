@@ -6,6 +6,7 @@ from ..ui import (
     commit_and_screenshot,
     edit_file,
     open_diff_and_screenshot,
+    screenshot_with_box,
     screenshot_with_dot,
     stage_file_and_screenshot,
     type_into_terminal,
@@ -81,4 +82,5 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     )
 
     page.get_by_role("treeitem", name="Modify guacamole to the traditional recipe").wait_for()
-    page.screenshot(path=output / "04-changes-log.png")
+    history = page.get_by_role("tree", name="Source Control History")
+    screenshot_with_box(page, history, output / "04-changes-log.png")

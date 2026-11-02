@@ -37,6 +37,21 @@ def screenshot_with_dot(
     img.save(output)
 
 
+def screenshot_with_box(page: Page, locator: Locator, output: Path, width: int = 3):
+    box = locator.bounding_box()
+    if box is None:
+        raise ValueError(f"Could not get a bounding box from {locator}")
+
+    scale = page.evaluate("window.devicePixelRatio")
+    x, y = box["x"] * scale, box["y"] * scale
+    x1, y1 = x + box["width"] * scale, y + box["height"] * scale
+
+    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
+    draw = ImageDraw.Draw(img)
+    draw.rectangle((x, y, x1, y1), outline="red", width=round(width * scale))
+    img.save(output)
+
+
 def close_annoying_modals(page: Page, screenshot_output_path: Path | None = None) -> None:
     """Get rid of the annoying modals and popups that block interaction with the page."""
     # None of this is important but it does introduce a brittleness.
