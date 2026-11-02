@@ -83,18 +83,6 @@ we will lose the project's history.
 
 We can now start using one of the most important git commands, which is particularly helpful to beginners. `git status` tells us the status of our project, and better, a list of changes in the project and options on what to do with those changes. We can use it as often as we want, whenever we want to understand what is going on.
 
-```bash
-$ git status
-```
-
-```output
-On branch main
-
-No commits yet
-
-nothing to commit (create/copy files and use "git add" to track)
-```
-
 ![](fig/03-create-status.png)
 
 If you are using a different version of `git`, the exact
