@@ -27,7 +27,8 @@ def creating_a_repository(page: Page, desktop: Path, output: Path) -> None:
         page, "ls -a", output / "03-create-ls-a.png", expected=".git"
     )
 
-    page.keyboard.press("ControlOrMeta+Shift+G")
+    page.keyboard.press("Control+Shift+G")
+    page.get_by_role("textbox", name="Message").wait_for()
     page.screenshot(path=output / "03-create-status.png")
 
     type_into_terminal(page, "cd ~/Desktop\ncd recipes\nls -a")
