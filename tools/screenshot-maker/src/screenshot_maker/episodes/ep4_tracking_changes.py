@@ -8,11 +8,13 @@ from ..ui import (
     open_diff_and_screenshot,
     screenshot_with_dot,
     stage_file_and_screenshot,
+    type_into_terminal,
     write_file,
 )
 
 
 def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
+    type_into_terminal(page, "clear")
     # Deselect desserts (from ep3) so the new file goes in the repo root.
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.keyboard.press("Escape")
