@@ -24,11 +24,6 @@ We will help Alfredo with his new project, create a repository with all his reci
 
 First, let's create a new directory in the `Desktop` folder for our work and then change the current working directory to the newly created one:
 
-```bash
-$ cd ~/Desktop
-$ mkdir recipes
-$ cd recipes
-```
 
 ![](fig/03-create-workspace.png)
 
@@ -45,9 +40,6 @@ $ cd recipes
 Then we tell Git to make `recipes` a [repository](../learners/reference.md#repository)
 \-- a place where Git can store versions of our files:
 
-```bash
-$ git init
-```
 
 ![](fig/03-create-repo.png)
 
@@ -117,15 +109,6 @@ Alfredo would also like to track information about desserts specifically.
 Alfredo creates a `desserts` project inside his `recipes`
 project with the following sequence of commands:
 
-```bash
-$ cd ~/Desktop    # return to Desktop directory
-$ cd recipes      # go into recipes directory, which is already a Git repository
-$ ls -a           # ensure the .git subdirectory is still present in the recipes directory
-$ mkdir desserts # make a sub-directory recipes/desserts
-$ cd desserts    # go into desserts subdirectory
-$ git init        # make the desserts subdirectory a Git repository
-$ ls -a           # ensure the .git subdirectory is present indicating we have created a new Git repository
-```
 
 ![](fig/03-create-dessert.png)
 
