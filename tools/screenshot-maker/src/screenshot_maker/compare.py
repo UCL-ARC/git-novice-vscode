@@ -22,4 +22,4 @@ def _images_differ(a: Path, b: Path) -> bool:
         if imagea.size != imageb.size:
             logger.warning(f"Images have different sizes: {imagea.size} vs {imageb.size}")
             return True
-        return ImageChops.difference(imagea, imageb).getbbox() is not None
+        return ImageChops.difference(imagea, imageb).getbbox(alpha_only=False) is not None
