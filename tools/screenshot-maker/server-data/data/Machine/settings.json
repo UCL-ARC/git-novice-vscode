@@ -25,5 +25,6 @@
     "editor.cursorBlinking": "solid",
     "chat.disableAIFeatures": true,
     "workbench.secondarySideBar.defaultVisibility": "hidden",
-    "breadcrumbs.filePath": "last"
+    "breadcrumbs.filePath": "last",
+    "terminal.integrated.resizeDimensionsOverlay.enabled": false
 }
