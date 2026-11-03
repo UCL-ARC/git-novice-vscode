@@ -37,6 +37,9 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
         "Create initial structure for a Guacamole recipe",
         output / "04-changes-commit.png",
     )
+    page.get_by_role("treeitem", name="Create initial structure for a Guacamole recipe").wait_for()
+    history = page.get_by_role("tree", name="Source Control History")
+    screenshot_with_box(page, history, output / "04-changes-commit-log.png")
 
     edit_file(
         page,
