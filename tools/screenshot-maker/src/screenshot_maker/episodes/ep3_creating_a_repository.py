@@ -28,5 +28,4 @@ def creating_a_repository(page: Page, desktop: Path, output: Path) -> None:
     changes = page.get_by_role("tree", name="Source Control Management")
     screenshot_with_box(page, changes, output / "03-create-status.png")
 
-    type_into_terminal(page, "cd ~/Desktop\ncd recipes\nls -a")
     make_subfolder_and_screenshot(page, "desserts", output / "03-create-dessert.png")

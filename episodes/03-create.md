@@ -31,7 +31,7 @@ First, let's create a new directory in the `Desktop` folder, click on the dialog
 
 ![](fig/03-create-workspace-confirm.png)
 
-Make sure to trust your newly created workspace, this is essential for using Git.
+Make sure to trust your newly created workspace if necessary, this is essential for using Git.
 
 ![](fig/03-create-workspace-restricted-mode.png)
 
@@ -40,14 +40,14 @@ Make sure to trust your newly created workspace, this is essential for using Git
 ![](fig/03-create-workspace-close-modal.png)
 
 Then we tell Git to make `recipes` a [repository](../learners/reference.md#repository)
-\-- a place where Git can store versions of our files:
+\-- a place where Git can store versions of our files, this is also known as initializing git or `git init`:
 
 
 ![](fig/03-create-repo.png)
 
 ![](fig/03-create-repo-after-click.png)
 
-It is important to note that `git init` will create a repository that
+It is important to note that the `initialize repository` button will create a repository that
 can include subdirectories and their files---there is no need to create
 separate repositories nested within the `recipes` repository, whether
 subdirectories are present from the beginning or added later. Also, note
@@ -117,18 +117,7 @@ to the `recipes` directory.
 Additionally, Git repositories can interfere with each other if they are "nested":
 the outer repository will try to version-control
 the inner repository. Therefore, it's best to create each new Git
-repository in a separate directory. To be sure that there is no conflicting
-repository in the directory, check the output of `git status`. If it looks
-like the following, you are good to go to create a new repository as shown
-above:
-
-```bash
-$ git status
-```
-
-```output
-fatal: Not a git repository (or any of the parent directories): .git
-```
+repository in a separate directory. 
 
 :::::::::::::::::::::::::
 
