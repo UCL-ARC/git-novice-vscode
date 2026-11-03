@@ -179,7 +179,10 @@ def commit_and_screenshot(page: Page, message: str, screenshot_output_path: Path
     commit = page.get_by_role("button", name="Commit Changes on")
     screenshot_with_dot(page, commit, screenshot_output_path)
     commit.click()
+    page.mouse.move(0, 0)  # off the button, or its tooltip appears while we wait below
     expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
+    # The change bars and any open diff stay drawn for a moment after the commit: wait for them.
+    expect(page.locator(".dirty-diff-glyph, .line-insert, .line-delete")).to_have_count(0)
     screenshot_name = screenshot_output_path.stem
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
