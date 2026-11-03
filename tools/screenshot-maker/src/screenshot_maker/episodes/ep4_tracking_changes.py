@@ -46,8 +46,9 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     )
 
     page.keyboard.press("Control+Shift+G")
-    page.get_by_role("treeitem", name="guacamole.md, Modified").wait_for()
-    page.screenshot(path=output / "04-changes-status-modified.png")
+    modified = page.get_by_role("treeitem", name="guacamole.md, Modified")
+    modified.wait_for()
+    screenshot_with_box(page, modified, output / "04-changes-status-modified.png")
 
     open_diff_and_screenshot(page, "guacamole.md", output / "04-changes-diff.png")
 
