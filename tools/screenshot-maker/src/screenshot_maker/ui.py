@@ -166,6 +166,7 @@ def open_diff_and_screenshot(
     file.click()
     side = "Index" if staged else "Working Tree"
     page.get_by_role("tab", name=f"{name} ({side})").wait_for()
+    page.locator(".monaco-diff-editor").locator(".line-insert, .line-delete").first.wait_for()
     screenshot_name = screenshot_output_path.stem
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
