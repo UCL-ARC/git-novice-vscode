@@ -129,9 +129,7 @@ This is the `git status`.
 If we want to know what we've done recently,
 we can look at the `git log`
 
-```bash
-$ git log
-```
+![](fig/04-changes-commit-log.png)
 
 
 The `log` lists all commits made to a repository in reverse chronological order.
