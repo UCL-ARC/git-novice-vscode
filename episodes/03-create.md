@@ -22,7 +22,7 @@ we can start using it.
 
 We will help Alfredo with his new project, create a repository with all his recipes.
 
-First, let's create a new directory in the `Desktop` folder for our work and then change the current working directory to the newly created one:
+First, let's create a new directory in the `Desktop` folder, click on the dialog prompts as follows:
 
 
 ![](fig/03-create-workspace.png)
@@ -30,6 +30,8 @@ First, let's create a new directory in the `Desktop` folder for our work and the
 ![](fig/03-create-workspace-new-folder.png)
 
 ![](fig/03-create-workspace-confirm.png)
+
+Make sure to trust your newly created workspace, this is essential for using Git.
 
 ![](fig/03-create-workspace-restricted-mode.png)
 
@@ -44,8 +46,6 @@ Then we tell Git to make `recipes` a [repository](../learners/reference.md#repos
 ![](fig/03-create-repo.png)
 
 ![](fig/03-create-repo-after-click.png)
-
-![](fig/03-create-file.png)
 
 It is important to note that `git init` will create a repository that
 can include subdirectories and their files---there is no need to create
@@ -81,12 +81,9 @@ including the tracked files and sub-directories located within the project's dir
 If we ever delete the `.git` subdirectory,
 we will lose the project's history.
 
-We can now start using one of the most important git commands, which is particularly helpful to beginners. `git status` tells us the status of our project, and better, a list of changes in the project and options on what to do with those changes. We can use it as often as we want, whenever we want to understand what is going on.
-
+This is the `git status`.
 ![](fig/03-create-status.png)
-
-If you are using a different version of `git`, the exact
-wording of the output might be slightly different.
+`git status` tells us the status of our project, and better, a list of changes in the project and options on what to do with those changes. We can use it as often as we want, whenever we want to understand what is going on. We will be referencing this throughout the lesson.
 
 :::::::::::::::::::::::::::::::::::::::  challenge
 
@@ -154,6 +151,7 @@ that are not tracked by Git can easily be removed like any other "ordinary" file
 ```bash
 $ rm filename
 ```
+Or by right clicking an deleting the file.
 
 Similarly a directory can be removed using `rm -r dirname`.
 If the files or folder being removed in this fashion are tracked by Git, then their removal

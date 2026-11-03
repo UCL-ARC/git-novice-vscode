@@ -123,8 +123,7 @@ This permanent copy is called a [commit](../learners/reference.md#commit)
 (or [revision](../learners/reference.md#revision)) and its short identifier is `f22b25e`. Your commit may have another identifier.
 
 
-Now that change has been commited, the staging area should be cleared. 
-This is the `git status`.
+Now that change has been commited, the staging area should be cleared.
 
 If we want to know what we've done recently,
 we can look at the `git log`
