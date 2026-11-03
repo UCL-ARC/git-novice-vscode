@@ -86,6 +86,7 @@ def init_workspace_and_screenshot(
     screenshot_output_path: Path,
 ) -> None:
     page.get_by_role("button", name="Hide Secondary Side Bar").click()
+    page.get_by_text("Restricted Mode is intended for safe code browsing").wait_for()
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
     open_folder = page.get_by_role("menuitem", name="Open Folder...")
