@@ -85,6 +85,7 @@ def init_workspace_and_screenshot(
     name: str,
     screenshot_output_path: Path,
 ) -> None:
+    page.get_by_role("button", name="Hide Secondary Side Bar").click()
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
     open_folder = page.get_by_role("menuitem", name="Open Folder...")
@@ -117,6 +118,7 @@ def init_workspace_and_screenshot(
     confirm_path.evaluate(show_path, real_path)
     ok_button.click()  # "are you sure?"
     page.wait_for_url(f"**/{name}")
+    page.get_by_role("button", name="Hide Secondary Side Bar").click()
     close_annoying_modals(page, screenshot_output_path)
 
 
@@ -246,6 +248,8 @@ def write_file(
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
+        # Wait for vs code to catch up with decorators
+        page.locator(".breadcrumbs-control .outline-element").first.wait_for()
         page.screenshot(
             animations="disabled",
             path=screenshot_output_path.with_stem(f"{screenshot_name}-after"),
@@ -266,6 +270,8 @@ def edit_file(
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
+        # Wait for vs code to catch up with decorators
+        page.locator(".breadcrumbs-control .outline-element").first.wait_for()
         page.screenshot(
             animations="disabled",
             path=screenshot_output_path.with_stem(f"{screenshot_name}-after"),
