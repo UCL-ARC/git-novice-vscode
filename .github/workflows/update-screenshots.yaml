@@ -2,14 +2,17 @@ name: "Update Visual Studio Code screenshots"
 on:
   schedule:
     - cron: "0 0 15 * *" # run every month on the 15th at midnight
-  pull_request: # for now on every PR - we can be smarter later: only run when the tools/screenshot-maker code is changed
-  #  paths:
-  #    - "tools/screenshot-maker/**"
+  pull_request: # only when the screenshot maker code changes
+    paths:
+      - "tools/screenshot-maker/**"
   workflow_dispatch:
 
 jobs:
   update-screenshots:
     runs-on: macos-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -38,3 +41,14 @@ jobs:
       - name: Run the screenshot maker
         working-directory: ./tools/screenshot-maker
         run: uv run screenshot-maker
+
+      - name: Open a PR if any screenshots changed
+        if: github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          add-paths: episodes/fig/*.png
+          branch: update-screenshots
+          delete-branch: true
+          commit-message: Update VS Code screenshots
+          title: Update VS Code screenshots
+          body: Screenshots that changed in the scheduled run of the screenshot maker.
