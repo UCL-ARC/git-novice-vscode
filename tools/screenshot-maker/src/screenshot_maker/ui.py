@@ -31,7 +31,7 @@ def screenshot_with_dot(
     x, y = point["x"] * scale, point["y"] * scale
     r, w = radius * scale, round(width * scale)
 
-    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
+    img = Image.open(BytesIO(page.screenshot(animations="disabled"))).convert("RGB")
     draw = ImageDraw.Draw(img)
     draw.ellipse((x - r, y - r, x + r, y + r), outline="red", width=w)
     img.save(output)
@@ -46,7 +46,7 @@ def screenshot_with_box(page: Page, locator: Locator, output: Path, width: int =
     x, y = box["x"] * scale, box["y"] * scale
     x1, y1 = x + box["width"] * scale, y + box["height"] * scale
 
-    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
+    img = Image.open(BytesIO(page.screenshot(animations="disabled"))).convert("RGB")
     draw = ImageDraw.Draw(img)
     draw.rectangle((x, y, x1, y1), outline="red", width=round(width * scale))
     img.save(output)
@@ -129,10 +129,14 @@ def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path:
     new_folder.click()
     folder_name = page.get_by_role("textbox", name="Type file name")
     folder_name.fill(name)
-    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-name"))
+    page.screenshot(
+        animations="disabled", path=screenshot_output_path.with_stem(f"{screenshot_name}-name")
+    )
     folder_name.press("Enter")
     page.get_by_role("treeitem", name=name).wait_for()
-    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
+    page.screenshot(
+        animations="disabled", path=screenshot_output_path.with_stem(f"{screenshot_name}-after")
+    )
 
 
 def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
@@ -142,7 +146,10 @@ def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
     initialise.click()
     page.get_by_role("textbox", name="Message").wait_for()
     screenshot_name = screenshot_output_path.stem
-    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after-click"))
+    page.screenshot(
+        animations="disabled",
+        path=screenshot_output_path.with_stem(f"{screenshot_name}-after-click"),
+    )
 
 
 def stage_file_and_screenshot(page: Page, name: str, screenshot_output_path: Path) -> None:
@@ -154,7 +161,9 @@ def stage_file_and_screenshot(page: Page, name: str, screenshot_output_path: Pat
     stage.click()
     page.get_by_role("treeitem", name="Staged Changes").wait_for()
     screenshot_name = screenshot_output_path.stem
-    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
+    page.screenshot(
+        animations="disabled", path=screenshot_output_path.with_stem(f"{screenshot_name}-after")
+    )
 
 
 def open_diff_and_screenshot(
@@ -168,7 +177,9 @@ def open_diff_and_screenshot(
     page.get_by_role("tab", name=f"{name} ({side})").wait_for()
     page.locator(".monaco-diff-editor").locator(".line-insert, .line-delete").first.wait_for()
     screenshot_name = screenshot_output_path.stem
-    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
+    page.screenshot(
+        animations="disabled", path=screenshot_output_path.with_stem(f"{screenshot_name}-after")
+    )
 
 
 def commit_and_screenshot(page: Page, message: str, screenshot_output_path: Path) -> None:
@@ -184,7 +195,9 @@ def commit_and_screenshot(page: Page, message: str, screenshot_output_path: Path
     # The change bars and any open diff stay drawn for a moment after the commit: wait for them.
     expect(page.locator(".dirty-diff-glyph, .line-insert, .line-delete")).to_have_count(0)
     screenshot_name = screenshot_output_path.stem
-    page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
+    page.screenshot(
+        animations="disabled", path=screenshot_output_path.with_stem(f"{screenshot_name}-after")
+    )
 
 
 def expect_terminal_to_contain(page: Page, expected: str) -> None:
@@ -207,7 +220,7 @@ def type_into_terminal_and_screenshot(
 ) -> None:
     type_into_terminal(page, command)
     expect_terminal_to_contain(page, expected)
-    page.screenshot(path=screenshot_output_path)
+    page.screenshot(animations="disabled", path=screenshot_output_path)
 
 
 def write_file(
@@ -223,13 +236,18 @@ def write_file(
     file_name = page.get_by_role("textbox", name="Type file name")
     file_name.fill(name)
     if screenshot_output_path:
-        page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-name"))
+        page.screenshot(
+            animations="disabled", path=screenshot_output_path.with_stem(f"{screenshot_name}-name")
+        )
     file_name.press("Enter")
     editor = page.get_by_role("textbox", name=name)
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
-        page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
+        page.screenshot(
+            animations="disabled",
+            path=screenshot_output_path.with_stem(f"{screenshot_name}-after"),
+        )
 
 
 def edit_file(
@@ -246,4 +264,7 @@ def edit_file(
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
-        page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after"))
+        page.screenshot(
+            animations="disabled",
+            path=screenshot_output_path.with_stem(f"{screenshot_name}-after"),
+        )
