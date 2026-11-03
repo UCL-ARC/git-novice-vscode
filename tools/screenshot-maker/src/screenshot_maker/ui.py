@@ -93,18 +93,28 @@ def init_workspace_and_screenshot(
 
     folder_path = page.get_by_role("textbox", name="Folder path")
     expect(folder_path).to_have_value(f"{desktop.parent}/")
-    folder_path.fill(f"{desktop}/{name}")
+    real_path = f"{desktop}/{name}"
+    fake_path = f"/Users/Alfredo/Desktop/{name}"
+    show_path = "(element, path) => element.value = path"
+    folder_path.fill(real_path)
     expect(page.get_by_role("option", name="Desktop")).to_be_hidden()
     ok_button = page.get_by_role("button", name="OK")
     screenshot_name = screenshot_output_path.stem
+
+    folder_path.evaluate(show_path, fake_path)
     screenshot_with_dot(
         page, ok_button, screenshot_output_path.with_stem(f"{screenshot_name}-new-folder")
     )
+    folder_path.evaluate(show_path, real_path)
     ok_button.click()  # "create new folder"
     page.get_by_text(f"The folder {name} does not").wait_for()
+
+    confirm_path = page.get_by_role("textbox", name=f"The folder {name} does not")
+    confirm_path.evaluate(show_path, fake_path)
     screenshot_with_dot(
         page, ok_button, screenshot_output_path.with_stem(f"{screenshot_name}-confirm")
     )
+    confirm_path.evaluate(show_path, real_path)
     ok_button.click()  # "are you sure?"
     page.wait_for_url(f"**/{name}")
     close_annoying_modals(page, screenshot_output_path)
