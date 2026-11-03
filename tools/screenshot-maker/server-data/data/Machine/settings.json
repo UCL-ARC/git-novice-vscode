@@ -26,5 +26,6 @@
     "chat.disableAIFeatures": true,
     "workbench.secondarySideBar.defaultVisibility": "hidden",
     "breadcrumbs.filePath": "last",
-    "terminal.integrated.resizeDimensionsOverlay.enabled": false
+    "terminal.integrated.resizeDimensionsOverlay.enabled": false,
+    "terminal.integrated.tabs.title": "bash"
 }
