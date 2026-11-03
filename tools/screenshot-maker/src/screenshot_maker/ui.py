@@ -69,6 +69,13 @@ def close_annoying_modals(page: Page, screenshot_output_path: Path | None = None
         button.click()
 
 
+def close_secondary_sidebar(page: Page) -> None:
+    page.get_by_text("Restricted Mode is intended for safe code browsing").wait_for()
+    hide_sidebar = page.get_by_role("button", name="Hide Secondary Side Bar")
+    if hide_sidebar.is_visible():
+        hide_sidebar.click()
+
+
 def commit_changes(page: Page, message: str) -> None:
     page.keyboard.press("Control+Shift+G")
     page.get_by_role("treeitem", name="Changes", exact=True).hover()
@@ -85,8 +92,7 @@ def init_workspace_and_screenshot(
     name: str,
     screenshot_output_path: Path,
 ) -> None:
-    page.get_by_role("button", name="Hide Secondary Side Bar").click()
-    page.get_by_text("Restricted Mode is intended for safe code browsing").wait_for()
+    close_secondary_sidebar(page)
     page.get_by_role("menuitem", name="Application Menu").click()
     page.get_by_role("menuitem", name="File", exact=True).click()
     open_folder = page.get_by_role("menuitem", name="Open Folder...")
@@ -119,7 +125,7 @@ def init_workspace_and_screenshot(
     confirm_path.evaluate(show_path, real_path)
     ok_button.click()  # "are you sure?"
     page.wait_for_url(f"**/{name}")
-    page.get_by_role("button", name="Hide Secondary Side Bar").click()
+    close_secondary_sidebar(page)
     close_annoying_modals(page, screenshot_output_path)
 
 
