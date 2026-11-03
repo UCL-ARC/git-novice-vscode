@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from ..ui import (
     commit_and_screenshot,
@@ -51,6 +51,9 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     screenshot_with_box(page, modified, output / "04-changes-status-modified.png")
 
     open_diff_and_screenshot(page, "guacamole.md", output / "04-changes-diff.png")
+    working_tree = page.get_by_role("tab", name="guacamole.md (Working Tree)")
+    working_tree.get_by_role("button", name="Close").click()
+    expect(working_tree).to_be_hidden()
 
     # Commit before staging: VSCode asks to stage everything, where git would refuse.
     page.get_by_role("textbox", name="Message").press_sequentially(
