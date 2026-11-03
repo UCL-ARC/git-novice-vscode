@@ -21,5 +21,8 @@
     "terminal.integrated.defaultProfile.osx": "bash",
     "terminal.integrated.shellIntegration.enabled": false,
     "terminal.integrated.gpuAcceleration": "off",
-    "editor.acceptSuggestionOnEnter": "off"
+    "editor.acceptSuggestionOnEnter": "off",
+    "editor.cursorBlinking": "solid",
+    "chat.disableAIFeatures": true,
+    "workbench.secondarySideBar.defaultVisibility": "hidden"
 }
