@@ -24,5 +24,6 @@
     "editor.acceptSuggestionOnEnter": "off",
     "editor.cursorBlinking": "solid",
     "chat.disableAIFeatures": true,
-    "workbench.secondarySideBar.defaultVisibility": "hidden"
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "breadcrumbs.filePath": "last"
 }
