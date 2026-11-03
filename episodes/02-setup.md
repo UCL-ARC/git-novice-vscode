@@ -222,9 +222,6 @@ More generally, you can get the list of available `git` commands and further res
 ```bash
 $ git help
 ```
-
-![](fig/02-setup-help.png)
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 [git-privacy]: https://help.github.com/articles/keeping-your-email-address-private/
