@@ -1,18 +1,21 @@
 from pathlib import Path
 
-from playwright.sync_api import Page
+from playwright.sync_api import Page, expect
 
 from ..ui import (
     commit_and_screenshot,
     edit_file,
     open_diff_and_screenshot,
+    screenshot_with_box,
     screenshot_with_dot,
     stage_file_and_screenshot,
+    type_into_terminal,
     write_file,
 )
 
 
 def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
+    type_into_terminal(page, "clear")
     # Deselect desserts (from ep3) so the new file goes in the repo root.
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.keyboard.press("Escape")
@@ -24,8 +27,9 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     )
 
     page.keyboard.press("Control+Shift+G")
-    page.get_by_role("treeitem", name="guacamole.md, Untracked").wait_for()
-    page.screenshot(path=output / "04-changes-status-untracked.png")
+    untracked = page.get_by_role("treeitem", name="guacamole.md, Untracked")
+    untracked.wait_for()
+    screenshot_with_box(page, untracked, output / "04-changes-status-untracked.png")
 
     stage_file_and_screenshot(page, "guacamole.md", output / "04-changes-add.png")
     commit_and_screenshot(
@@ -33,6 +37,9 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
         "Create initial structure for a Guacamole recipe",
         output / "04-changes-commit.png",
     )
+    page.get_by_role("treeitem", name="Create initial structure for a Guacamole recipe").wait_for()
+    history = page.get_by_role("tree", name="Source Control History")
+    screenshot_with_box(page, history, output / "04-changes-commit-log.png")
 
     edit_file(
         page,
@@ -42,10 +49,14 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     )
 
     page.keyboard.press("Control+Shift+G")
-    page.get_by_role("treeitem", name="guacamole.md, Modified").wait_for()
-    page.screenshot(path=output / "04-changes-status-modified.png")
+    modified = page.get_by_role("treeitem", name="guacamole.md, Modified")
+    modified.wait_for()
+    screenshot_with_box(page, modified, output / "04-changes-status-modified.png")
 
     open_diff_and_screenshot(page, "guacamole.md", output / "04-changes-diff.png")
+    working_tree = page.get_by_role("tab", name="guacamole.md (Working Tree)")
+    working_tree.get_by_role("button", name="Close").click()
+    expect(working_tree).to_be_hidden()
 
     # Commit before staging: VSCode asks to stage everything, where git would refuse.
     page.get_by_role("textbox", name="Message").press_sequentially(
@@ -79,4 +90,5 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     )
 
     page.get_by_role("treeitem", name="Modify guacamole to the traditional recipe").wait_for()
-    page.screenshot(path=output / "04-changes-log.png")
+    history = page.get_by_role("tree", name="Source Control History")
+    screenshot_with_box(page, history, output / "04-changes-log.png")

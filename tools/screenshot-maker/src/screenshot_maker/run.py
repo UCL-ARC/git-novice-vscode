@@ -3,8 +3,11 @@ from pathlib import Path
 
 from playwright.sync_api import sync_playwright
 
+from .compare import compare_screenshots
 from .episodes import EPISODES
 from .server import CodeServer
+
+FIGURES = Path(__file__).parents[4] / "episodes" / "fig"
 
 
 def _make_student_desktop(tmp_path: str) -> Path:
@@ -19,6 +22,8 @@ def run(output: Path) -> None:
     # bash is still writing session files into the fake home as the server shuts down.
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_path:
         desktop = _make_student_desktop(tmp_path)
+        new_screenshots = Path(tmp_path) / "screenshots"
+        new_screenshots.mkdir()
         student_env = {
             "HOME": str(desktop.parent),
             "GIT_CONFIG_GLOBAL": str(desktop.parent / ".gitconfig"),
@@ -35,8 +40,10 @@ def run(output: Path) -> None:
             page.goto(f"{server.url}/?folder={desktop}")
 
             for episode in EPISODES:
-                episode(page, desktop, output)
+                episode(page, desktop, new_screenshots)
+
+        compare_screenshots(new_screenshots, output)
 
 
 if __name__ == "__main__":
-    run(output=Path("./screenshots"))
+    run(output=FIGURES)
