@@ -204,6 +204,8 @@ def expect_terminal_to_contain(page: Page, expected: str) -> None:
     """Use this to check (or wait for) terminal output from a call to `type_into_terminal`."""
     terminal_output = page.locator(".xterm-rows")
     expect(terminal_output).to_contain_text(expected)
+    # The scrollbar shows for a moment whenever new output scrolls the terminal: wait for it to go.
+    expect(page.locator(".xterm-scrollbar.xterm-visible")).to_have_count(0)
 
 
 def open_terminal(page: Page) -> None:

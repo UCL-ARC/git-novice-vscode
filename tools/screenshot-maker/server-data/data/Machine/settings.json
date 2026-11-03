@@ -31,5 +31,6 @@
     "workbench.startupEditor": "none",
     "workbench.tips.enabled": false,
     "git.showProgress": false,
-    "scm.countBadge": "off"
+    "scm.countBadge": "off",
+    "editor.scrollbar.vertical": "hidden"
 }
