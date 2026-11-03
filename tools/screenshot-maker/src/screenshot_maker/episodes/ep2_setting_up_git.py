@@ -18,6 +18,7 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
     open_terminal(page)
 
     type_into_terminal(page, 'git config --global user.name "Alfredo Linguini"')
+    expect_terminal_to_contain(page, 'Linguini"bash-')
     type_into_terminal_and_screenshot(
         page,
         'git config --global user.email "a.linguini@ratatouille.fr"',
