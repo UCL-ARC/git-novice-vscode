@@ -27,5 +27,7 @@
     "workbench.secondarySideBar.defaultVisibility": "hidden",
     "breadcrumbs.filePath": "last",
     "terminal.integrated.resizeDimensionsOverlay.enabled": false,
-    "terminal.integrated.tabs.title": "bash"
+    "terminal.integrated.tabs.title": "bash",
+    "workbench.startupEditor": "none",
+    "workbench.tips.enabled": false
 }
