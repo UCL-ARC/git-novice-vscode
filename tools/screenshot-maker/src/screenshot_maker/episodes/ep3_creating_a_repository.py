@@ -5,6 +5,7 @@ from playwright.sync_api import Page
 from ..ui import (
     init_repo_and_screenshot,
     make_subfolder_and_screenshot,
+    screenshot_with_box,
     type_into_terminal,
     type_into_terminal_and_screenshot,
 )
@@ -24,7 +25,8 @@ def creating_a_repository(page: Page, desktop: Path, output: Path) -> None:
 
     page.keyboard.press("Control+Shift+G")
     page.get_by_role("textbox", name="Message").wait_for()
-    page.screenshot(path=output / "03-create-status.png")
+    changes = page.get_by_role("tree", name="Source Control Management")
+    screenshot_with_box(page, changes, output / "03-create-status.png")
 
     type_into_terminal(page, "cd ~/Desktop\ncd recipes\nls -a")
     make_subfolder_and_screenshot(page, "desserts", output / "03-create-dessert.png")
