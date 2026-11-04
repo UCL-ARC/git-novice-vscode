@@ -158,6 +158,7 @@ def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
     screenshot_with_dot(page, initialise, screenshot_output_path)
     initialise.click()
     page.get_by_role("textbox", name="Message").wait_for()
+    page.get_by_text("does not have any source control history items").wait_for()
     screenshot_name = screenshot_output_path.stem
     _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after-click"))
 
