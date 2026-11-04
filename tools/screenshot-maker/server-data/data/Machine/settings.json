@@ -26,6 +26,7 @@
     "chat.disableAIFeatures": true,
     "breadcrumbs.filePath": "last",
     "terminal.integrated.tabs.title": "bash",
+    "terminal.integrated.environmentChangesIndicator": "off",
     "workbench.startupEditor": "none",
     "workbench.tips.enabled": false,
     "git.showProgress": false,
