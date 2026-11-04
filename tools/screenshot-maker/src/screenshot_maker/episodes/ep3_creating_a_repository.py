@@ -13,7 +13,7 @@ from ..ui import (
 
 def creating_a_repository(page: Page, desktop: Path, output: Path) -> None:
     # Created workspace in ep2 - named after ep3
-    type_into_terminal(page, "clear")
+    type_into_terminal(page, r"clear && printf '\033[3J'")
     init_repo_and_screenshot(page, output / "03-create-repo.png")
 
     page.keyboard.press("ControlOrMeta+Shift+E")

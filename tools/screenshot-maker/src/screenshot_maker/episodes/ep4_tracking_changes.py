@@ -15,7 +15,7 @@ from ..ui import (
 
 
 def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
-    type_into_terminal(page, "clear")
+    type_into_terminal(page, r"clear && printf '\033[3J'")
     # Deselect desserts (from ep3) so the new file goes in the repo root.
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.keyboard.press("Escape")

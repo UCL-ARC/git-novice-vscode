@@ -185,6 +185,7 @@ def open_diff_and_screenshot(
     side = "Index" if staged else "Working Tree"
     page.get_by_role("tab", name=f"{name} ({side})").wait_for()
     page.locator(".monaco-diff-editor").locator(".line-insert, .line-delete").first.wait_for()
+    expect(page.get_by_text("Ln 1, Col 1")).to_be_hidden()
     screenshot_name = screenshot_output_path.stem
     _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
@@ -248,8 +249,6 @@ def write_file(
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
-        # Wait for vs code to catch up with decorators
-        page.locator(".breadcrumbs-control .outline-element").first.wait_for()
         _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
 
@@ -267,6 +266,4 @@ def edit_file(
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
-        # Wait for vs code to catch up with decorators
-        page.locator(".breadcrumbs-control .outline-element").first.wait_for()
         _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
