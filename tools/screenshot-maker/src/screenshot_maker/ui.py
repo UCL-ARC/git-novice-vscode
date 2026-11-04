@@ -176,6 +176,12 @@ def stage_file_and_screenshot(page: Page, name: str, screenshot_output_path: Pat
     screenshot_with_dot(page, stage, screenshot_output_path)
     stage.click()
     page.get_by_role("treeitem", name="Staged Changes").wait_for()
+    # The tab's git letter is drawn by CSS, so a locator can't read it: wait for it to leave "U".
+    page.wait_for_function(
+        """() => getComputedStyle(
+            document.querySelector(".tab.active .monaco-icon-label"), "::after"
+        ).content !== '"U"'"""
+    )
     screenshot_name = screenshot_output_path.stem
     _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
@@ -206,6 +212,7 @@ def commit_and_screenshot(page: Page, message: str, screenshot_output_path: Path
     expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
     # The change bars and any open diff stay drawn for a moment after the commit: wait for them.
     expect(page.locator(".dirty-diff-glyph, .line-insert, .line-delete")).to_have_count(0)
+    expect(page.locator(".tab .monaco-decoration-text-badge")).to_have_count(0)
     page.get_by_role("treeitem", name=message).wait_for()
     screenshot_name = screenshot_output_path.stem
     _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
@@ -257,6 +264,7 @@ def write_file(
     if screenshot_output_path:
         # Wait for vs code to catch up with decorators
         page.locator(".breadcrumbs-control .outline-element").first.wait_for()
+        page.locator(".tab.active .monaco-decoration-text-badge").wait_for()
         _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
 
@@ -276,4 +284,5 @@ def edit_file(
     if screenshot_output_path:
         # Wait for vs code to catch up with decorators
         page.locator(".breadcrumbs-control .outline-element").first.wait_for()
+        page.locator(".tab.active .monaco-decoration-text-badge").wait_for()
         _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
