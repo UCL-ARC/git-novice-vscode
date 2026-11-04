@@ -25,7 +25,6 @@ def _screenshot(page: Page, path: Path) -> None:
     # The mouse stays wherever the last click was, so a tooltip or a highlighted resize handle can
     # end up in the shot depending on timing. The top-left corner of the page is empty.
     page.mouse.move(0, 0)
-    page.wait_for_timeout(2000)
     page.screenshot(animations="disabled", path=path, style=HIDE_PROGRESS)
 
 
@@ -33,7 +32,6 @@ def screenshot_with_dot(
     page: Page, locator: Locator, output: Path, radius: int = 7, width: int = 3
 ):
     locator.hover()
-    page.wait_for_timeout(2000)
     box = locator.bounding_box()
     if box is None:
         raise ValueError(f"Could not get a bounding box from {locator}")
@@ -52,7 +50,6 @@ def screenshot_with_dot(
 
 def screenshot_with_box(page: Page, locator: Locator, output: Path, width: int = 3):
     page.mouse.move(0, 0)
-    page.wait_for_timeout(2000)
     box = locator.bounding_box()
     if box is None:
         raise ValueError(f"Could not get a bounding box from {locator}")
