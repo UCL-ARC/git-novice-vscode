@@ -11,9 +11,6 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 from playwright.sync_api import FloatRect, Locator, Page, Position, expect
 
-# Removes git decoration
-HIDE_PROGRESS = ".activitybar .progress-badge { display: none !important; }"
-
 
 def _centre(box: FloatRect) -> Position:
     x = box["x"] + box["width"] / 2
@@ -25,7 +22,7 @@ def _screenshot(page: Page, path: Path) -> None:
     # The mouse stays wherever the last click was, so a tooltip or a highlighted resize handle can
     # end up in the shot depending on timing. The top-left corner of the page is empty.
     page.mouse.move(0, 0)
-    page.screenshot(animations="disabled", path=path, style=HIDE_PROGRESS)
+    page.screenshot(animations="disabled", path=path)
 
 
 def screenshot_with_dot(
@@ -41,8 +38,7 @@ def screenshot_with_dot(
     x, y = point["x"] * scale, point["y"] * scale
     r, w = radius * scale, round(width * scale)
 
-    screenshot = page.screenshot(animations="disabled", style=HIDE_PROGRESS)
-    img = Image.open(BytesIO(screenshot)).convert("RGB")
+    img = Image.open(BytesIO(page.screenshot(animations="disabled"))).convert("RGB")
     draw = ImageDraw.Draw(img)
     draw.ellipse((x - r, y - r, x + r, y + r), outline="red", width=w)
     img.save(output)
@@ -58,8 +54,7 @@ def screenshot_with_box(page: Page, locator: Locator, output: Path, width: int =
     x, y = box["x"] * scale, box["y"] * scale
     x1, y1 = x + box["width"] * scale, y + box["height"] * scale
 
-    screenshot = page.screenshot(animations="disabled", style=HIDE_PROGRESS)
-    img = Image.open(BytesIO(screenshot)).convert("RGB")
+    img = Image.open(BytesIO(page.screenshot(animations="disabled"))).convert("RGB")
     draw = ImageDraw.Draw(img)
     draw.rectangle((x, y, x1, y1), outline="red", width=round(width * scale))
     img.save(output)
