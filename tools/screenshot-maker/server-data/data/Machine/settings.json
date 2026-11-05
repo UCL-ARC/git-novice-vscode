@@ -27,6 +27,7 @@
     "breadcrumbs.filePath": "last",
     "terminal.integrated.tabs.title": "bash",
     "terminal.integrated.environmentChangesIndicator": "off",
+    "terminal.integrated.resizeDimensionsOverlay.enabled": false,
     "workbench.startupEditor": "none",
     "workbench.tips.enabled": false,
     "git.showProgress": false,
