@@ -250,6 +250,7 @@ def write_file(
     editor.press_sequentially(content)
     editor.press("ControlOrMeta+s", delay=500)
     if screenshot_output_path:
+        page.locator(".tab.active .monaco-decoration-text-badge").wait_for()
         _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
 
