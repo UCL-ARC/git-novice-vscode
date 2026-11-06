@@ -22,6 +22,7 @@ def _screenshot(page: Page, path: Path) -> None:
     # The mouse stays wherever the last click was, so a tooltip or a highlighted resize handle can
     # end up in the shot depending on timing. The top-left corner of the page is empty.
     page.mouse.move(0, 0)
+    page.locator(".workbench-hover").first.wait_for(state="hidden")
     page.screenshot(animations="disabled", path=path)
 
 
