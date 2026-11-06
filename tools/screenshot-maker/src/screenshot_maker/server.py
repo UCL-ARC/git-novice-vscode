@@ -1,6 +1,8 @@
 import os
+import shutil
 import signal
 import subprocess
+import tempfile
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -26,6 +28,7 @@ class CodeServer:
     port: int = 8000
     timeout_seconds: float = 30
     process: subprocess.Popen | None = field(default=None, init=False)
+    data_dir: Path | None = field(default=None, init=False)
     code_binary: str = os.getenv("CODE_BIN", "code")
     additional_env: dict[str, str] = field(default_factory=dict)
 
@@ -49,6 +52,8 @@ class CodeServer:
             return self
 
         logger.info(f"Starting VS Code server {self.url}...")
+        self.data_dir = Path(tempfile.mkdtemp(prefix="vscode-server-data-"))
+        shutil.copytree(_SERVER_DATA_DIR / "data" / "Machine", self.data_dir / "data" / "Machine")
         self.process = subprocess.Popen(
             [
                 self.code_binary,
@@ -61,7 +66,7 @@ class CodeServer:
                 "--accept-server-license-terms",
                 "--disable-telemetry",
                 "--server-data-dir",
-                str(_SERVER_DATA_DIR),
+                str(self.data_dir),
             ],
             stdout=subprocess.DEVNULL,
             env={**os.environ, **self.additional_env},
@@ -116,6 +121,8 @@ class CodeServer:
             self.process.wait()
         self.process = None
         logger.info("Terminated")
+        if self.data_dir:
+            shutil.rmtree(self.data_dir, ignore_errors=True)
 
     # Enter and exit methods to make this class into a context manager.
 

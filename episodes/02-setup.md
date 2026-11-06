@@ -34,6 +34,8 @@ $ git config --global user.name "Alfredo Linguini"
 $ git config --global user.email "a.linguini@ratatouille.fr"
 ```
 
+![](fig/02-setup-name-and-email.png)
+
 Please use your own name and email address instead of Alfredo's. This user name and email will be associated with your subsequent Git activity,
 which means that any changes pushed to
 [GitHub](https://github.com/),
@@ -76,6 +78,8 @@ On macOS and Linux:
 $ git config --global core.autocrlf input
 ```
 
+![](fig/02-setup-line-endings.png)
+
 And on Windows:
 
 ```bash
@@ -104,6 +108,8 @@ Alfredo also has to set his favorite text editor, following this table:
 | Vim                                   | `$ git config --global core.editor "vim"`                      | 
 | VS Code                               | `$ git config --global core.editor "code --wait"`                      | 
 
+![](fig/02-setup-editor.png)
+
 It is possible to reconfigure the text editor for Git whenever you want to change it.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
@@ -124,6 +130,8 @@ it matches the cloud service he will eventually use.
 ```bash
 $ git config --global init.defaultBranch main
 ```
+
+![](fig/02-setup-default-branch.png)
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
@@ -157,12 +165,16 @@ Let's review those settings and test our `core.editor` right away:
 $ git config --global --edit
 ```
 
+![](fig/02-setup-edit-config.png)
+
 Let's close the file without making any additional changes.  Remember, since typos in the config file will cause
 issues, it's safer to view the configuration with:
 
 ```bash
 $ git config --list --global
 ```
+
+![](fig/02-setup-list-config.png)
 
 And if necessary, change your configuration using the
 same commands to choose another editor or update your email address.
@@ -210,7 +222,6 @@ More generally, you can get the list of available `git` commands and further res
 ```bash
 $ git help
 ```
-
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 [git-privacy]: https://help.github.com/articles/keeping-your-email-address-private/

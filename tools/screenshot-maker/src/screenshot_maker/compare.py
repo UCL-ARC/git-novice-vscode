@@ -1,20 +1,21 @@
+import shutil
 from pathlib import Path
 
 from loguru import logger
 from PIL import Image, ImageChops
 
 
-def compare_screenshots(new_screenshots: Path, existing_screenshots: Path) -> None:
-    # for sshot in new_screenshots:
-    #     x = Path(sshot)
-    #     y = Path(existing_screenshots) / x.name
-    #     if not y.is_file():
-    #         raise FileNotFoundError(f"Expected screenshot {y} does not exist.")
-    #     if _images_differ(x, y):
-    #         # copy over / update
-    #     else:
-    #         continue
-    pass
+def compare_screenshots(first: Path, second: Path, existing_screenshots: Path) -> list[str]:
+    updated = []
+    for new in sorted(first.glob("*.png")):
+        existing = existing_screenshots / new.name
+        if _images_differ(new, second / new.name):
+            logger.warning(f"Not updating {new.name}: the two runs disagree")
+        elif not existing.is_file() or _images_differ(new, existing):
+            logger.info(f"Updating {existing}")
+            shutil.copy(new, existing)
+            updated.append(new.name)
+    return updated
 
 
 def _images_differ(a: Path, b: Path) -> bool:
@@ -23,4 +24,5 @@ def _images_differ(a: Path, b: Path) -> bool:
         if imagea.size != imageb.size:
             logger.warning(f"Images have different sizes: {imagea.size} vs {imageb.size}")
             return True
-        return ImageChops.difference(imagea, imageb).getbbox() is not None
+        difference = ImageChops.difference(imagea.convert("RGB"), imageb.convert("RGB"))
+        return difference.getbbox() is not None
