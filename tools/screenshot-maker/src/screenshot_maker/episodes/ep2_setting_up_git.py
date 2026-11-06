@@ -51,11 +51,12 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
     )
     type_into_terminal(page, ":wq")
     expect_terminal_to_contain(page, "--editbash-")
-    type_into_terminal(page, "git config --list --global")
     type_into_terminal_and_screenshot(
-        page, "G", output / "02-setup-list-config.png", expected="init.defaultbranch=main"
+        page,
+        "git config --list --global",
+        output / "02-setup-list-config.png",
+        expected="init.defaultbranch=mainbash-",
     )
-    type_into_terminal(page, "q")
     type_into_terminal_and_screenshot(
         page, "git help", output / "02-setup-help.png", expected="overview of the system"
     )
