@@ -23,20 +23,10 @@ exercises: 0
 First let's make sure we're still in the right directory.
 You should be in the `recipes` directory.
 
-```bash
-$ cd ~/Desktop/recipes
-```
-
 Let's create a file called `guacamole.md` that contains the basic structure of our first recipe.
-A file editor is a command that opens a specified file in the current shell and allows you to edit it; the file is created if it does not exist.
 
-In this lesson, we'll use `nano` as a file editor, but you can use whatever editor you like.
-In particular, this does not have to be the `core.editor` you set globally earlier during ["Setting Up Git"](https://swcarpentry.github.io/git-novice/02-setup.html).
-For a refresher on text editors, check out ["Which Editor?"](https://swcarpentry.github.io/shell-novice/03-create.html#which-editor) in [The Unix Shell](https://swcarpentry.github.io/shell-novice/) lesson.
-
-```bash
-$ nano guacamole.md
-```
+![](fig/04-changes-create-file.png)
+![](fig/04-changes-create-file-name.png)
 
 Type the text below into the `guacamole.md` file:
 
@@ -45,10 +35,8 @@ Type the text below into the `guacamole.md` file:
 ## Ingredients
 ## Instructions
 ```
-
-Now we need to save the file and exit the editor.
-In the case of `nano`, many shortcuts are available via the `^` (symbolizing `Ctrl`) key.
-For example, to save and exit the editor you should use the sequence: `Ctrl+X` to exit, `Y` to save, and finally `Enter` to validate.
+![](fig/04-changes-create-file-after.png)
+Now we need to save the file with `ctrl + s`
 
 :::::::::::::::::::::::::::::::::::::::::  spoiler
 
@@ -98,89 +86,35 @@ links and other things that might go into a web page.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
-Let’s verify that the file was properly created by running the list command (`ls`):
-
-```bash
-$ ls
-```
-
-```output
-guacamole.md
-```
-
-The `cat` command prints the content of a file in the shell.
-We can use it to visualize the 3 lines we added to `guacamole.md`:
-
-```bash
-$ cat guacamole.md
-```
-
-```output
-# Guacamole
-## Ingredients
-## Instructions
-```
-
 If we check the status of our project again,
 Git tells us that it's noticed the new file:
 
-```bash
-$ git status
-```
+![](fig/04-changes-status-untracked.png)
 
-```output
-On branch main
-
-No commits yet
-
-Untracked files:
-   (use "git add <file>..." to include in what will be committed)
-
-	guacamole.md
-
-nothing added to commit but untracked files present (use "git add" to track)
-```
-
-The "untracked files" message means that there's a file in the directory
-that Git isn't keeping track of.
+The `U` on the right of the file name, marks this file as "untracked" which means it is not 
+yet tracked by git.
 We can tell Git to track a file using `git add`:
 
-```bash
-$ git add guacamole.md
-```
+![](fig/04-changes-add.png)
 
-and then check that the right thing happened:
-
-```bash
-$ git status
-```
-
-```output
-On branch main
-
-No commits yet
-
-Changes to be committed:
-  (use "git rm --cached <file>..." to unstage)
-
-	new file:   guacamole.md
-
-```
+![](fig/04-changes-add-after.png)
 
 Git now knows that it's supposed to keep track of `guacamole.md`,
 but it hasn't recorded these changes as a commit yet.
-To get it to do that,
-we need to run one more command:
+To get it to do that, we need to commit it along with a message. Record a short, descriptive, and specific comment that will help us remember later on what we did and why.
 
-```bash
-$ git commit -m "Create initial structure for a Guacamole recipe"
+[Good commit messages][commit-messages] start with a brief (\<50 characters) statement about the
+changes made in the commit. Generally, the message should complete the sentence "If applied, this commit will" <commit message here>.
+If you want to go into more detail, add a blank line between the summary line and your additional notes. Use this additional space to explain why you made changes and/or what their impact will be.
+
+This commit message will be 
+```
+Create initial structure for a Guacomole recipe
 ```
 
-```output
-[main (root-commit) f22b25e] Create initial structure for a Guacamole recipe
- 1 file changed, 1 insertion(+)
- create mode 100644 guacamole.md
-```
+![](fig/04-changes-commit.png)
+
+![](fig/04-changes-commit-after.png)
 
 When we run `git commit`,
 Git takes everything we have told it to save by using `git add`
@@ -188,51 +122,18 @@ and stores a copy permanently inside the special `.git` directory.
 This permanent copy is called a [commit](../learners/reference.md#commit)
 (or [revision](../learners/reference.md#revision)) and its short identifier is `f22b25e`. Your commit may have another identifier.
 
-We use the `-m` flag (for "message")
-to record a short, descriptive, and specific comment that will help us remember later on what we did and why.
-If we just run `git commit` without the `-m` option,
-Git will launch `nano` (or whatever other editor we configured as `core.editor`)
-so that we can write a longer message.
 
-[Good commit messages][commit-messages] start with a brief (\<50 characters) statement about the
-changes made in the commit. Generally, the message should complete the sentence "If applied, this commit will" <commit message here>.
-If you want to go into more detail, add a blank line between the summary line and your additional notes. Use this additional space to explain why you made changes and/or what their impact will be.
+Now that change has been commited, the staging area should be cleared.
 
-If we run `git status` now:
-
-```bash
-$ git status
-```
-
-```output
-On branch main
-nothing to commit, working tree clean
-```
-
-it tells us everything is up to date.
 If we want to know what we've done recently,
-we can ask Git to show us the project's history using `git log`:
+we can look at the `git log`
 
-```bash
-$ git log
-```
+![](fig/04-changes-commit-log.png)
 
-```output
-commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 09:51:46 2013 -0400
 
-    Create initial structure for a Guacamole recipe
-```
-
-`git log` lists all commits  made to a repository in reverse chronological order.
+The `log` lists all commits made to a repository in reverse chronological order.
 The listing for each commit includes
-the commit's full identifier
-(which starts with the same characters as
-the short identifier printed by the `git commit` command earlier),
-the commit's author,
-when it was created,
-and the log message Git was given when the commit was created.
+the commit's log message when it was created, as well as the branch it was commited to.
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
@@ -248,13 +149,6 @@ so that our filesystem doesn't become cluttered
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 Now suppose Alfredo adds more information to the file.
-(Again, we'll edit with `nano` and then `cat` the file to show its contents;
-you may use a different editor, and don't need to `cat`.)
-
-```bash
-$ nano guacamole.md
-$ cat guacamole.md
-```
 
 ```output
 # Guacamole
@@ -265,97 +159,45 @@ $ cat guacamole.md
 ## Instructions
 ```
 
-When we run `git status` now,
-it tells us that a file it already knows about has been modified:
+![](fig/04-changes-edit-ingredients.png)
 
-```bash
-$ git status
-```
+![](fig/04-changes-edit-ingredients-after.png)
 
-```output
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
+When we look at the `git status` now,
+it tells us that a file it already knows about has been modified `M`:
 
-	modified:   guacamole.md
+![](fig/04-changes-status-modified.png)
 
-no changes added to commit (use "git add" and/or "git commit -a")
-```
-
-The last line is the key phrase:
-"no changes added to commit".
-We have changed this file,
+Since it is beneath the `Changes` tab, it shows that we have changed this file,
 but we haven't told Git we will want to save those changes
 (which we do with `git add`)
 nor have we saved them (which we do with `git commit`).
 So let's do that now. It is good practice to always review
-our changes before saving them. We do this using `git diff`.
+our changes before saving them. This is called the `git diff` and you can see it by clicking
+the file name.
 
-```bash
-$ git diff
-```
+![](fig/04-changes-diff.png)
 
-```output
-diff --git a/guacamole.md b/guacamole.md
-index df0654a..315bf3a 100644
---- a/guacamole.md
-+++ b/guacamole.md
-@@ -1,3 +1,6 @@
- # Guacamole
- ## Ingredients
-+* avocado
-+* lemon
-+* salt
- ## Instructions
-```
+![](fig/04-changes-diff-after.png)
 
-The output is cryptic because
-it is actually a series of commands for tools like editors and `patch`
-telling them how to reconstruct one file given the other.
-If we break it down into pieces:
-
-1. The first line tells us that Git is producing output similar to the Unix `diff` command
-  comparing the old and new versions of the file.
-2. The second line tells exactly which versions of the file
-  Git is comparing;
-  `df0654a` and `315bf3a` are unique computer-generated labels for those versions.
-3. The third and fourth lines once again show the name of the file being changed.
-4. The remaining lines are the most interesting, they show us the actual differences
-  and the lines on which they occur.
-  In particular,
-  the `+` marker in the first column shows where we added a line.
+This will open a new file window tagged as working-tree, this describes the most recent changes compared against the commited file. 
+Added changes are highlighted in green.
 
 After reviewing our change, it's time to commit it:
 
-```bash
-$ git commit -m "Add ingredients for basic guacamole"
-```
+![](fig/04-changes-commit-unstaged.png)
 
-```output
-On branch main
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-
-	modified:   guacamole.md
-
-no changes added to commit (use "git add" and/or "git commit -a")
-```
+![](fig/04-changes-commit-unstaged-dialog.png)
 
 Whoops:
 Git won't commit because we didn't use `git add` first.
 Let's fix that:
 
-```bash
-$ git add guacamole.md
-$ git commit -m "Add ingredients for basic guacamole"
-```
+![](fig/04-changes-add-ingredients.png)
 
-```output
-[main 34961b1] Add ingredients for basic guacamole
- 1 file changed, 3 insertions(+)
-```
+![](fig/04-changes-commit-ingredients.png)
+
+![](fig/04-changes-commit-ingredients-after.png)
 
 Git insists that we add files to the set we want to commit
 before actually committing anything. This allows us to commit our
@@ -406,11 +248,6 @@ and into long-term storage.
 First,
 we'll improve our recipe by changing 'lemon' to 'lime':
 
-```bash
-$ nano guacamole.md
-$ cat guacamole.md
-```
-
 ```output
 # Guacamole
 ## Ingredients
@@ -420,106 +257,38 @@ $ cat guacamole.md
 ## Instructions
 ```
 
-```bash
-$ git diff
-```
+![](fig/04-changes-lime.png)
 
-```output
-diff --git a/guacamole.md b/guacamole.md
-index 315bf3a..b36abfd 100644
---- a/guacamole.md
-+++ b/guacamole.md
-@@ -1,6 +1,6 @@
- # Guacamole
- ## Ingredients
- * avocado
--* lemon
-+* lime
- * salt
- ## Instructions
-```
+![](fig/04-changes-lime-after.png)
+
+
 
 So far, so good:
-we've replaced one line (shown with a `-` in the first column) with a new line
-(shown with a `+` in the first column).
-Now let's put that change in the staging area
+
+Now let's save that change to the staging area
 and see what `git diff` reports:
+![](fig/04-changes-lime-diff.png)
+![](fig/04-changes-lime-diff-after.png)
+We've replaced one line (highlighted in red) with a new line (highlighted in green).
 
-```bash
-$ git add guacamole.md
-$ git diff
+Then add the changes to the staging area.
+![](fig/04-changes-lime-add.png)
+
+![](fig/04-changes-lime-add-after.png)
+
+Then commit these changes with the message 
+```
+Modify guacamole to the traditional recipe
 ```
 
-There is no output. Without any arguments, `git diff` compares the working directory and the staging area. After `git add`, the two versions are identical and there is nothing to show.
+![](fig/04-changes-lime-commit.png)
 
-However, if we do this:
+![](fig/04-changes-lime-commit-after.png)
 
-```bash
-$ git diff --staged
-```
 
-```output
-diff --git a/guacamole.md b/guacamole.md
-index 315bf3a..b36abfd 100644
---- a/guacamole.md
-+++ b/guacamole.md
-@@ -1,6 +1,6 @@
- # Guacamole
- ## Ingredients
- * avocado
--* lemon
-+* lime
- * salt
- ## Instructions
-```
+Then we can see the changes in the history of what we've done so far:
 
-we can see that by adding the `--staged` argument to the command we are now comparing what’s in the staged area to the last committed change.
-
-```bash
-$ git commit -m "Modify guacamole to the traditional recipe"
-```
-
-```output
-[main 005937f] Modify guacamole to the traditional recipe
- 1 file changed, 1 insertion(+)
-```
-
-check our status:
-
-```bash
-$ git status
-```
-
-```output
-On branch main
-nothing to commit, working tree clean
-```
-
-and look at the history of what we've done so far:
-
-```bash
-$ git log
-```
-
-```output
-commit 005937fbe2a98fb83f0ade869025dc2636b4dad5 (HEAD -> main)
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 10:14:07 2013 -0400
-
-    Modify guacamole to the traditional recipe
-
-commit 34961b159c27df3b475cfe4415d94a6d1fcd064d
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 10:07:21 2013 -0400
-
-    Add ingredients for basic guacamole
-
-commit f22b25e3233b4645dabd0d81e651fe074bd8e73b
-Author: Alfredo Linguini <a.linguini@ratatouille.fr>
-Date:   Thu Aug 22 09:51:46 2013 -0400
-
-    Create initial structure for a Guacamole recipe
-```
+![](fig/04-changes-log.png)
 
 :::::::::::::::::::::::::::::::::::::::::  callout
 
