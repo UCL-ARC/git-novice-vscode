@@ -25,6 +25,7 @@ def _take_screenshots(new_screenshots: Path) -> None:
         student_env = {
             "HOME": str(desktop.parent),
             "GIT_CONFIG_GLOBAL": str(desktop.parent / ".gitconfig"),
+            "LESS": "FRX",
             "VSCODE_CLI_DATA_DIR": str(Path.home() / ".vscode" / "cli"),
         }
         with (
