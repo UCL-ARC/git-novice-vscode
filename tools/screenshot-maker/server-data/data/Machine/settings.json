@@ -33,5 +33,6 @@
     "git.showProgress": false,
     "scm.countBadge": "off",
     "editor.scrollbar.vertical": "hidden",
-    "workbench.view.alwaysShowHeaderActions": true
+    "workbench.view.alwaysShowHeaderActions": true,
+    "workbench.hover.delay": 100000
 }
