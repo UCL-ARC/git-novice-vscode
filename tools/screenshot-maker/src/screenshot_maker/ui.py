@@ -185,7 +185,6 @@ def open_diff_and_screenshot(
     side = "Index" if staged else "Working Tree"
     page.get_by_role("tab", name=f"{name} ({side})").wait_for()
     page.locator(".monaco-diff-editor").locator(".line-insert, .line-delete").first.wait_for()
-    expect(page.get_by_text("Ln 1, Col 1")).to_be_hidden()
     screenshot_name = screenshot_output_path.stem
     _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
@@ -198,7 +197,6 @@ def commit_and_screenshot(page: Page, message: str, screenshot_output_path: Path
     commit = page.get_by_role("button", name="Commit Changes on")
     screenshot_with_dot(page, commit, screenshot_output_path)
     commit.click()
-    page.mouse.move(0, 0)  # off the button, or its tooltip appears while we wait below
     expect(page.get_by_role("treeitem", name="Staged Changes")).to_be_hidden()
     # The change bars and any open diff stay drawn for a moment after the commit: wait for them.
     expect(page.locator(".dirty-diff-glyph, .line-insert, .line-delete")).to_have_count(0)
