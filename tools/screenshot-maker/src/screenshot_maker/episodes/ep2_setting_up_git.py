@@ -55,3 +55,6 @@ def setting_up_git(page: Page, desktop: Path, output: Path) -> None:
         page, "G", output / "02-setup-list-config.png", expected="init.defaultbranch=main"
     )
     type_into_terminal(page, "q")
+    type_into_terminal_and_screenshot(
+        page, "git help", output / "02-setup-help.png", expected="overview of the system"
+    )

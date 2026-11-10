@@ -37,6 +37,21 @@ def screenshot_with_dot(
     img.save(output)
 
 
+def screenshot_with_box(page: Page, locator: Locator, output: Path, width: int = 3):
+    box = locator.bounding_box()
+    if box is None:
+        raise ValueError(f"Could not get a bounding box from {locator}")
+
+    scale = page.evaluate("window.devicePixelRatio")
+    x, y = box["x"] * scale, box["y"] * scale
+    x1, y1 = x + box["width"] * scale, y + box["height"] * scale
+
+    img = Image.open(BytesIO(page.screenshot())).convert("RGB")
+    draw = ImageDraw.Draw(img)
+    draw.rectangle((x, y, x1, y1), outline="red", width=round(width * scale))
+    img.save(output)
+
+
 def close_annoying_modals(page: Page, screenshot_output_path: Path | None = None) -> None:
     """Get rid of the annoying modals and popups that block interaction with the page."""
     # None of this is important but it does introduce a brittleness.
@@ -112,8 +127,9 @@ def make_subfolder_and_screenshot(page: Page, name: str, screenshot_output_path:
 
 def init_repo_and_screenshot(page: Page, screenshot_output_path: Path) -> None:
     page.keyboard.press("Control+Shift+G")
-    page.screenshot(path=screenshot_output_path)
-    page.get_by_role("button", name="Initialize Repository").click()
+    initialise = page.get_by_role("button", name="Initialize Repository")
+    screenshot_with_dot(page, initialise, screenshot_output_path)
+    initialise.click()
     page.get_by_role("textbox", name="Message").wait_for()
     screenshot_name = screenshot_output_path.stem
     page.screenshot(path=screenshot_output_path.with_stem(f"{screenshot_name}-after-click"))
