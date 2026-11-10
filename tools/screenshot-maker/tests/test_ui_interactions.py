@@ -16,6 +16,7 @@ from playwright.sync_api import expect
 from screenshot_maker.compare import _images_differ
 from screenshot_maker.ui import (
     close_annoying_modals,
+    init_workspace_and_screenshot,
     make_subfolder_and_screenshot,
     open_terminal,
     screenshot_with_dot,
@@ -56,6 +57,22 @@ def test_make_subfolder(vscode_page_and_path, tmp_path_factory) -> None:
         "subfolder-after.png",
         "subfolder-name.png",
         "subfolder.png",
+    ]
+
+
+def test_init_workspace(vscode_page_and_path, tmp_path_factory) -> None:
+    # Creates and opens a new workspace folder, with a screenshot of each step.
+    vscode_page, desktop = vscode_page_and_path
+    screenshots = tmp_path_factory.mktemp("screenshots")
+    init_workspace_and_screenshot(vscode_page, desktop, "recipes", screenshots / "workspace.png")
+    assert (desktop / "recipes").is_dir()
+    assert sorted(path.name for path in screenshots.iterdir()) == [
+        "workspace-close-modal.png",
+        "workspace-confirm.png",
+        "workspace-new-folder.png",
+        "workspace-restricted-mode.png",
+        "workspace-trust.png",
+        "workspace.png",
     ]
 
 

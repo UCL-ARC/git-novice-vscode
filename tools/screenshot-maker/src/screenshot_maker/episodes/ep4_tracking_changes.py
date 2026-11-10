@@ -15,7 +15,7 @@ from ..ui import (
 
 
 def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
-    type_into_terminal(page, "clear")
+    type_into_terminal(page, r"clear && printf '\033[3J'")
     # Deselect desserts (from ep3) so the new file goes in the repo root.
     page.keyboard.press("ControlOrMeta+Shift+E")
     page.keyboard.press("Escape")
@@ -37,7 +37,6 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
         "Create initial structure for a Guacamole recipe",
         output / "04-changes-commit.png",
     )
-    page.get_by_role("treeitem", name="Create initial structure for a Guacamole recipe").wait_for()
     history = page.get_by_role("tree", name="Source Control History")
     screenshot_with_box(page, history, output / "04-changes-commit-log.png")
 
@@ -88,7 +87,5 @@ def tracking_changes(page: Page, desktop: Path, output: Path) -> None:
     commit_and_screenshot(
         page, "Modify guacamole to the traditional recipe", output / "04-changes-lime-commit.png"
     )
-
-    page.get_by_role("treeitem", name="Modify guacamole to the traditional recipe").wait_for()
     history = page.get_by_role("tree", name="Source Control History")
     screenshot_with_box(page, history, output / "04-changes-log.png")

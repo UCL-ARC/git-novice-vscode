@@ -1,23 +1,35 @@
 from pathlib import Path
 
-from PIL import Image
+import pytest
+from PIL import Image, ImageColor
 
 from screenshot_maker.compare import compare_screenshots
 
 
-def test_compare_screenshots(tmp_path: Path) -> None:
-    """
-    Check compare_screenshots copies a new screenshot over an existing one of a different
-    size, then copies nothing when the same screenshot comes in again.
-    """
-    new_screenshots = tmp_path / "new"
-    existing_screenshots = tmp_path / "existing"
-    new_screenshots.mkdir()
-    existing_screenshots.mkdir()
-    Image.new("RGB", (1, 1)).save(existing_screenshots / "screenshot.png")
-    Image.new("RGB", (20, 20)).save(new_screenshots / "screenshot.png")
+@pytest.mark.parametrize(
+    "first, second, existing, updated, kept",
+    [
+        ("red", "red", "black", ["screenshot.png"], "red"),
+        ("red", "red", None, ["screenshot.png"], "red"),
+        ("red", "blue", "black", [], "black"),
+        ("black", "black", "black", [], "black"),
+    ],
+    ids=["runs agree on a change", "new screenshot", "runs disagree", "nothing changed"],
+)
+def test_compare_screenshots(
+    tmp_path: Path,
+    first: str,
+    second: str,
+    existing: str | None,
+    updated: list[str],
+    kept: str,
+) -> None:
+    colours = {"first": first, "second": second, "existing": existing}
+    for folder, colour in colours.items():
+        (tmp_path / folder).mkdir()
+        if colour:
+            Image.new("RGB", (1, 1), colour).save(tmp_path / folder / "screenshot.png")
 
-    assert compare_screenshots(new_screenshots, existing_screenshots) == ["screenshot.png"]
-    with Image.open(existing_screenshots / "screenshot.png") as image:
-        assert image.size == (20, 20)
-    assert compare_screenshots(new_screenshots, existing_screenshots) == []
+    assert compare_screenshots(*(tmp_path / folder for folder in colours)) == updated
+    with Image.open(tmp_path / "existing" / "screenshot.png") as image:
+        assert image.getpixel((0, 0)) == ImageColor.getrgb(kept)

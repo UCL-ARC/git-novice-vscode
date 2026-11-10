@@ -5,11 +5,13 @@ from loguru import logger
 from PIL import Image, ImageChops
 
 
-def compare_screenshots(new_screenshots: Path, existing_screenshots: Path) -> list[str]:
+def compare_screenshots(first: Path, second: Path, existing_screenshots: Path) -> list[str]:
     updated = []
-    for new in sorted(new_screenshots.glob("*.png")):
+    for new in sorted(first.glob("*.png")):
         existing = existing_screenshots / new.name
-        if not existing.is_file() or _images_differ(new, existing):
+        if _images_differ(new, second / new.name):
+            logger.warning(f"Not updating {new.name}: the two runs disagree")
+        elif not existing.is_file() or _images_differ(new, existing):
             logger.info(f"Updating {existing}")
             shutil.copy(new, existing)
             updated.append(new.name)

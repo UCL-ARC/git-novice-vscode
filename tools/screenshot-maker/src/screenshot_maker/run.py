@@ -17,16 +17,15 @@ def _make_student_desktop(tmp_path: str) -> Path:
     return desktop
 
 
-def run(output: Path) -> None:
-    output.mkdir(parents=True, exist_ok=True)
+def _take_screenshots(new_screenshots: Path) -> None:
+    new_screenshots.mkdir()
     # bash is still writing session files into the fake home as the server shuts down.
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp_path:
         desktop = _make_student_desktop(tmp_path)
-        new_screenshots = Path(tmp_path) / "screenshots"
-        new_screenshots.mkdir()
         student_env = {
             "HOME": str(desktop.parent),
             "GIT_CONFIG_GLOBAL": str(desktop.parent / ".gitconfig"),
+            "LESS": "FRX",
             "VSCODE_CLI_DATA_DIR": str(Path.home() / ".vscode" / "cli"),
         }
         with (
@@ -34,15 +33,20 @@ def run(output: Path) -> None:
             sync_playwright() as playwright_context,
         ):
             browser = playwright_context.firefox.launch()
-            context = browser.new_context()
-            context.tracing.start(screenshots=True, snapshots=True, sources=True)
-            page = context.new_page()
+            page = browser.new_page()
             page.goto(f"{server.url}/?folder={desktop}")
 
             for episode in EPISODES:
                 episode(page, desktop, new_screenshots)
 
-        compare_screenshots(new_screenshots, output)
+
+def run(output: Path) -> None:
+    output.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory() as tmp_path:
+        first, second = Path(tmp_path) / "first", Path(tmp_path) / "second"
+        _take_screenshots(first)
+        _take_screenshots(second)
+        compare_screenshots(first, second, output)
 
 
 if __name__ == "__main__":
