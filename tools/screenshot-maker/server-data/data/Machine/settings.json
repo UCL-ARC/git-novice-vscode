@@ -34,5 +34,6 @@
     "scm.countBadge": "off",
     "editor.scrollbar.vertical": "hidden",
     "workbench.view.alwaysShowHeaderActions": true,
-    "workbench.hover.delay": 100000
+    "workbench.hover.delay": 100000,
+    "workbench.sash.autoHideGrippersDelay": 0
 }
