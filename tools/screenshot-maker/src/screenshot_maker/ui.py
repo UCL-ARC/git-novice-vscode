@@ -201,6 +201,7 @@ def commit_and_screenshot(page: Page, message: str, screenshot_output_path: Path
     # The change bars and any open diff stay drawn for a moment after the commit: wait for them.
     expect(page.locator(".dirty-diff-glyph, .line-insert, .line-delete")).to_have_count(0)
     page.get_by_role("treeitem", name=message).wait_for()
+    expect(page.locator(".progress-badge")).to_have_count(0)
     screenshot_name = screenshot_output_path.stem
     _screenshot(page, screenshot_output_path.with_stem(f"{screenshot_name}-after"))
 
